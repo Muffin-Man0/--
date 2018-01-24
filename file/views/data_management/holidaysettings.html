@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--right slidebar-->
+    <link href="css/slidebars.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/bootstrap-select.min.css" rel="stylesheet" />
+
+    <link href="assets/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 10px;
+            padding: 10px;
+            overflow-y: hidden;
+            background: white;
+        }
+
+
+
+        .ztree span {
+            line-height: 18px;
+            margin: 2px;
+            font-size: 13px;
+        }
+
+        .TreeDiv {
+            z-index: 999;
+            width: 260px;
+            height: 160px;
+            position: absolute;
+            background-color: #a7a7a7;
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 3px;
+            box-shadow: rgb(102, 102, 102) 0px 1px 5px;
+            display: none;
+        }
+
+
+
+        #formRight {
+            height: 535px;
+        }
+
+        @media screen and (max-width:1050px) {
+
+            #friFra {
+            }
+
+            #formRight {
+                height: 400px;
+            }
+        }
+
+        .form-horizontal.tasi-form .form-group2 {
+            padding-bottom: 20px;
+            /*padding-top: 10px;*/
+        }
+
+        .form-control {
+            color: #47596f !important;
+        }
+
+        .userInfoTable {
+        }
+
+            .userInfoTable tr {
+                height: 36px;
+            }
+
+                .userInfoTable tr td {
+                    border: 1px solid #ccc;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+
+        .recharge-txt {
+            height: 33px;
+            line-height: 33px;
+            font-weight: bold;
+            margin-left: 15px;
+        }
+
+        .input-group-btn :hover {
+            background: #165082;
+            color: #fff;
+        }
+
+        #TreeDiv {
+            top: 106px;
+            left: 274px;
+            z-index: 10;
+            width: 550px;
+            height: 430px;
+        }
+
+        .recharge-txt select {
+            width: 100px;
+            height: 34px;
+        }
+
+        .chons i {
+            font-style: normal;
+            font-weight: 900;
+            color: #006600;
+        }
+
+        i {
+            font-style: normal;
+        }
+
+        .m-bot15 {
+            margin-bottom: 5px;
+        }
+
+        .sydiv {
+            width: 300px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+
+<body style="padding: 10px; background-color: #f1f2f7;">
+
+    <div id="teamrow" class="row" style="border-radius: 0px;">
+        <div class="panel" style="border-radius: 0px; border-bottom: 0px solid #c3c1c1; margin-bottom: 0px;">
+            <div class="panel-body" style="padding: 2px;">
+
+                <div style="padding-right: 3px; margin-left: 5px; margin-top: 5px;">
+
+
+                    <div style="float: left; height: 33px; line-height: 33px; font-weight: bold; margin-left: 5px;">
+                        选择日期：
+                    </div>
+                    <div class="col-sm-2" style="padding-left: 3px; padding-right: 3px;">
+                        <section class="panel" style="margin-bottom: 0px;">
+                                <input id="startTime" type="text" placeholder="请输入开始时间" class="form-control cor_bck" readonly="" size="16" />
+                            </section>
+                    </div>
+
+                    <div class="col-sm-2" style="padding-left: 3px; padding-right: 3px;">
+                        <section class="panel" style="margin-bottom: 0px;">
+                                <input id="endTime" type="text" placeholder="请输入结束时间" class="form-control cor_bck" readonly="" size="16">
+                            </section>
+                    </div>
+
+
+
+                    <div class="sydiv">
+                        <div class="recharge-txt" style="width: 60px;">
+                            <button type="button" id="recharge" data-loading-text="Loading..." class="btn btn-success" style="background-color: #165082; border-color: #1a5284; color: #FFFFFF;">
+                                <i class="fa"></i>增加
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+            <section class="panel" style="border: 1px solid #ccc; border-bottom: 1px solid #c3c1c1; border-radius: 0px;">
+                            <div class="panel-body" style="padding: 5px;">
+                                <div class="adv-table">
+                                    <table id="AlarmAnalysis"></table>
+                                </div>
+                            </div>
+                        </section>
+        </div>
+    </div>
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="js/respond.min.js"></script>
+    <!--right slidebar-->
+    <script src="js/slidebars.min.js"></script>
+    <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
+    <!--<script src="js/advanced-form-components.js"></script>-->
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+    <script type="text/javascript" src="js/bootstrap-select.js"></script>
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+
+    <script src="assets/timepicker/jquery.datetimepicker.js"></script>
+    <link href="assets/timepicker/jquery.datetimepicker.css" rel="stylesheet" />
+
+ 
+
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="js/holidaysettings.js"></script>
+ 
+    <script type="text/javascript" src="js/jquery.nicescroll.js"></script>
+
+
+    <style>
+        .search {
+            width: 200px;
+        }
+
+        /*.selected {
+            background-color: #f39b13;
+        }*/
+
+        /*.btn {
+            padding: 0px 0px;
+            margin-top: -5px;
+            padding: 2px;
+            padding-left: 4px;
+            padding-right: 4px;
+        }*/
+        .blueColor {
+            color: #0b6be4;
+        }
+
+            .blueColor div {
+                color: #555;
+            }
+
+        .displayCol {
+            display: none;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,1507 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>风控</title>
+
+
+    <link href="/js/unpkg/index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/button.css">
+    <link rel="stylesheet" href="/css/main.css">
+     <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-reset.css" rel="stylesheet" />
+ <!--   <script src="/js/bootstrap.min.js"></script>-->
+    <style>
+        .xtable {
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+            .xtable tr th {
+                height: 40px;
+                font-size: 15px;
+                line-height: 40px;
+                background-color: #eef1f6;
+                text-align: center;
+                border: 1px solid #ccc;
+            }
+
+            .xtable tr td {
+                height: 40px;
+                font-size: 15px;
+                line-height: 40px;
+                background-color: #fff;
+                text-align: center;
+                border: 1px solid #ccc;
+            }
+
+        .loding {
+            z-index: 111;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background: #fff;
+        }
+
+        .el-checkbox__inner {
+            border-radius: 50%;
+        }
+
+        .el-form-item .err-text {
+            visibility: hidden;
+        }
+
+        .layui-layer-title {
+            background-color: #165082 !important;
+            color: #fff !important;
+        }
+
+        #jiesao_div p {
+            text-indent: 10px;
+            color: #8c8c8c;
+            font-size: 12px;
+        }
+
+        .dropdownul li a span {
+            float: right;
+            color: #f00;
+        }
+
+        .dropdownul li a i {
+            font-style: normal;
+        }
+
+        body {
+            background-color: #F1F2F7;
+        }
+
+        .jiesao_div_p {
+            display: none;
+        }
+
+
+        .button_lssss {
+            border: 1px solid #3070f3;
+            background: #3070f3;
+            padding: 1px 0;
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+            width: 100px;
+            height: 35px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div style="width: 80%; float: left;">
+        <div id="app">
+            <div class='asrisk'>
+                <div>
+                    <div class='loding' v-show='loadding'>
+                        <div>
+
+                        </div>
+                    </div>
+                    <header class='header-box' style="background-color:#fff;">
+                <!--    <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox> -->
+                        <div style="margin: 15px 0;"></div>
+                        <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                            <el-checkbox v-for="city in cities" :label="city"  :key="city">{{city}}</el-checkbox>
+                <!--      :disabled='city!="银行卡"?false:true'-->
+                      </el-checkbox-group>
+
+                    </header>
+
+                    <div class='header-box ' style="background-color:#fff;">
+                        <div :class='{ animated: isActive,"pd-footer":true }'>
+                            <div class='form-x'>
+                                <el-form label-position="right" label-width="80px" :model="formLabelAlign">
+                                    <el-form-item label="真实姓名">
+                                        <el-input v-model="name" id="chooseId" name="name"  onkeydown="if(event.keyCode==32) return false"></el-input>
+                                        <span id="nameberstext" class='err-text'>{{nameberstext}}</span>
+                                           <ul class="typeahead dropdown-menu dropdownul" style="top: 34px; left: 0px; z-index: 1001; width: 280px; max-height: 300px; overflow-y: auto; display: none; max-height: 100px;" id="quanbu">
+                                         </ul>
+                                    </el-form-item>
+                                    <el-form-item label="身份证">
+                                        <el-input v-model="type" name="idCard"  ></el-input>
+                                        <span id="IDberstext" class='err-text'>{{IDberstext}}</span>
+                                    </el-form-item>
+                                    <el-form-item label="手机号码">
+                                        <el-input name="mobile" v-model="numbers" :maxlength='11' ></el-input>
+                                        <span id="numberstext" class='err-text'>{{numberstext}}</span>
+                                    </el-form-item>
+                                       <el-form-item label="银行卡号"  v-show='banknoshow'>
+                                        <el-input name="bankno" v-model="bankno"   ></el-input>
+                                        <span id="banknotext" class='err-text'>{{banknotext}}</span>
+                                    </el-form-item>
+
+                                          <el-form-item label="消耗">
+                        <!--                 <img src="/img/coin.png" style="float: left; margin-top:5px" />
+                                       <span style="font-size: 18px; color: #f00; margin-top: 1px; float: left; margin-left: 3px;">×</span>
+                                              <span style="color:#f00;float: left;margin-top: 0px;font-size: 18px;"><span id="mocot">3</span>/次</span>
+-->    <span style="color: #f00; float: left; margin-top: 2px; font-size: 18px;">
+                        <span id="mocot">4</span></span><img src="/img/coin.png" style="float: left;width: 21px;margin-top: 9px;margin-left:2px;" />
+                        <span style="float: left; margin-top: 2px;margin-left:2px; color: #f00;letter-spacing:2px; font-size:17px;">/次</span>
+
+                                                   <span style="float: left; margin-top: 2px; margin-left: 15px;">剩余钻石：</span> 
+                        <img src="/img/coinp.png" style="float: left; margin-top: 2px; width: 34px;margin-left: 0px;" />
+                        <span id="incrementMoney" style="float: left;color: #f00;margin-top:2px;margin-left: 9px; font-size:18px; ">-</span>
+                                    </el-form-item>
+                                </el-form>
+                            </div>
+                            <div   class='check-x'   v-show='check_show' >
+                                <input type='checkbox' id="open" checked="checked" />
+                                <span>同意</span>
+                                <span onclick="authorization()">《授权协议》</span>
+                            </div>
+               
+                            <div class='check-x btn-connet' style="margin-top:10px;">
+                                <input type='button' :value="stoptest" @click='search' :class='{isdis:disableds}'>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div v-show='froms' :class='{animated:isActive,fadeInDown:ssli,"header-box":true}'>
+                        <div class='detail-box'>
+                            {{querytile}}
+                        </div>
+                        <div id="maindiv_hhh">
+                            <div class='chartlist' v-for='item in checklist' key='item'>
+                                <div class='dt-title'>
+                                    <div class='dios'></div>
+                                    <div class='dt-font'>{{item.name}}</div>
+                                </div>
+
+                                <table v-for='table in item.table' key='table' class="xtable" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style=" font-family: 微软雅黑;height: 40px;  font-size: 15px; line-height: 40px;background-color: #eef1f6;  text-align: center;   border: 1px solid #ccc;" v-for='th in table.thead' key='th'>{{th}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td  v-for='td in table.tbody' key='td'>
+                                                <span  style="color:#f00 "  v-if="td=='不匹配' || td=='不匹配' || td=='不支持的银行卡或系统无记录' ">{{td}}</span>
+                                                 <span  style="color:#09f806 " v-else-if="td=='匹配' ">{{td}}</span>
+                                                    <span    v-else >{{td}}</span>
+                                            </td>
+                                        </tr>                                                  
+                                    </tbody>                                               
+                                </table>                                                       
+                                                                                  
+                                <!--    <el-table :data="item.tableData"   border style="width: 100%">
+                            <el-table-column prop="key" label="名称" align='center'>
+                            </el-table-column>
+                            <el-table-column prop="val" label="结果" align='center'>
+                            </el-table-column>
+                        </el-table> -->
+                            </div>
+                        </div>
+
+                        <div class='center-footer'  >
+                    
+                          <input type="button" id="print_data" value="打印" class="button_lssss" onclick="printData()" style="right: 133px;" />
+                          <input type="button" id="method" value="导出" class="button_lssss" onclick="tableToExcelcc()" />
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width: 20%; float: left; ">
+        <div class="header-box" style="clear: both; margin-left: 0px; min-height:400px;">
+
+            <div class="dt-title">
+                <div class="dios"></div>
+                <div class="dt-font">使用步骤</div>
+            </div>
+            <div id="jiesao_div">
+<p>1.填写被查询人资料，并查询。</p>
+ <p>2.查看报告。</p>
+ <p>3.打印报告。</p>
+                 <div class="dt-title">
+                <div class="dios"></div>
+                <div class="dt-font">注意事项</div>
+                    </div>
+               <p id="jiesao_div_p1"  class="jiesao_div_p" >1.将于三大运营商的实名认证数据进行对比，若结果返回匹配，说明与运营商的数据一致。</p>
+               <p id="jiesao_div_p2"  class="jiesao_div_p">1.查询是否在不执行法院判决的黑名单中（俗称“老赖”）。一般征信问题不在此清单体现。 </p>
+               <p id="jiesao_div_p22" class="jiesao_div_p">2.查询时间需8至10分钟</p>
+               <p id="jiesao_div_p3"  class="jiesao_div_p">1.查询手机的使用时长。</p>
+               <p id="jiesao_div_p4"  class="jiesao_div_p">1.查询最高学历，大学名称，专业信息，入学年份等。</p>
+               <p id="jiesao_div_p5"  class="jiesao_div_p">1.将于各大银行的实名认证数据进行对比，若结果返回匹配，说明与各大银行的数据一致。</p>
+               <p><span id="jiesao_div_p_2"  style="float: left;margin-right:-5px;">2.</span><span style=" color: #f00;"><span  style="float: left;">统一售价：1</span><img src="/img/coin.png" style="float: left;width: 18px;margin-top: -2px;margin-left:2px;margin-right:-9px;" />= 1元</span></p>
+                </div>
+          
+
+        </div>
+    </div>
+     <input type="hidden"  id="nametxt" />
+</body>
+
+</html>
+<script src='/js/vue.min.js'></script>
+<script src="/js/unpkg/index.js"></script>
+<script src="/js/unpkg/echarts.min.js"></script>
+<script src="/js/unpkg/index.min.js"></script>
+<script src="/js/jquery.js?v=1.1"></script>
+<script src="/layer/layer.js"></script>
+<script>
+
+    $(function(){
+        incrementMoney(); 
+        getInquireRecords();
+        $("#chooseId").click(function (event) {
+            if ($("#quanbu").html().replace(/(^\s*)|(\s*$)/g, "") != "") {
+                $("#quanbu").show();
+            }
+            event.stopPropagation();  //阻止节点触发事件
+            event.preventDefault()    //阻止默认事件
+        });
+        $("body").click(function (e) {
+            $("#quanbu").hide();
+        });
+
+    });
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURI(r[2]); return null;
+    }
+        
+    function incrementMoney() {
+        myAjax({
+            url: ajax('/http/increment/GetIncrementMoney.json'),
+            type: 'post',
+            data: {},
+            dataType: 'json',
+            beforeSend: function () {
+            },
+            success: function (d) {
+                if (d.flag == 1) {
+                    $("#incrementMoney").html(d.obj.incrementMoney);
+                } else {
+                    layer.msg('' + d.msg, { icon: 2 });
+                }
+
+            }, error: function (msg) {
+                console.log("程序出错:" + msg.responseText);
+            }
+        });
+    }
+
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+           // incrementMoney: 0,
+            checkAll: true,
+            querytile: "正在查询中...",
+            checkedCities: ['手机身份验证'],
+            checklist: [],
+            loadding: true,
+            cities: ['手机身份验证', '失信黑名单', '手机在网时长', '学历查询', '银行卡验证'],
+            isIndeterminate: true,
+            tableData: [{
+                date: '123',
+                name: '手机123配对',
+                address: '银行23421卡正常'
+            }],
+            name: '',
+            numberstext: '*请输入手机号码',
+            IDberstext: "*请输入身份证",
+            nameberstext: '*请输入姓名',
+            banknotext:'*请输入银行卡号',
+            banknoshow:false,
+            check_show:false,
+            numbers: '',
+            isActive: true,
+            stoptest: '查询',
+            disableds: false,
+            hasError: false,
+            ssli: false,
+            clsarr: ['animete'],
+            froms: false,
+            type: '',
+            card: '',
+            bankno:'',
+            formLabelAlign: {
+                name: '',
+                region: '',
+                type: '',
+                ss: ''
+            }
+        },
+        mounted() {
+    var type=getQueryString("type");
+    this.check_show=false;
+    if(type!=null)
+    {
+        switch(Number(type))
+        {
+            case 1:
+                this.checkedCities=['手机身份验证'];
+                $("#mocot").html("4");
+
+                break;  
+            case 2:
+                this.checkedCities=['失信黑名单'];
+                $("#mocot").html("2");
+                break;
+            case 3:
+                this.checkedCities=['手机在网时长'];
+                $("#mocot").html("4");
+                break;
+            case 4:
+                this.checkedCities=['学历查询'];
+                this.check_show=true;
+                $("#mocot").html("10");
+                break;
+            case 5:
+                this.checkedCities=['银行卡验证'];
+                this.banknoshow=true;
+                $("#mocot").html("4");
+                break;
+        }
+        $("#jiesao_div_p"+type).show();
+    }else{
+        $("#jiesao_div_p1").show();
+    }
+
+ 
+
+
+
+    setTimeout(() => {
+        this.loadding = false
+    }, 0);
+    },
+    methods: {
+      
+        handleCheckAllChange(event) {
+            this.banknoshow=false;
+            this.check_show=false;
+            this.checkedCities = event.target.checked ? this.cities : [];
+            //this.isIndeterminate = false;
+            var mocot=0;
+            for(var i=0;i<this.checkedCities.length;i++)
+            {
+                switch(this.checkedCities[i])
+                {
+                    case"手机身份验证":
+                        mocot+=4;
+                        break;
+                    case"失信黑名单":
+                        mocot+=2;
+                        break;
+                    case"手机在网时长":
+                        mocot+=4;
+                        break;
+                    case"学历查询":
+                        mocot+=10;
+                        this.check_show=true;
+                        break;
+                    case "银行卡验证":
+                        mocot+=4;
+                        this.banknoshow=true;
+                        break;
+                }
+
+            }
+            $("#mocot").html(mocot);
+        },
+        handleCheckedCitiesChange(value) {
+            this.banknoshow=false;
+            this.check_show=false;
+            if(value.length==2)
+            {
+                this.checkedCities = [value[1]];
+            }else{
+                this.checkedCities = [value[0]];
+            }
+          
+            //let checkedCount = value.length;
+            //this.checkAll = checkedCount === this.cities.length;
+            //this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+            var mocot=0;
+            $(".jiesao_div_p").hide();
+            $("#jiesao_div_p_2").html("2.");
+            for(var i=0;i<this.checkedCities.length;i++)
+            {
+                switch(this.checkedCities[i])
+                {
+                    case"手机身份验证":
+                        mocot+=4;
+                        $("#jiesao_div_p1").show();
+
+                        break;
+                    case"失信黑名单":
+                        mocot+=2;
+                        $("#jiesao_div_p2").show();
+                        $("#jiesao_div_p22").show();
+                        $("#jiesao_div_p_2").html("3.");
+                        break;
+                    case"手机在网时长":
+                        $("#jiesao_div_p3").show();
+                        mocot+=4;
+                        break;
+                    case"学历查询":
+                        $("#jiesao_div_p4").show();
+                        mocot+=10;
+                        this.check_show=true;
+                        break;
+                    case "银行卡验证":
+                        mocot+=4;
+                        $("#jiesao_div_p5").show();
+                        this.banknoshow=true;
+                        break;
+                }
+
+            }
+            $("#mocot").html(mocot);
+
+        },
+
+        outvN() {
+            $("#nameberstext").css("visibility", "visible");
+            this.name=  $("input[name='name']").val();
+
+           
+
+
+            if (this.name.replace(/(^\s*)|(\s*$)/g, "") == "") {
+                this.nameberstext = "*请输入姓名";
+            } else {
+                if (this.name.replace(/(^\s*)|(\s*$)/g, "").length <= 1) {
+
+                    this.nameberstext = "真实姓名字符必须大于一个字符";
+                } else {
+                    this.nameberstext = "";
+                }
+
+
+            }
+
+        },
+        outvID() {
+
+            $("#IDberstext").css("visibility", "visible");
+            this.type= $("input[name='idCard']").val();
+
+           
+            if (this.type.replace(/(^\s*)|(\s*$)/g, "") == "") {
+                this.IDberstext = "*请输入身份证";
+            } else {
+
+                if (IDCardCheck(this.type) != "正确") {
+                    this.IDberstext = "*身份证号格式错误";
+
+                } else {
+                    this.IDberstext = "";
+                }
+
+            }
+
+        },
+        outvluhmCheck()
+        {
+            $("#banknotext").css("visibility", "visible");
+            this.bankno= $("input[name='bankno']").val();
+           
+            if (this.bankno.replace(/(^\s*)|(\s*$)/g, "") == "") {
+                this.banknotext = "*请输入银行卡号";
+            } else {
+
+                if (!luhmCheck(this.bankno)) {
+                    this.banknotext = "*银行卡号格式错误";
+                } else {
+                    this.banknotext = "";
+                }
+
+            }
+
+        },
+        outv() {
+            $("#numberstext").css("visibility", "visible");
+            this.numbers=   $("input[name='mobile']").val();
+
+            if (this.numbers.replace(/(^\s*)|(\s*$)/g, "") == "") {
+                this.numberstext = "*请输入手机号码";
+            } else {
+                if (this.numbers.length < 11) {
+                    this.numberstext = '*手机号码有误'
+                } else {
+                    this.numberstext = ''
+                }
+
+                if (this.numbers.length == 11) {
+                    if (!(/^1[34578]\d{9}$/.test(this.numbers))) {
+                        this.numberstext = '*手机号码有误'
+                        return false;
+                    } else {
+                        this.numberstext = ''
+                    }
+                }
+            }
+        },
+        open2() {
+            this.checklist = [];
+            this.stoptest = '查询中';
+            this.disableds = true;
+            // var oDiv = document.querySelector('.right_content')
+            this.querytile = "正在查询中...";
+            var _this = this;
+
+
+            //var times = 10
+            //setTimeout(() => {
+            //    $('html, body').animate({scrollTop: 500}, 1000)
+            //}, 500)
+            var infotype = "";
+            var douhao = 0;
+
+            this.checkedCities.forEach((item, i) => {
+                if (douhao == 1) {
+                    infotype += ",";
+            douhao = 0;
+        }
+
+        switch (item) {
+            case "手机身份验证":
+                infotype += "1";
+                douhao = 1;
+                break;
+            case "失信黑名单":
+                infotype += "9";
+                douhao = 1;
+                break;
+            case "手机在网时长":
+                infotype += "3";
+                douhao = 1;
+                break;
+            case "学历查询":
+                infotype += "2";
+                douhao = 1;
+                break;
+            case "银行卡验证":
+                infotype += "10";
+                douhao = 1;
+                break;
+        }
+
+
+
+    });
+    var url="/credit/PersonalInformation/InquireData.json?type=" + infotype ;
+
+
+    if(infotype.indexOf("10")!=-1)
+    {
+        url="/credit/CentralBankCredit/CheckBank.json?bankno="+this.bankno;
+    }
+    myAjax({
+        url: ajax(url+
+            "&idName=" + this.name + "&idNumber=" + this.type + "&mobile=" + this.numbers
+        ),
+        type: 'get',
+        //data: { type: infotype, idName: this.name, idNumber: this.type, mobile: this.numbers },
+        dataType: 'json',
+        beforeSend: function () {},
+        success: function (d) {
+            getInquireRecords();
+                   
+            if (d.flag == 1) {
+            
+
+                incrementMoney();
+                _this.querytile = "查询结果";
+                //_this.$message({
+                //    type: 'info',
+                //    message: d.msg
+                //});
+                //  layer.msg(d.msg, { icon: 1 });
+                _this.froms = true
+                _this.ssli = true
+                _this.disableds = false;
+                _this.stoptest = '查询';
+                var msg="";
+
+                $('html, body').animate({
+                    scrollTop: 500
+                }, 1000);
+                if(infotype.indexOf("10")!=-1)
+                {
+                    var obj = {
+                    }
+                    obj.name = "银行卡验证";
+                    $("#nametxt").val(_this.name+"银行卡验证");
+                    var data={
+                        bankno:d.obj.bankno,
+                        idname:d.obj.idname,
+                        idnumber:d.obj.idnumber,
+                        mobile:d.obj.mobile,
+                    }
+                    data.codeStr="接口无结果";
+                    switch (d.obj.code)
+                    {
+                        case "00":
+                            data.codeStr="匹配";
+                            break;
+                        case "01":
+                            data.codeStr="不匹配";
+                            break;
+                        case "02":
+                            data.codeStr="不支持的银行卡或系统无记录";
+                            break;
+                    }
+                    obj.table = getdatetel(data);
+                    _this.checklist.push(obj);
+
+                }else{
+
+                       
+
+                    $.each(d.obj, function (i) {
+
+                        var obj = {
+                            // name: item,
+                            // msg:item,
+                            // tableData:tableData
+                        }
+                        var data = [];
+                        switch (Number(this.type)) {
+                            case 1:
+                                obj.name = "手机身份验证";
+                                data={
+                                    idname: this.data.idname,
+                                    resmsg:this.data.resmsg,
+                                    idnumber:this.data.idnumber,
+                                    mobile:this.data.mobile,
+                                    idnamemobilecheck:this.data.idnamemobilecheck
+                                } 
+                                $("#nametxt").val(_this.name+"手机身份验证");
+
+                                if (data.idnamemobilecheck == "NO") {
+                                    data.idnamemobilecheck = "不匹配";
+                                }
+                                if (data.idnamemobilecheck == "YES") {
+                                    data.idnamemobilecheck = "匹配";
+                                }
+                                       
+                                break;
+                            case 9:
+                                $("#nametxt").val(_this.name+"失信黑名单");
+                                obj.name = "失信黑名单";
+                                data = this.data;
+
+                                if (this.data.dishonests!=null && this.data.dishonests.length == 0) {
+                                    data.resmsg = "查询无记录！";
+                                } else {
+                                }
+                                break;
+                            case 3:
+                                $("#nametxt").val(_this.name+"手机在网时长");
+                                obj.name = "手机在网时长";
+                                data = this.data;
+                                //obj.msg ="查询结果："+ this.data.resmsg;
+                                break;
+                            case 2:
+                                $("#nametxt").val(_this.name+"学历认证");
+                                obj.name = "学历查询";
+                                data = this.data.data;
+                                if (data == null) {
+                                    data = this.data;
+                                }
+                                break;
+                        }
+                              
+                              
+                        if(this.msg!=null && this.msg!="")
+                        {
+                            msg = this.msg;
+                        } else{
+
+                            if (data != null) {
+                                if (Number(this.type) == 2) {
+                                    obj.table = getdatetelschoo(data);
+                                } else if (Number(this.type) == 9 && data.dishonests.length >
+                                    0) {
+                                    obj.table = shixindata(data.dishonests);
+                                } else {
+                                    obj.table = getdatetel(data);
+                                }
+                            }
+                            _this.checklist.push(obj);
+                        }
+                               
+                    });
+                            
+                }
+                          
+                if(msg!="")
+                {
+                            
+                    _this.froms = false;
+                    _this.ssli = true;
+                    _this.disableds = false;
+                    _this.stoptest = '查询'
+                    layer.alert(msg);
+                    gaibian(0);
+
+                }
+            }else
+            { 
+                _this.froms = false;
+                _this.ssli = true;
+                _this.disableds = false;
+                _this.stoptest = '查询'
+                       
+                layer.alert(d.msg);
+                gaibian(0);
+            }
+
+            var a = document.querySelector('.detail-box')
+            var toscroll = a.offsetTop;
+        },
+        error: function (msg) {
+            console.log("程序出错:" + msg.responseText);
+        }
+    });
+
+
+
+
+
+
+
+    },
+    search() {
+      
+
+        var infotype = "";
+        var douhao = 0;
+
+        this.checkedCities.forEach((item, i) => {
+            if (douhao == 1) {
+                infotype += ",";
+        douhao = 0;
+    }
+
+    switch (item) {
+        case "手机身份验证":
+            infotype += "1";
+            douhao = 1;
+            break;
+        case "失信黑名单":
+            infotype += "9";
+            douhao = 1;
+            break;
+        case "手机在网时长":
+            infotype += "3";
+            douhao = 1;
+            break;
+        case "学历查询":
+            infotype += "2";
+            douhao = 1;
+            break;
+        case "银行卡验证":
+            infotype += "10";
+            douhao = 1;
+            break;
+    }
+
+
+
+    })
+
+    if (infotype == "") {
+
+        //this.$message({
+        //    type: 'info',
+        //    message: "请先选择需要查询的选项！"
+        //});
+        layer.msg("请先选择需要查询的选项！" );
+
+        return false;
+    }
+
+    this.outvN();
+    this.outvID();
+    this.outv();
+    if(infotype.indexOf("10")!=-1)
+    {
+        this.outvluhmCheck();
+    }else{
+        this.banknotext = "";
+    }
+    if (this.nameberstext != "" || this.IDberstext != "" || this.numberstext != "" || this.banknotext!="") {
+        //this.$message({
+        //    type: 'info',
+        //    message: ""
+        //});
+        layer.msg("请先输入正确的信息！" );
+        $("#nameberstext").css("visibility", "visible");
+        $("#IDberstext").css("visibility", "visible");
+        $("#numberstext").css("visibility", "visible");
+        return false;
+    }
+    
+  
+    
+    if (!$("#open").prop("checked") &&  this.check_show) {
+        //this.$message({
+        //    type: 'info',
+        //    message: "请先勾选同意选项！"
+        //});
+        layer.msg("请先勾选同意选项！");
+        return false;
+    }
+    var _this=this;
+
+    layer.confirm(
+          '此次查询将消耗<span style="color:#f00;">' +  $("#mocot").html()+ '</span>个钻石, 是否继续?', {
+              area: '420px',
+              title: "提示",
+              btn: ['确定查询', '取消'] //按钮
+          }, function () {
+              layer.closeAll('dialog');
+              _this.open2();
+
+          });
+    gaibian(0);
+    
+    //this.$confirm('此次查询将消耗' + infotype.split(',').length * 10 + '个钻石, 是否继续?', '提示', {
+    //    confirmButtonText: '确定',
+    //    cancelButtonText: '取消',
+    //    type: 'info'
+    //}).then(() => {
+    //    this.open2()
+    //}).catch(() => {
+    //    //this.$message({
+    //    //    type: 'info',
+    //    //    message: '已取消'
+    //    //});
+    //layer.msg("已取消");
+    //});
+    }
+    }
+    })
+
+
+    function gaibian(type) {
+        var scbtu = $(".layui-layer-setwin").find("a").eq(0);
+        if (type == 1) {
+            scbtu = parent.parent.$(".layui-layer-setwin").find("a").eq(0);
+        }
+        scbtu.html("×");
+        scbtu.css("color", "#fff");
+        scbtu.css("font-size", "25px");
+        scbtu.css("margin-top", "-11px");
+        scbtu.css("font-weight", "bold");
+        scbtu.css("background", "url()");
+        scbtu.css("text-decoration", "blink");
+                    
+    }
+
+    function getInquireRecords() {
+
+        myAjax({
+            url: ajax('/credit/CreditInquireTask/GetInquireRecords.json?recordType=1'),
+            type: 'get',
+            //data: data,
+            dataType: 'json',
+            timeout: 999999999, //超时时间设置，单位毫秒
+            beforeSend: function () {
+            },
+            success: function (d) {
+                if (d.flag == 1) {
+                    var html = "";
+                    $.each(d.obj, function () {
+                        html += ' <li data-str=\'' + JSON.stringify(this) + '\' onclick="chooseIdqunabu(this)"><a href="javascript:void(0);"><i>' + this.name + '</i> <span>'+this.createTime+'</span></a></li>   ';
+                    });
+                    $("#quanbu").html(html);
+                }
+            }, error: function (msg) {
+                console.log("程序出错:" + msg.responseText);
+            }
+        });
+    }
+
+    
+    var authorizationindex = 0;
+    function authorization() {
+        var h = $(window).height() * 0.8;
+        //document.body.clientHeight * 0.8;
+        var w = document.body.clientWidth * 0.8;
+        authorizationindex = layer.open({
+            type: 2,
+            area: [w + 'px', '540px'],
+            title: '授权协议',
+            shade: 0.6, //遮罩透明度, 
+            anim: 6,//0-6的动画形式，-1不开启 
+            content: '/addedcoin/agreement.html?type=putongshuju' 
+        });
+        gaibian(0);
+    }
+    function gauthorization() {
+        $("#open").prop("checked", false);
+        layer.close(authorizationindex);
+    }
+    function tauthorization() {
+        $("#open").prop("checked", true);
+        layer.close(authorizationindex);
+    }
+
+
+    function chooseIdqunabu(e) {
+        var obj = JSON.parse($(e).attr("data-str"));
+        $("input[name='name']").val(obj.name);
+        $("input[name='idCard']").val(obj.idCard);
+        $("input[name='mobile']").val(obj.mobile);
+
+
+        $("#quanbu").hide();
+
+
+    }
+    function getkeyname(k) {
+        var str = "";
+
+        switch (k) {
+
+            //case "responsetext":
+            //    str = "接口调用返回结果提示";
+            //    break;
+            //case "result":
+            //    str = "数据返回结果状态码";
+            //    break;
+            //case "resulttext":
+            //    str = "数据返回结果提示信息";
+            //    break;
+            //case "resid":
+            //    str = "调用第三方接口成功与否标识";
+            //    break;
+            //case "resmsg":
+            //    str = "调用第三方接口成功或者失败的详细信息";
+            //    break;
+
+            case "bankno":
+                str = "银行卡号";
+                break;
+            case "codeStr":
+                str = "验证信息";
+                break;
+            case "idname":
+                str = "姓名";
+                break;
+            case "idnumber":
+                str = "身份证号";
+                break;
+            case "mobile":
+                str = "手机号";
+                break;
+            case "resmsg":
+                str = "提示信息";
+                break;
+            case "idnamemobilecheck":
+                str = "验证的结果";
+                break
+            case "age":
+                str = "年龄";
+                break;
+            case "birthday":
+                str = "出生日期";
+                break;
+            case "college":
+                str = "毕业院校";
+                break;
+            case "degree":
+                str = "学历";
+                break;
+            case "gender":
+                str = "性别";
+                break;
+            case "graduatetime":
+                str = "毕业时间";
+                break;
+            case "idname":
+                str = "身份证姓名";
+                break;
+            case "idnumber":
+                str = "身份证号";
+                break;
+            case "photo":
+                str = "照片(base64编码)";
+                break;
+
+            case "schoolname":
+                str = "学校名称";
+                break;
+            case "specialty":
+                str = "专业类别";
+                break;
+            case "specialtyname":
+                str = "专业名称";
+                break;
+            case "starttime":
+                str = "入学时间";
+                break;
+            case "studylevel":
+                str = "学历等级";
+                break;
+            case "studyresult":
+                str = "是否毕业";
+                break;
+            case "studystyle":
+                str = "学习形式";
+                break;
+            case "studytype":
+                str = "学习性质";
+                break;
+
+            case "mobile":
+                str = "手机号";
+                break;
+
+            case "ctime":
+                str = "查询接口的时间";
+                break;
+            case "statusmsg":
+                str = "说明";
+                break;
+            case "intime":
+                str = "在网时段";
+                break;
+            case "areacode":
+                str = "手机号码归属地区";
+                break
+            case "city":
+                str = "所在的城市";
+                break
+            case "district":
+                str = "所在的区域";
+                break
+            case "lat":
+                str = "纬度值";
+                break
+            case "lng":
+                str = "经度值";
+                break
+            case "location":
+                str = "地理位置信息";
+                break;
+            case "province":
+                str = "所在的省";
+                break;
+            case "street":
+                str = "地理位置所在的街道";
+                break;
+            case "roamcity":
+                str = "手机号码所在的漫游地区";
+                break;
+            case "caseNo":
+                str = "案号";
+                break;
+            case "executed":
+                str = "已履行";
+                break;
+            case "executiveArm":
+                str = "做出执行依据单位";
+                break;
+            case "executiveBaiscNo":
+                str = "执行依据文号";
+                break;
+            case "executiveCase":
+                str = "被执行人的履行情况";
+                break;
+            case "executiveCourt":
+                str = "执行法院";
+                break;
+            case "filingTime":
+                str = "立案时间";
+                break;
+            case "identityNo":
+                str = "身份证号码";
+                break;
+            case "legalObligation":
+                str = "生效法律文书确定的义务";
+                break;
+            case "name":
+                str = "被执行人姓名";
+                break;
+            case "no":
+                str = "序号";
+                break;
+            case "province":
+                str = "省份";
+                break;
+            case "releaseTime":
+                str = "发布时间";
+                break;
+            case "sex":
+                str = "性别";
+                break;
+            case "specificSituation":
+                str = "具体情形";
+                break;
+            case "unExecuted":
+                str = "未履行";
+                break;
+        }
+        return str;
+
+    }
+
+    function shixindata(data) {
+        var table = [];
+
+        $.each(data, function () {
+            var thead = [];
+            var tbody = [];
+            var tdata = this;
+            for (k in tdata) {
+                var key = getkeyname(k);
+                if (key != "") {
+                    thead.push(key);
+                    tbody.push(tdata[k]);
+                }
+            }
+            var c = {};
+            c.thead = thead;
+            c.tbody = tbody;
+            table.push(c);
+        });
+        return table;
+    }
+
+    function getdatetelschoo(data) {
+        var table = [];
+        var thead = [];
+        var tbody = [];
+        thead.push("身份证姓名");
+        thead.push("身份证号");
+        thead.push("性别");
+        thead.push("年龄");
+        thead.push("出生日期");
+        thead.push("毕业院校");
+        thead.push("学历");
+        thead.push("毕业时间");
+        tbody.push(data.idname);
+        tbody.push(data.idnumber);
+        tbody.push(data.gender);
+        tbody.push(data.age);
+        tbody.push(data.birthday);
+        tbody.push(data.college);
+        tbody.push(data.degree);
+        tbody.push(data.graduatetime);
+        var c = {};
+        c.thead = thead;
+        c.tbody = tbody;
+        table.push(c);
+
+        thead = [];
+        tbody = [];
+
+
+        tbody.push(data.schoolname);
+        tbody.push(data.specialty);
+        tbody.push(data.specialtyname);
+        tbody.push(data.starttime);
+        tbody.push(data.studylevel);
+        tbody.push(data.studyresult);
+        tbody.push(data.studystyle);
+        tbody.push(data.studytype);
+        thead.push("学校名称");
+        thead.push("专业类别");
+        thead.push("专业名称");
+        thead.push("入学时间");
+        thead.push("学历等级");
+        thead.push("是否毕业");
+        thead.push("学习形式");
+        thead.push("学习性质");
+
+        var c = {};
+        c.thead = thead;
+        c.tbody = tbody;
+        table.push(c);
+
+        return table;
+    }
+
+    function getdatetel(data) {
+        var table = [];
+        var thead = [];
+        var tbody = [];
+
+        for (var k in data) {
+            var key = getkeyname(k);
+            if (key != "") {
+
+                thead.push(key);
+                tbody.push(data[k]);
+            }
+        }
+
+
+        var c = {};
+        c.thead = thead;
+        c.tbody = tbody;
+        table.push(c);
+
+        return table;
+    }
+
+
+    function IDCardCheck(num) {
+        num = num.toUpperCase();
+        //身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。   
+        if (!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(num))) {
+            return '输入的身份证号长度不对，或者号码不符合规定！\n15位号码应全为数字，18位号码末位可以为数字或X。';
+
+            // alert('输入的身份证号长度不对，或者号码不符合规定！\n15位号码应全为数字，18位号码末位可以为数字或X。');
+            return false;
+        }
+        //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。 
+        //下面分别分析出生日期和校验位 
+        var len, re;
+        len = num.length;
+        if (len == 15) {
+            re = new RegExp(/^(\d{6})(\d{2})(\d{2})(\d{2})(\d{3})$/);
+            var arrSplit = num.match(re);
+
+            //检查生日日期是否正确 
+            var dtmBirth = new Date('19' + arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
+            var bGoodDay;
+            bGoodDay = (dtmBirth.getYear() == Number(arrSplit[2])) && ((dtmBirth.getMonth() + 1) == Number(arrSplit[3])) &&
+                (dtmBirth.getDate() == Number(arrSplit[4]));
+            if (!bGoodDay) {
+                return '输入的身份证号里出生日期不对！';
+
+            } else {
+                //将15位身份证转成18位 
+                //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。 
+                var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+                var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+                var nTemp = 0,
+                    i;
+                num = num.substr(0, 6) + '19' + num.substr(6, num.length - 6);
+                for (i = 0; i < 17; i++) {
+                    nTemp += num.substr(i, 1) * arrInt[i];
+                }
+                num += arrCh[nTemp % 11];
+                return true;
+            }
+        }
+        if (len == 18) {
+            re = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/);
+            var arrSplit = num.match(re);
+
+            //检查生日日期是否正确 
+            var dtmBirth = new Date(arrSplit[2] + "/" + arrSplit[3] + "/" + arrSplit[4]);
+            var bGoodDay;
+            bGoodDay = (dtmBirth.getFullYear() == Number(arrSplit[2])) && ((dtmBirth.getMonth() + 1) == Number(arrSplit[
+                3])) && (dtmBirth.getDate() == Number(arrSplit[4]));
+            if (!bGoodDay) {
+
+                //    alert(dtmBirth.getYear());
+                // alert(arrSplit[2]);
+
+                return '输入的身份证号里出生日期不对！';
+                // return false;
+            } else {
+                //检验18位身份证的校验码是否正确。 
+                //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。 
+                var valnum;
+                var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+                var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+                var nTemp = 0,
+                    i;
+                for (i = 0; i < 17; i++) {
+                    nTemp += num.substr(i, 1) * arrInt[i];
+                }
+                valnum = arrCh[nTemp % 11];
+                if (valnum != num.substr(17, 1)) {
+                    return '18位身份证的校验码不正确！'; //应该为： + valnum
+                    //      return false;
+                }
+                return "正确";
+            }
+        }
+        return "格式不对！";
+    }
+    function luhmCheck(bankno){
+        if (bankno.length < 16 || bankno.length > 19) {
+            //$("#banknoInfo").html("银行卡号长度必须在16到19之间");
+            return false;
+        }
+        var num = /^\d*$/;  //全数字
+        if (!num.exec(bankno)) {
+            //$("#banknoInfo").html("银行卡号必须全为数字");
+            return false;
+        }
+        //开头6位
+        var strBin="10,18,30,35,37,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,60,62,65,68,69,84,87,88,94,95,98,99";    
+        if (strBin.indexOf(bankno.substring(0, 2))== -1) {
+            //$("#banknoInfo").html("银行卡号开头6位不符合规范");
+            return false;
+        }
+        var lastNum=bankno.substr(bankno.length-1,1);//取出最后一位（与luhm进行比较）
+
+
+        var first15Num=bankno.substr(0,bankno.length-1);//前15或18位
+        var newArr=new Array();
+        for(var i=first15Num.length-1;i>-1;i--){    //前15或18位倒序存进数组
+            newArr.push(first15Num.substr(i,1));
+        }
+        var arrJiShu=new Array();  //奇数位*2的积 <9
+        var arrJiShu2=new Array(); //奇数位*2的积 >9
+    
+        var arrOuShu=new Array();  //偶数位数组
+        for(var j=0;j<newArr.length;j++){
+            if((j+1)%2==1){//奇数位
+                if(parseInt(newArr[j])*2<9)
+                    arrJiShu.push(parseInt(newArr[j])*2);
+                else
+                    arrJiShu2.push(parseInt(newArr[j])*2);
+            }
+            else //偶数位
+                arrOuShu.push(newArr[j]);
+        }
+    
+        var jishu_child1=new Array();//奇数位*2 >9 的分割之后的数组个位数
+        var jishu_child2=new Array();//奇数位*2 >9 的分割之后的数组十位数
+        for(var h=0;h<arrJiShu2.length;h++){
+            jishu_child1.push(parseInt(arrJiShu2[h])%10);
+            jishu_child2.push(parseInt(arrJiShu2[h])/10);
+        }        
+    
+        var sumJiShu=0; //奇数位*2 < 9 的数组之和
+        var sumOuShu=0; //偶数位数组之和
+        var sumJiShuChild1=0; //奇数位*2 >9 的分割之后的数组个位数之和
+        var sumJiShuChild2=0; //奇数位*2 >9 的分割之后的数组十位数之和
+        var sumTotal=0;
+        for(var m=0;m<arrJiShu.length;m++){
+            sumJiShu=sumJiShu+parseInt(arrJiShu[m]);
+        }
+    
+        for(var n=0;n<arrOuShu.length;n++){
+            sumOuShu=sumOuShu+parseInt(arrOuShu[n]);
+        }
+    
+        for(var p=0;p<jishu_child1.length;p++){
+            sumJiShuChild1=sumJiShuChild1+parseInt(jishu_child1[p]);
+            sumJiShuChild2=sumJiShuChild2+parseInt(jishu_child2[p]);
+        }      
+        //计算总和
+        sumTotal=parseInt(sumJiShu)+parseInt(sumOuShu)+parseInt(sumJiShuChild1)+parseInt(sumJiShuChild2);
+    
+        //计算Luhm值
+        var k= parseInt(sumTotal)%10==0?10:parseInt(sumTotal)%10;        
+        var luhm= 10-k;
+    
+        if(lastNum==luhm){
+    
+            return true;
+        }
+        else{
+   
+            return false;
+        }        
+    }
+ 
+
+</script>
+
+  <script type="text/javascript" language="javascript">
+
+   
+      function printData()
+      {
+          let codestr = document.getElementsByClassName("chartlist");
+          var htmls = ''
+          for (var i = 0; i<codestr.length; i++) {
+              htmls += codestr[i].innerHTML
+          }
+          let openwindow = window.open("_blank"); 
+          openwindow.document.write(htmls); //向文档写入HTML表达式或者JavaScript代码
+          openwindow.document.close(); //关闭document的输出流, 显示选定的数据
+          openwindow.print(); //打印当前窗口
+          return true;
+      
+      }
+      var tableToExcelcc = (function () {
+
+          var uri = 'data:application/vnd.ms-excel;base64,',
+          template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"  ><head><meta  http-equiv="Content-Type" content="text/html; charset=utf-8" ><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body> <table  style="  border-collapse: collapse;" >{table}</table></body></html>',
+
+          base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) },
+            format = function (s, c) {
+                return s.replace(/{(\w+)}/g,
+                function (m, p) { return c[p]; })
+            }
+          return function (table, name) {
+              //  if (!table.nodeType) table = document.getElementById(table);
+              var html ="";
+
+              $.each($(".xtable"),function(i){
+
+                var data_html =  $(".xtable").eq(i).find("tr");
+                for(var c=0;c<data_html.length;c++)
+                {
+                    
+                    if(c==0)
+                    { 
+                        html += "<tr>"
+                        var th_data= data_html.eq(c).find("th");
+                        $.each(th_data,function(h){
+                            html += "<th  style=\" font-family: 微软雅黑;height: 40px;  font-size: 15px; line-height: 40px;background-color: #eef1f6;  text-align: center;   border: 1px solid #ccc;\" >"+ th_data.eq(h).html()+ "</th>";
+                        });
+                        html += "</tr>"
+                    }else{
+                        html += "<tr>"
+                        var th_data= data_html.eq(c).find("td");
+                        $.each(th_data,function(h){
+                            html += "<td  style=\" vnd.ms-excel.numberformat:@ ; font-family: 微软雅黑; height: 40px; font-size: 15px;   line-height: 40px;      background-color: #fff;  text-align: center;   \" >"+ th_data.eq(h).find("span").eq(0).html()+ "</td>";
+                        });
+                        html += "</tr>"
+                    }
+                }
+
+              //    html +=$(".xtable").eq(i).html();
+              });
+
+              var ctx = { worksheet: 'data', table: html }
+              //  window.location.href = uri + base64(format(template, ctx));
+              var urf = uri + base64(format(template, ctx));
+              //  window.location.href = urf;
+              var sc = "";
+              sc += '  <div style="display: none;"> ';
+              sc += '  <a href="" download="myexcel.xls" id="dlfile">';
+              sc += '     <p  >baidu</p>';
+              sc += '  </a>';
+              sc += '</div>';
+              if ($("#dlfile").html() == null || $("#dlfile").html() == "")
+              {
+                  $("body").append(sc);
+              }
+              $("#dlfile").attr("href", urf);
+              $("#dlfile").attr("download",$("#nametxt").val() + getNowFormatDatezz()+".xls");
+              $("#dlfile>p").trigger('click');
+
+          }
+      })()
+
+  
+
+  
+    </script>

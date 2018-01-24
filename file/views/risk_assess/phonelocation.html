@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/assets/gritter/css/jquery.gritter.css" />
+    <script src="/js/jquery.js?v=1.1"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-reset.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/layer/layer.js"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8ebe8b1bf92a362d7e8bc8a75c01be8f&plugin=AMap.Geocoder"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <script src="/js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/addedcoin/phonelocation.js" });
+            GetVersions(arr);
+        });
+    </script>
+
+</head>
+
+<body>
+
+    <style>
+        .munu {
+            float: left;
+            width: 250px;
+            height: 500px;
+            background-color: #eaeefb;
+        }
+
+            .munu .li {
+                width: 100%;
+                text-indent: 10px;
+                padding-top: 12px;
+                padding-bottom: 10px;
+                border-top: 1px solid #ccc;
+                cursor: pointer;
+                color: #48576a;
+            }
+
+                .munu .li:hover {
+                    background-color: #fff;
+                }
+
+            .munu .aaa {
+                background-color: #fff;
+            }
+
+        .main {
+            float: left;
+            padding-left: 20px;
+        }
+
+        .header-box {
+            border: 1px solid #eaeefb;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 15px;
+            margin-bottom: 0px;
+            background-color: #fff;
+        }
+
+        .fa {
+            float: left;
+            padding-top: 2px;
+        }
+
+        .txt_div input {
+            border: 1px solid #bfcbd9;
+            width: 289px;
+            padding: 3px 10px;
+            transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+            height: 36px;
+            border-radius: 4px;
+        }
+
+        .txt_div .button {
+            width: 177px;
+            border: 1px solid #3070f3;
+            background: #3070f3;
+            padding: 7px 0;
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .disabled {
+            background-color: #eef1f6!important;
+            border-color: #d1dbe5!important;
+            color: #bbb!important;
+            cursor: not-allowed !important;
+        }
+
+        body {
+            background-color: #F1F2F7;
+        }
+
+        .dt-title {
+            padding: 15px 0;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+            .dt-title .dt-font {
+                display: inline-block;
+            }
+
+            .dt-title .dios {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                background: #dadada;
+                border-radius: 50%;
+            }
+
+        .layui-layer-title {
+            background-color: #165082 !important;
+            color: #fff !important;
+        }
+
+        #jiesao_div p {
+            text-indent: 10px;
+            color: #8c8c8c;
+            font-size: 12px;
+        }
+
+        .tile {
+            font-size: 12px;
+            color: #f00;
+            background-color: rgb(234, 249, 255);
+            border: 1px solid rgb(177, 196, 234);
+            /*position: absolute;*/
+            /*top: 135px;*/
+            /*width: 49.5%;*/
+            /*left: 14.8%;*/
+            /*margin-top: 5px;*/
+            padding: 5px 13px 0px 10px;
+
+            display:none;
+        }
+            .tile p {
+                margin: 0 0 5px;
+            }
+    </style>
+    <div style="width: 80%; float: left;">
+
+
+        <div class="header-box">
+            <div style="clear: both; overflow: hidden;">
+                <div class="munu" style="display: none;">
+                    <div class="li aaa">
+                        <i class="fa fa-user"></i>查询手机号实时定位数据
+                    </div>
+                    <div class="li">
+                        <i class="fa fa-user"></i>查询手机号授权定位状态
+                    </div>
+                    <div class="li">
+                        <i class="fa fa-user"></i>开通手机号授权定位
+                    </div>
+                    <div class="li" style="border-bottom: 1px solid #ccc;">
+                        <i class="fa fa-user"></i>关闭手机号授权定位
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="txt_div" style="margin-top: 13px; margin-bottom: 13px; margin-left: 20%;">
+                        <input id="phonetxt" type="text" placeholder="请输入手机号码" style="width: 50%; height: 40px; margin-right: 10px;" />
+
+                        <input type="button" id="btnsearch" value="定位" style="width: 100px;" class="button" onclick="gettyboot()" />
+                        <!--        background-color: #ccc; border: #ccc; cursor: not-allowed  disabled="disabled" ;-->
+                    </div>
+                    <div class="txt_div" style="margin-top: 13px; margin-bottom: -13px; margin-left: 20%; overflow: hidden;">
+                        <span style="float: left; margin-top: 8px">消耗：</span>
+                        <!--     <img src="/img/coin.png" style="float: left; margin-top: 5px" />
+                        <span style="font-size: 18px; color: #f00; margin-top:6px; float: left; margin-left: 3px;">×</span>
+                        <span style="color: #f00; float: left; margin-top: 6px; font-size: 18px;">
+                            <span id="mocot">4</span>/次</span>-->
+                        <span style="color: #f00; float: left; margin-top: 6px; font-size: 18px;">
+                            <span id="mocot">6</span></span><img src="/img/coin.png" style="float: left; width: 21px; margin-top: 7px; margin-left: 2px;" />
+                        <span style="float: left; margin-top: 7px; margin-left: 2px; color: #f00; letter-spacing: 2px; font-size: 17px;">/次</span>
+
+
+                        <span style="float: left; margin-top: 8px; margin-left: 15px;">剩余钻石：</span>
+                        <img src="/img/coinp.png" style="float: left; margin-top: 2px; width: 34px; margin-left: 0px;" />
+                        <span id="incrementMoney" style="float: left; color: #f00; margin-top: 8px; margin-left: 9px; font-size: 18px;">-</span>
+
+                    </div>
+                    <div style="margin-top: 15px; display: none;">
+                        <p>返回结果：</p>
+                        <div id="ResultDiv" style="height: 30px;">
+                        </div>
+                    </div>
+                    <div id="mapdiv" style="overflow: hidden; width: 100%; height: 420px; margin-top: 20px;">
+                        <div id="container" style="position: initial;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width: 20%; float: left;">
+        <div class="header-box" style="clear: both; margin-left: 0px; min-height: 400px;">
+
+            <div class="dt-title">
+                <div class="dios"></div>
+                <div class="dt-font">使用步骤</div>
+            </div>
+            <div id="jiesao_div">
+
+                <p>1.填写被查询人手机号   </p>
+                <p>2.系统下发<span style="color: #f00;">授权短信</span></p>
+                <p>3.被查询人<span style="color: #f00;">同意授权</span></p>
+                <p>（2，3步仅首次需要）    </p>
+                <p>4.定位手机位置       </p>
+                <div class="dt-title">
+                    <div class="dios"></div>
+                    <div class="dt-font">注意事项</div>
+                </div>
+                <p>1.查询前请先确保已获得被查询者<span style="color: #f00;">本人授权</span>，不得使用非法途径获取的信息来使用本功能！！</p>
+                <p>2.此功能仅限于向 <span style="color: #f00;">物流</span> 及<span style="color: #f00;">物流相关的客户</span>提供行业白名单(移动、联通、电信手机号码可实现授权位置服务称之为白名单)的同步授权位置业务。</p>
+                <p>3.首次定位，由于运营商同步数据原因，<span style="color: #f00;">需5～20分钟</span>。后续定位不再需要授权，<span style="color: #f00;">5秒</span>内即能定位。</p>
+                <p>4.手机在<span style="color: #f00;">关机或飞行模式</span>下不能定位。</p>
+                <p>5.<span style="color: #f00;">联通4g卡</span>在开启4g时不能定位，您<span style="color: #f00;">先拨打手机号</span>，在等待接通时或接通后使用本功能（联通卡在等待接通或接通后会从4g降为3g模式）。</p>
+                <p>6.移动，联通卡不能主动撤除定位授权，但<span style="color: #f00;">电信卡</span>可以通过<span style="color: #f00;">短信撤除</span>定位授权。</p>
+                <p style="margin-top: 20px;"><span style="float: left; margin-right: -5px;">7.</span><span style="color: #f00;"><span style="float: left;">统一售价：1</span><img src="/img/coin.png" style="float: left; width: 14px; margin-top: 0px; margin-left: 2px; margin-right: -9px;" />= 1元</span></p>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="tile" id="tile_div">
+        <p>
+            由于近期收到多起未经本人授权对移动号码使用“手机定位”功能的投诉，特此郑重声明：
+        </p>
+        <p style="text-indent: 20px;">
+            请您在获得正规合法的授权后使用本功能。未经被定位号码持有者本人授权不得使用此功能，如未经授权使用此功能，平台将永久性下线您的“手机定位”服务，所造成的损失或法律责任，将由您承担。
+         同时，平台每月将委托提供方向持有移动通讯卡的被定位人发送统计当月定位次数的短信。
+        </p>
+    </div>
+
+  
+</body>
+</html>

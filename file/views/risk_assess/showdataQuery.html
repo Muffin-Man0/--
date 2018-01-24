@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>数据查询</title>
+
+
+    <script src="/js/jquery.js?v=1.1"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-reset.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/layer/layer.js"></script>
+    <script src="/assets/jqprint/jquery-1.4.4.min.js"></script>
+    <script src="/assets/jqprint/jquery.jqprint-0.3.js"></script>
+    <script src="/js/addedcoin/jquery.table2excel.min.js"></script>
+    <script src="/js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/addedcoin/showdataQuery.js" });
+            GetVersions(arr);
+        });
+    </script>
+    <style>
+        .txt {
+            clear: both;
+            text-align: center;
+            color: #48576a;
+        }
+
+        .txt_name {
+            float: left;
+            width: 121px;
+            text-align: right;
+            padding: 7px;
+            height: 66px;
+        }
+
+        .txt_div {
+            float: left;
+            height: 40px;
+        }
+
+        .tile {
+            float: left;
+            color: #f00;
+        }
+
+        .txt_div input {
+            border: 1px solid #bfcbd9;
+            width: 289px;
+            padding: 3px 10px;
+            transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+            height: 36px;
+            border-radius: 4px;
+        }
+
+        .button {
+            border: 1px solid #3070f3;
+            background: #3070f3;
+            padding: 7px 0;
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+            position: fixed;
+            top: 33px;
+            right: 28px;
+            width: 100px;
+        }
+
+
+        .header-box {
+            border: 1px solid #eaeefb;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 15px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .pu {
+            display: none;
+        }
+
+        .xtable {
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+            .xtable tr th {
+                height: 40px;
+                font-size: 15px;
+                line-height: 40px;
+                background-color: #eef1f6;
+                text-align: center;
+                border: 1px solid #ccc;
+            }
+
+            .xtable tr td {
+                height: 40px;
+                font-size: 15px;
+                line-height: 40px;
+                background-color: #fff;
+                text-align: center;
+                border: 1px solid #ccc;
+            }
+
+        .dt-title {
+            padding: 15px 0;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+            .dt-title .dt-font {
+                display: inline-block;
+            }
+
+            .dt-title .dios {
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                background: #dadada;
+                border-radius: 50%;
+            }
+
+        .disabled {
+            background-color: #eef1f6!important;
+            border-color: #d1dbe5!important;
+            color: #bbb!important;
+            cursor: not-allowed !important;
+        }
+
+        .check_result {
+            height: 28px;
+            line-height: 24px;
+            margin-top: 7px;
+        }
+
+        body {
+            background-color: #F1F2F7;
+        }
+
+        a {
+            color: #0664f7;
+        }
+
+            a:hover {
+                color: #f00;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="header-box" style="clear: both;">
+        <div style="margin-top: 10px; width: 100%; font-size: 20px;">
+            <div id="tilediv" style="text-align: center;">
+                查询结果
+            </div>
+            <div>
+                <input type="button" id="print_data" value="打印" class="button" onclick="print_data()" style="right: 133px;" />
+                <input type="button" id="method" value="导出" class="button" onclick="daochu()" />
+            </div>
+        </div>
+        <div id="maindiv_hhh">
+        </div>
+        <div id="maindiv_hhh22" style="display: none;">
+        </div>
+
+        <div id="maindiv_hhh3333" style="display: none;">
+        </div>
+    </div>
+    <input type="hidden" id="nametxt" />
+
+
+
+</body>
+</html>

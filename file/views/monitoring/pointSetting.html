@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--<link href="css/navbar-fixed-top.css" rel="stylesheet">-->
+
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+    <style type="text/css">
+        .amap-logo {
+            display: none;
+        }
+
+        .amap-copyright {
+            display: none;
+        }
+
+        /*!
+ * Css Document
+ * 
+ * @author	zongxian.chen at 2012/04/16 build.
+ * @version $Id$
+ */
+
+
+        /************************* Just Reset Browser Default CSS : BEGIN ***************************/
+        html {
+            background-color: #fff;
+        }
+
+        body, div, h1, h2, h3, h4, ul, li, form, input, dl, dt, dd, p {
+            margin: 0;
+            padding: 0;
+            /*font-family:微软雅黑;*/
+        }
+
+        h3 {
+            +font-size:14px;
+            _font-size: 14px;
+        }
+
+        img {
+            border: none;
+        }
+
+        .c {
+            clear: both;
+        }
+
+        ul, ol, li {
+            list-style: none;
+        }
+
+        /*清除浮动*/
+        .clearfix:after {
+            content: ".";
+            visibility: hidden;
+            display: block;
+            height: 0;
+            overflow: hidden;
+            clear: both;
+        }
+
+        /* no ie mac \*/
+        * html .clearfix {
+            height: 1%;
+        }
+        /* end */
+        * + html .clearfix {
+            height: 1%;
+        }
+
+        body {
+            /*font: 12px/1.5em 微软雅黑,Arial,Verdana,Helvetica,sans-serif;*/
+            color: #333;
+        }
+
+        button, input, select, textarea {
+            color: #999;
+        }
+
+            input[type="button"] {
+                padding: 0 5px;
+                color: white;
+            }
+
+        .demo_box {
+            width: 760px;
+        }
+        /* map style */
+        #iCenter {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #F6F6F6;
+        }
+
+        #r_title {
+            line-height: 28px;
+            padding-left: 5px;
+            background-color: #D1EEEE;
+            font-weight: bold;
+        }
+
+        #result {
+            overflow: auto;
+            margin-bottom: 5px;
+            /*	width:661px;*/
+            height: 255px;
+        }
+            /*  结果项 */
+            #result .sub_result {
+                font-size: 12px;
+                cursor: pointer;
+                line-height: 20px;
+                /*padding:0px 0 4px 2px;*/
+                border-bottom: 1px solid #C1FFC1;
+            }
+
+                #result .sub_result .detail {
+                }
+
+                    #result .sub_result .detail h3 {
+                        color: #00A6AC;
+                    }
+
+        a {
+            color: #067EC0;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: none;
+            }
+
+        .note {
+            color: #999;
+        }
+
+        /*** layerout stylesheet ***/
+        /* 修改背景URL */
+        div.change {
+            background-image: url(http://pages.haozu.ajkcdn.com/20110909/img/map/marker-h.png);
+        }
+
+            div.change div {
+                background-image: url(http://pages.haozu.ajkcdn.com/20110909/img/map/marker-h-l.gif);
+            }
+
+        /*** copied from demo #39 添加自定义点覆盖物 ***/
+        /* 定义自定义点样式 */
+        .markerContentStyle {
+            position: relative;
+        }
+
+            .markerContentStyle span {
+                background-color: #FFFFFF;
+                color: #FF1493;
+                width: 120px;
+                heigth: 80px;
+                border: 2px solid #D8BFD8;
+                FONT-FAMILY: 华文行楷;
+                position: absolute;
+                top: -10px;
+                left: 25px;
+                white-space: nowrap -webkit-border-radius:5px;
+                border-radius: 5px;
+            }
+
+        /*** copied from demo #43 添加自定义信息窗体 ***/
+        /* 定义自定义信息窗体样式 */
+        div.info {
+            position: relative;
+            z-index: 100;
+            border: 1px solid #BCBCBC;
+            box-shadow: 0 0 10px #B7B6B6;
+            border-radius: 8px;
+            background-color: rgba(255,255,255,0.9);
+            transition-duration: 0.25s;
+        }
+
+            div.info:hover {
+                box-shadow: 0px 0px 15px #0CF;
+            }
+
+        div.info-top {
+            position: relative;
+            background: none repeat scroll 0 0 #F9F9F9;
+            border-bottom: 1px solid #CCC;
+            border-radius: 5px 5px 0 0;
+        }
+
+            div.info-top div {
+                display: inline-block;
+                color: #333333;
+                font-size: 14px;
+                font-weight: bold;
+                line-height: 31px;
+                padding: 0 10px;
+            }
+
+            div.info-top img {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                transition-duration: 0.25s;
+            }
+
+                div.info-top img:hover {
+                    box-shadow: 0px 0px 5px #000;
+                }
+
+        div.info-middle {
+            font-size: 12px;
+            padding: 10px;
+            line-height: 21px;
+        }
+
+        div.info-bottom {
+            height: 0px;
+            width: 100%;
+            clear: both;
+            text-align: center;
+        }
+
+            div.info-bottom img {
+                position: relative;
+                z-index: 104;
+            }
+        /*** -------------------------***/
+
+
+        #panel {
+            position: absolute;
+            background-color: white;
+            max-height: 80%;
+            overflow-y: auto;
+            top: 50px;
+            right: 10px;
+            width: 280px;
+        }
+
+        .closeSearchList {
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            border: 0px;
+            cursor: pointer;
+            background-color: white;
+            color: #7DC1FB;
+        }
+
+            .closeSearchList:hover {
+                background-color: #7DC1FB;
+                color: white;
+            }
+    </style>
+</head>
+<body style="margin: 0px;">
+    <div id="right" style="float: right; height: 100%; width: 40%;">
+        <div id="EditPoi" class="form-horizontal" role="form" style="padding: 15px;">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">位置点名称:</label>
+                <div class="col-sm-8">
+                    <input id="txtAreaName" type="text" class="form-control" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">位置点类型:</label>
+
+                <div class="col-sm-8">
+                    <select id="cbAreaType" class="form-control m-bot15">
+                        <option value="1">写字楼</option>
+                        <option value="2">工厂</option>
+                        <option value="3">停车场</option>
+                        <option value="4">住宅</option>
+                        <option value="5">维修厂</option>
+                        <option value="6">租赁公司</option>
+                        <!--     <option value="">区域超速</option>-->
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-8">
+                    <button id="saveArea" type="button" data-loading-text="Loading" class="btn btn-danger" style="float: right;">保存</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="TPOPdiv"  class="form-horizontal" role="form" style="padding: 15px; display: none;">
+            <div class="form-group">
+                <label style="width:109px;" class="col-sm-4 control-label">位置点名称:</label>
+                <div class="col-sm-8" style="width:206px;" >
+                    <input type="text" class="form-control" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label style="width:109px;" class="col-sm-4 control-label">位置点范围:</label>
+                <div class="col-sm-8" style="width:206px;">
+                    <input type="text" class="form-control" placeholder="" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-8">
+                    <button type="button" data-loading-text="Loading" class="btn btn-danger" style="float: right;">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="beginDraw" type="button" class="btn btn-primary" style="position: absolute; left: 42%; top: 100px; z-index: 9999;"><i class="fa fa-pencil-square-o"></i>点击绘制</button>
+
+    <div style="float: left; height: 100%; width: 60%;">
+        <textarea id="txtHome" class="form-control" style="height: 50px; width: 463px; margin: 10px; resize: none" placeholder="请输入所在地"></textarea>
+        <div id="container" style="width: 60%; margin-top: 70px; height:403px">
+        </div>
+    </div>
+
+
+
+
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8ebe8b1bf92a362d7e8bc8a75c01be8f&plugin=AMap.Autocomplete,AMap.PlaceSearch,AMap.Geocoder,AMap.MouseTool"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+
+
+
+
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+
+
+    <script src="js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript">
+        var map;
+
+
+        var marker;
+        var isClickModel = false;
+        var homeMark;
+        $(document).ready(function () {
+            var ct = getUrlParam("type");
+            if (ct == "TPOP") {
+                $("#TPOPdiv").show();
+                $("#EditPoi").hide();
+            }
+
+
+            var x, y, type = 0;
+            params = getQueryString();
+            for (var i = 0; i < params.length; i++) {
+                $("#" + params[i].name).val(params[i].value);
+                switch (params[i].name) {
+                    case "lat":
+                        y = params[i].value;
+                        break;
+                    case "lng":
+                        x = params[i].value;
+                        break;
+                    case "type":
+                        type = params[i].value;
+                        break;
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+            map = new AMap.Map('container', {
+                resizeEnable: true,
+                zoom: 18
+            });
+
+            map.on('click', function (e) {
+                if (isClickModel == true) {
+                    isClickModel = false;
+                    //e.lnglat.getLng() + ',' + e.lnglat.getLat()
+
+                    var polygons = map.getAllOverlays("point");
+                    map.remove(polygons);
+
+                    marker = new AMap.Marker({
+                        position: e.lnglat,
+                        draggable: true,
+                        cursor: 'move',
+                        raiseOnDrag: true
+                    });
+                    marker.setMap(map);
+                }
+
+            });
+
+            AMap.event.addListener(map, 'complete', function () {
+                $('.amap-toolbar').css('top', '50px');
+                parent.monitorresize();
+            });
+
+
+            $("#beginDraw").click(function () {
+                isClickModel = true;
+            });
+
+
+
+            var currentPoint; var btn;
+            $("#saveArea").click(function () {
+                if ($("#txtAreaName").val() == "") {
+                    parent.showError("位置点名称不能为空！");
+                    return;
+                }
+                if ($("#txtAreaName").val().trim(' ') == "") {
+                    parent.showError("区域名称不合法！");
+                    return;
+                } else {
+                    if ($("#txtAreaName").val().length > 15) {
+                        parent.showError("位置点名称长度不能大于15！");
+                        return;
+                    }
+                }
+
+                var pathType, param, pathName;
+                var selectedList = $("#cbAreaType").find("option:selected");
+                //String	name	信息点名称
+                //int	type	信息点类型
+                //double	lon	经度
+                //double	lat	纬度
+                //int	color	颜色
+
+                var currentPoint = {
+                    name: $("#txtAreaName").val(),
+                    type: selectedList.val(),
+                    lon: marker.getPosition().lng,
+                    lat: marker.getPosition().lat,
+                    color: 0
+                };
+
+
+                btn = $(this).button('loading');
+                var url = ajax('http/SafetyZone/AddPoint.json?');
+
+                myAjax({
+                    type: 'POST',
+                    url: url,
+                    dataType: 'json',
+                    timeout: 10000,                              //请求超时时间
+                    cache: false,                               //是否缓存上一次的请求数据
+                    async: true,                                //是否异步
+                    data: currentPoint,
+                    success: function (data) {
+                        if (data.flag == 1) {
+                            parent.showError("位置点保存成功!");
+                            currentPoint = data.obj;
+                            currentPoint.lon = 0;
+                            currentPoint.lat = 0;
+
+                            var ss = GPS.deltaOut(currentPoint.lat, currentPoint.lon);
+                            currentPoint.lat = ss.lat;
+                            currentPoint.lon = ss.lon;
+                            parent.addNewPoint(currentPoint);
+                            parent.closeWindow();
+                        } else { parent.showError(data.msg); }
+                        btn.button('reset');
+                    },
+                    error: function (data) {
+                        parent.showError("位置点保存失败:" + data.msg);
+                        btn.button('reset');
+                    }
+                });
+
+
+            })
+
+            if (x > 0) {
+                marker = new AMap.Marker({
+                    position: [x, y],
+                    draggable: true,
+                    cursor: 'move',
+                    raiseOnDrag: true
+                });
+                marker.setMap(map);
+
+                map.setCenter([x, y]);
+            }
+            //0新增
+            //1编辑
+            //2绑定
+            //3删除
+            //输入提示
+            var autoHomeOptions = {
+                input: "txtHome"
+            };
+            var autoHome = new AMap.Autocomplete(autoHomeOptions);
+
+
+
+
+            //构造地点查询类
+            AMap.event.addListener(autoHome, "select", selectHome);//注册监听，当选中某条记录时会触发
+            function selectHome(e) {
+                //e.poi.location.lat
+                //e.poi.location.lng
+                if (true) {
+                    if (e.poi.location != undefined & e.poi.location != "") {
+                        var polygons = map.getAllOverlays("point");
+                        map.remove(polygons);
+                        homeMark = {
+                            mark: new AMap.Marker({
+                                position: [e.poi.location.lng, e.poi.location.lat],
+                                draggable: true,
+                                cursor: 'move',
+                                raiseOnDrag: true,
+                                icon: new AMap.Icon({
+                                    size: new AMap.Size(30, 35),  //图标大小
+                                    image: "boyunImg/locationHome.png",
+                                    imageOffset: new AMap.Pixel(0, 0)
+                                }),
+                                map: map
+                            }),
+                            circle: drawCircle(e.poi.location.lng, e.poi.location.lat, 1000, "#41cac0")
+                        }
+
+                        homeMark.mark.on('dragend', function (MapsEvent) {
+                            setTimeout(function () { homeMark.circle.setCenter(homeMark.mark.getPosition()); }, 1000);
+
+                            geocoderHome.getAddress(homeMark.mark.getPosition(), function (status, result) {
+                                if (status === 'complete' && result.info === 'OK') {
+                                    var address = result.regeocode.formattedAddress; //返回地址描述 
+                                    $('#txtHome').val(address);
+                                }
+                            });
+
+                        });
+                        map.remove(homeMark.mark);
+
+                        map.setZoomAndCenter(14, [e.poi.location.lng, e.poi.location.lat]);
+                    } else { layer.msg('地址不够具体，请重新输入！', { icon: 3 }); }
+                } else {
+                    if (e.poi.location != undefined && e.poi.location != "") {
+                        homeMark.mark.setPosition([e.poi.location.lng, e.poi.location.lat]);
+                        homeMark.circle.setCenter([e.poi.location.lng, e.poi.location.lat]);
+                        map.setZoomAndCenter(14, [e.poi.location.lng, e.poi.location.lat]);
+                    } else { layer.msg('地址不够具体，请重新输入！', { icon: 3 }); }
+                }
+
+            }
+
+
+
+        });
+
+
+        function setCurrent(obj) {
+            currentPoint = obj;
+            //$("#labelBindAreaName").text(obj.pathName);
+            //if (obj.pathType == 3 & obj.param == 1) {
+            //    $("#labelBindAreaType").text("禁止驶入区域");
+            //} else if (obj.pathType == 3 & obj.param == 0) {
+            //    $("#labelBindAreaType").text("禁止驶出区域");
+            //}
+        }
+
+
+        function drawCircle(lat, lon, radius, fillColor, strokeColor) {
+
+            marker = new AMap.Marker({
+                position: [lat, lon],
+                draggable: true,
+                cursor: 'move',
+                raiseOnDrag: true
+            });
+            // circle.setMap(map);
+            marker.setMap(map);
+            return marker;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+</body>
+</html>

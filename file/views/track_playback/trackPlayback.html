@@ -1,0 +1,1193 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>轨迹回放</title>
+    <!--默认先用最高ie模式打开-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--有谷歌内核的话优先使用-->
+    <meta name="renderer" content="webkit" />
+    <link rel="shortcut icon" href="track/img/01.ico" type="image/x-icon" />
+
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap-reset.css" rel="stylesheet" />
+    <link href="track/topMenu.css" rel="stylesheet" />
+    <link href="track/menu/css/base.css" rel="stylesheet" />
+    <link href="track/menu/css/style.css" rel="stylesheet" />
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+
+    <script src="js/jquery-migrate-1.1.1.js"></script>
+    <script src="assets/autocomplete/jquery.autocomplete.js"></script>
+    <link href="assets/autocomplete/jquery.autocomplete.css" rel="stylesheet" />
+
+    <!--<link href="assets/asyncbox/skins/ZCMS/asyncbox.css" rel="stylesheet" />
+    <script src="assets/asyncbox/AsyncBox.v1.4.js"></script>-->
+
+
+    <link href="css/MessageBox.css" rel="stylesheet" />
+    <script src="js/MessageBox.js"></script>
+
+    <!--    <link href="track/artDialog/skins/idialog.css" rel="stylesheet" />
+    <script src="track/artDialog/artDialog.js"></script>
+    <script src="track/artDialog/plugins/iframeTools.js"></script>-->
+
+    <link href="track/timepicker/jquery.datetimepicker.css" rel="stylesheet" />
+    <script src="track/timepicker/jquery.datetimepicker.js"></script>
+
+    <script type="text/javascript" src="js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="js/defaults-zh_CN.js"></script>
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+
+
+    <link rel="stylesheet" href="assets/zTree/css/metroStyle/metroStyle.css" type="text/css">
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8ebe8b1bf92a362d7e8bc8a75c01be8f&plugin=AMap.Geocoder"></script>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+    <!--<script type="text/javascript" src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap-datetimepicker/css/datetimepicker.css" />-->
+
+    <script src="js/browser.js"></script>
+    <script src="js/Common.js"></script>
+    <script src="track/TrajectoryAMap.js"></script>
+    <script src="track/Trajectory.js"></script>
+
+    <script src="track/Rating.js"></script>
+    <script src="track/rotate.js"></script>
+    <script src="track/calculateDays.js"></script>
+    <script src="track/gpsGetDataList.js"></script>
+    <script src="track/placeholder.js"></script>
+    <script src="track/move.js"></script>
+    <script type="text/javascript" src="js/jquery.table2excel.js"></script>
+    <style type="text/css">
+        body {
+            font-size: 14px;
+            background-color: #F7F7F7;
+            overflow: auto;
+            color: #333333;
+            margin: 0px;
+            -moz-user-select: none; /*火狐*/
+            -webkit-user-select: none; /*webkit浏览器*/
+            -ms-user-select: none; /*IE10*/
+            -khtml-user-select: none; /*早期浏览器*/
+            user-select: none;
+            overflow: hidden;
+        }
+
+        i {
+            font-style: normal;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333333;
+        }
+
+        .amap-logo {
+            display: none;
+        }
+
+        .amap-copyright {
+            display: none;
+        }
+
+        .amap-overviewcontrol {
+            display: none;
+        }
+
+
+
+        table.dataTable tbody tr {
+            cursor: pointer;
+        }
+
+        .amap-info-content {
+            margin: 2px;
+            line-height: 1.1;
+        }
+
+        .amap-maptypecontrol {
+            /*right: 1350px;*/
+            left: 80px;
+            right: inherit;
+        }
+        /*.amap-info-content tr {
+            height:15px;
+            }*/
+
+        #tools div div div:hover {
+            color: #8EB9E9;
+            cursor: pointer;
+        }
+
+        #controlPanel div img:hover {
+            cursor: pointer;
+        }
+
+        .btnOne {
+            float: left;
+            height: 20px;
+            cursor: pointer;
+            margin: 2px 8px 2px 2px;
+            width: 90px;
+            text-align: center;
+            background-color: #3896DD;
+            color: White;
+            border: 1px solid #0074CC;
+        }
+
+            .btnOne:active {
+                float: left;
+                height: 20px;
+                cursor: pointer;
+                margin: 2px 8px 2px 2px;
+                width: 90px;
+                text-align: center;
+                background-color: #6BA6D3;
+                color: White;
+                border: 1px solid #3E7197;
+            }
+
+        .tb table {
+            border-collapse: collapse;
+        }
+
+            .tb table td {
+                background: transparent;
+                border: 0;
+                margin: 0;
+                padding: 0;
+                vertical-align: baseline;
+            }
+
+        .CustomMapP_div {
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            width: 60px;
+        }
+
+        .CustomMap_div {
+            position: absolute;
+            border: solid 1px #ccc;
+            right: 0px;
+            background: #fff;
+            overflow: hidden;
+            width: 60px;
+            height: 20px;
+            z-index: 101;
+            cursor: pointer;
+        }
+
+        .CustomMap_check {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-left: 2px;
+            background: url('track/img/maptype-bg.png') no-repeat -30px 4px;
+        }
+
+        .CustomMap_content {
+            /*width: 80px;*/
+            height: 15px;
+            color: #333;
+            font-size: 12px;
+            line-height: 15px;
+            margin-left: 5px;
+        }
+
+        /*隐藏导出按钮*/
+        .fixed-table-toolbar {
+            width: 50px;
+            float: right;
+            display: none;
+        }
+
+        .fixed-table-container .bs-checkbox .th-inner {
+            padding: 2px 0;
+        }
+
+        .fixed-table-container thead th .th-inner, .fixed-table-container tbody td .th-inner {
+            padding: 2px;
+        }
+
+        .bootstrap-table .table:not(.table-condensed), .bootstrap-table .table:not(.table-condensed) > tbody > tr > th, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th, .bootstrap-table .table:not(.table-condensed) > thead > tr > td, .bootstrap-table .table:not(.table-condensed) > tbody > tr > td, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td {
+            padding: 2px;
+        }
+
+        .fixed-table-body, .fixed-table-header {
+            background-color: #FFF;
+        }
+
+
+        .fixed-table-pagination div.pagination, .fixed-table-pagination .pagination-detail {
+            margin: 5px;
+        }
+
+        #searchTable li, #searchTable a {
+            height: 25px;
+        }
+
+            #searchTable li a {
+                height: 25px;
+            }
+
+                #searchTable li a strong {
+                    font-size: 14px;
+                }
+
+        .typeahead {
+            z-index: 1000;
+        }
+
+        .ztree li .ck_cl {
+            border: 1px #b4b2b2 solid;
+            padding: 2px;
+            position: relative;
+            right: 5px;
+            border-radius: 3px;
+            color: #9f9f9f;
+            height: 20px;
+            width: 30px;
+            font-size: 8px;
+            display: none;
+        }
+
+        #TreeDiv {
+            z-index: 999;
+            position: fixed;
+            top: 35px;
+            right: 15px;
+            width: 550px;
+            height: 400px;
+        }
+
+        .RpZtree {
+            width: 270px;
+            height: 388px;
+            overflow-y: auto;
+            float: left;
+        }
+
+
+        .dropdown-menu1 {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1000;
+            display: none;
+            float: right;
+            min-width: 160px;
+            padding: 5px 0;
+            margin: 2px 0 0;
+            font-size: 14px;
+            text-align: left;
+            list-style: none;
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            border: 1px solid #ccc;
+            border: 1px solid rgba(0, 0, 0, .15);
+            border-radius: 4px;
+            -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+        }
+    </style>
+
+
+
+    <script type="text/javascript">
+        var plateText = "";//记录刷新前车辆文本信息，刷新后恢复
+        var flag = -1;
+        var historyTableShow = true;
+        var currentId = 0;
+        $(function () {
+            parent.$("#mainframe2").show();
+            if (window.Browser.name == "msie" && window.Browser.version == "8.0") {
+                $("#inputSearch").height(20);
+                $("#inputSearch").css("margin-top", "5px");
+                $("#inputSearch").css("padding-top", "3px");
+                $("#inputSearch").css("line-height", "18px");
+            }
+            $("#helpTPOP").hover(function (e) {
+                $("#helpTPOP_div").css("top", e.clientY);
+                $("#helpTPOP_div").css("left", e.clientX - 350);
+                $("#helpTPOP_div").show();
+            }, function () {
+                $("#helpTPOP_div").hide();
+            });
+
+            var strlst = ("KM-01,KM-02,GT02D,A5E-3").split(',');
+            var shebei = "";
+            $.each(strlst, function () {
+                if (shebei != "") {
+                    shebei += ",";
+                }
+                shebei += getTypeAllocationStr(this);
+            });
+            $("#pinfoMile_shebei").html("（注：针对于设备" + shebei.replace("\n", "") + "）");
+
+
+            // 数组indexOf函数处理
+            if (!Array.prototype.indexOf) {
+                Array.prototype.indexOf = function (elt /*, from*/) {
+                    var len = this.length >>> 0;
+                    var from = Number(arguments[1]) || 0;
+                    from = (from < 0)
+                         ? Math.ceil(from)
+                         : Math.floor(from);
+                    if (from < 0)
+                        from += len;
+                    for (; from < len; from++) {
+                        if (from in this &&
+                            this[from] === elt)
+                            return from;
+                    }
+                    return -1;
+                };
+            }
+
+            initPage();
+            $(".amap-copyright").removeAttr("style");
+            $('#txtStartDate').datetimepicker({
+                lang: 'ch',
+                timepicker: false,
+                format: 'Y-m-d',
+                formatDate: 'Y-m-d',
+                datepicker: true,
+                autoclose: true
+            });
+            $('#txtStartTime').datetimepicker({
+                lang: 'ch',
+                timepicker: true,
+                format: 'H:i',
+                formatDate: 'H:i',
+                datepicker: false
+            });
+
+            $('#txtEndDate').datetimepicker({
+                lang: 'ch',
+                timepicker: false,
+                format: 'Y-m-d',
+                formatDate: 'Y-m-d',
+                datepicker: true
+            });
+            $('#txtEndTime').datetimepicker({
+                lang: 'ch',
+                timepicker: true,
+                format: 'H:i',
+                formatDate: 'H:i',
+                datepicker: false
+            });
+
+            if (getUrlParam("plate") != "") {
+                $("#chooseId").val(getUrlParam("plate"));
+                flag = 1;
+            }
+
+            if (getUrlParam("vehId") != "") {
+                currentId = (getUrlParam("vehId"));
+            }
+
+
+
+
+
+
+            $('#chooseId').typeahead({
+                minLength: 2,
+                items: 10,
+                width: "240px",
+                offsetX: -85,
+                source: function (query, process) {
+                    $('#chooseId').addClass('spinner');
+
+                    return myAjax({
+                        url: ajax('http/Monitor/SearchBindingOfVehicles.json?plate=' + query + ''),
+                        type: 'get',
+                        dataType: 'json',
+                        timeout: 30000,                              //超时时间
+                        beforeSend: function () {
+                            //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 });
+                        },
+                        success: function (result) {
+                            flag = -1
+                            // 这里省略resultList的处理过程，处理后resultList是一个字符串列表，
+                            // 经过process函数处理后成为能被typeahead支持的字符串数组，作为搜索的源
+                            //showError("模糊搜索数据返回:" + result.obj.length + "");
+                            //layer.msg("模糊搜索数据返回:" + result.obj.length + "");
+                            $('#chooseId').removeClass('spinner');
+                            return process(result.obj);
+                        }, error: function (msg) {
+                            //layer.msg("模糊搜索失败:" + msg.responseText);
+                            $('#chooseId').removeClass('spinner');
+                        }
+
+                    });
+                },
+                updater: function (item) {
+                    var obj = JSON.parse(item);
+                    //$('#txtVehicle').val(obj.plate);
+                    flag = 1;
+                    currentId = obj.vehicleId;
+                    $('#chooseId').attr("data-name", obj.plate)
+                    return $.trim(obj.plate);
+                }, matcher: function (obj) {
+                    return ~obj.plate.toLowerCase().indexOf(this.query.toLowerCase())
+                },
+                sorter: function (items) {
+                    var beginswith = [], caseSensitive = [], caseInsensitive = [], item;
+                    while (aItem = items.shift()) {
+                        var item = aItem;
+                        if (!item.plate.toLowerCase().indexOf(this.query.toLowerCase()))
+                            beginswith.push(JSON.stringify(item));
+                        else if (~item.plate.indexOf(this.query)) caseSensitive.push(JSON.stringify(item));
+                        else caseInsensitive.push(JSON.stringify(item));
+                    }
+
+                    $(".typeahead").append('<div style="clear:both;"></div>');
+                    return beginswith.concat(caseSensitive, caseInsensitive)
+
+                },
+                highlighter: function (obj) {
+                    var item = JSON.parse(obj);
+                    var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+                    return item.plate.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+                        return '<strong>' + match + '</strong>'
+                    })
+                },
+            });
+            $("#btnTree").click(function () {
+                if ($("#groupTree").html() == "") {
+                    $("#groupTree").empty();
+                    var groupList = [];
+                    $.each(JSON.parse(localStorage.getItem('groupList')), function () {
+                        groupList.push({ id: this.groupId, name: this.groupName, pid: this.parentId, type: "group" });
+                    })
+                    VehGroup.initData("#groupTree", groupList);
+                }
+                // parent.showGroupTree();
+                //$("#TreeDiv").show();
+                if ($("#groupTree").html() != "") {
+                    setTimeout(function () {
+                        $("#TreeDiv").show()
+                    }, 500);
+                } else {
+                    layer.tips('暂时无车组,请模糊搜索车辆', '#chooseId', { tips: 3 });
+                }
+
+            });
+
+            $("body").click(function (e) {
+                var id = $(e.toElement).attr('id') || "";
+                if (!(id.indexOf("Tree") != -1)) {
+                    $("#TreeDiv").hide();
+                }
+            });
+            //选项卡事件
+
+            $("#tabTra").addClass("gridmenucheck");
+            $("#tabTra").find(".imgRealdataMenuCheck").attr("src", "track/img/realinfocheck.png");
+            $("#stopTab").css({ "display": "none" });//初始化隐藏停车怠速表
+            $(".def-nav1").click(function () {
+                if ($(".def-nav2").hasClass("gridmenucheck")) {
+                    $(".def-nav2").removeClass("gridmenucheck");
+                    $(".def-nav2").find(".imgRealdataMenuCheck").attr("src", "");
+                    $(".def-nav2").find(".imgRealdataMenuCheck").css("width", "0px");
+                }
+                $(this).addClass("gridmenucheck");
+                $(this).find(".imgRealdataMenuCheck").attr("src", "track/img/realinfocheck.png");
+                $(this).find(".imgRealdataMenuCheck").css("width", "16px");
+                if (!historyTableShow) {//当前显示轨迹数据表
+                    $("#history").css({ "display": "block" });
+                    $("#stopTab").css({ "display": "none" });
+                    historyTableShow = true;
+                }
+            });
+            $(".def-nav2").click(function () {
+                if ($(".def-nav1").hasClass("gridmenucheck")) {
+                    $(".def-nav1").removeClass("gridmenucheck");
+                    $(".def-nav1").find(".imgRealdataMenuCheck").attr("src", "");
+                    $(".def-nav1").find(".imgRealdataMenuCheck").css("width", "0px");
+                }
+                $(this).addClass("gridmenucheck");
+                $(this).find(".imgRealdataMenuCheck").attr("src", "track/img/realinfocheck.png");
+                $(this).find(".imgRealdataMenuCheck").css("width", "16px");
+                if (historyTableShow) {//当前显示轨迹数据表
+                    $("#history").css({ "display": "none" });
+                    $("#stopTab").css({ "display": "block" });
+                    historyTableShow = false;
+                }
+            });
+
+            $("#loginManage").click(function () {
+                window.open("../../VehicleMgr/VehicleMain.aspx?uid=" + user.Uid + "&token=" + user.Token + "&UserType=" + user.UserType + "&UserName=" + user.UserName + "&GroupID=" + user.GroupID + "&MaxResultCount=" + user.MaxResultCount + "&UserKind=" + user.UserKind);
+            })
+
+
+            $("#divShow").click(function () {
+                if ($(this).attr("title") == "收起") {
+                    //   $("#PanelSearch").css("right", "-230px");
+                    // $(this).css("right", "2px");
+
+                    $("#PanelSearch").animate({ right: "-230px" }, 1000);
+                    $(this).animate({ right: "2px" }, 1000);
+                    $(this).attr("title", "显示");
+                }
+                else {
+                    //$("#PanelSearch").css("right", "0px");
+                    // $(this).css("right", "232px");
+                    $("#PanelSearch").animate({ right: "-0px" }, 1000);
+                    $(this).animate({ right: "232px" }, 1000);
+                    $(this).attr("title", "收起");
+                }
+
+            })
+
+
+
+            $("#btnDate").change(function () {
+                var dateOption = $("#btnDate").find("option:selected").text();
+                var myDate = new Date().format('yyyy-MM-dd');
+                var eDate = myDate;
+                var d = new Date();
+                var m = "";
+                var day = "";
+                if (d.getMonth() < 9) {
+                    m = "0" + (d.getMonth() + 1);
+                }
+                else {
+                    m = (d.getMonth() + 1);
+                }
+
+                if (dateOption == "今天") {
+                    if (d.getDate() < 10) {
+                        day = "0" + d.getDate().toString();
+                    }
+                    else {
+                        day = d.getDate();
+                    }
+                    var s = d.getFullYear() + "-" + m + "-" + day;
+                    $("#txtStartDate").val(s);
+                    $("#txtStartTime").val("00:00");
+                    $("#txtEndDate").val(eDate);
+                    $("#txtEndTime").val(new Date().format('hh:mm'));
+                }
+                else if (dateOption == "昨天") {
+                    d.setTime(d.getTime() - 24 * 60 * 60 * 1000);
+                    if (d.getDate() < 10) {
+                        day = "0" + d.getDate().toString();
+                    }
+                    else {
+                        day = d.getDate();
+                    }
+                    var s = d.getFullYear() + "-" + m + "-" + day;
+                    $("#txtStartDate").val(s);
+                    $("#txtStartTime").val("00:00");
+                    $("#txtEndDate").val(s);
+                    $("#txtEndTime").val("23:59");
+
+                }
+                else if (dateOption == "前天") {
+                    d.setTime(d.getTime() - 24 * 60 * 60 * 1000 * 2);
+                    if (d.getDate() < 10) {
+                        day = "0" + d.getDate().toString();
+                    }
+                    else {
+                        day = d.getDate();
+                    }
+                    var s = d.getFullYear() + "-" + m + "-" + day;
+                    $("#txtStartDate").val(s);
+                    $("#txtStartTime").val("00:00");
+                    $("#txtEndDate").val(s);
+                    $("#txtEndTime").val("23:59");
+
+                }
+                else if (dateOption == "自定义") {
+                }
+            });
+
+            $("#today").click(function () {
+                $("#txtStartDate").val(dateAdd(0));
+                $("#txtStartTime").val("00:00");
+                $("#txtEndDate").val(dateAdd(0));
+                $("#txtEndTime").val(new Date().format('hh:mm'));
+
+                return false;
+            })
+            $("#yestoday").click(function () {
+                $("#txtStartDate").val(dateAdd(-1));
+                $("#txtStartTime").val("00:00");
+                $("#txtEndDate").val(dateAdd(-1));
+                $("#txtEndTime").val("23:59");
+
+
+                return false;
+
+            })
+            $("#beforeyestoday").click(function () {
+                $("#txtStartDate").val(dateAdd(-2));
+                $("#txtStartTime").val("00:00");
+                $("#txtEndDate").val(dateAdd(-2));
+                $("#txtEndTime").val("23:59");
+                return false;
+            })
+
+            $(document.body).click(function () {
+                $(".xdsoft_datetimepicker").hide();
+            })
+
+            $("#txtStartDate").click(function (e) {
+                var event = e || window.event;
+                event.stopPropagation();
+            })
+            $("#txtStartTime").click(function (e) {
+                var event = e || window.event;
+                event.stopPropagation();
+            })
+            $("#txtEndDate").click(function (e) {
+                var event = e || window.event;
+                event.stopPropagation();
+            })
+            $("#txtEndTime").click(function (e) {
+                var event = e || window.event;
+                event.stopPropagation();
+            })
+            $(".xdsoft_datetimepicker").click(function (e) {
+                var event = e || window.event;
+                event.stopPropagation();
+            })
+
+            $(".CustomMap_div").mouseover(function () {
+
+                if ($(this).find(".CustomMap_check").attr("cmd") == "start") {
+                    $(this).find(".CustomMap_check").css("background-position", "-15px 4px");
+                }
+                startMove(this, { width: 100 });
+            })
+
+            $(".CustomMap_div").mouseout(function () {
+
+                if ($(this).find(".CustomMap_check").attr("cmd") == "start") {
+                    $(this).find(".CustomMap_check").css("background-position", "-30px 4px")
+
+                }
+                if ($(this).attr("id") == "range_div" || $(this).attr("id") == "forbid_div")
+                { startMove(this, { width: 60 }); }
+                else if ($(this).attr("id") == "position_div") {
+                    startMove(this, { width: 70 });
+                }
+                else {
+                    startMove(this, { width: 80 });
+                }
+            })
+            $("#range_div").click(range2);
+            //阻止浏览器的默认行为 
+
+            $("#topBar").mousedown(function (e) {
+                if (e.target.id != "realPnlimg" && e.target.id != "realPnl" && e.target.id != "a_export") {
+                    var event = window.event || e;
+                    var eventY = event.clientY; //鼠标当前位置的y坐标
+                    $(document).mousemove(function (e) {
+                        var event = window.event || e;
+                        var theHeight = eventY - event.clientY;
+                        if (Math.ceil($("#tablePanel").height() + theHeight) >= 25 && Math.ceil($("#tablePanel").height() + theHeight) <= document.body.clientHeight) {
+                            $("#map").css("height", Math.ceil($("#map").height() - theHeight) + "px");
+                            $("#controlPanel").css("bottom", Math.ceil($("#tablePanel").height() + theHeight) + "px");
+                            $("#tablePanel").css("height", Math.ceil($("#tablePanel").height() + theHeight) + "px");
+                            // $("#history").css("height", Math.ceil($("#history").height() + theHeight) + "px");
+                            //console.log(Math.ceil($("#tablePanel").height() + theHeight));
+                            $("#historyTb").bootstrapTable('resetView', { height: Math.ceil($("#tablePanel").height() + 20) });
+                            eventY = event.clientY;
+                        }
+                        else {
+                            $(document).unbind("mousemove");
+                        }
+
+
+                        $("#topBar").mouseup(function () {
+                            $(document).unbind("mousemove");
+                        })
+                        return false;
+                    })
+                    $("#topBar").mouseup(function () {
+                        $(document).unbind("mousemove");
+                    })
+                }
+
+            })
+
+            $("#speed-slider").mousedown(function (e) {
+                var event = window.event || e;
+                var eventX = event.clientX; //鼠标当前位置的x坐标
+                $(document).mousemove(function (e) {
+                    var event = window.event || e;
+                    var theX = eventX - event.clientX;
+                    var theLeft = parseFloat($("#speed-slider").css("left"));
+                    if (Math.ceil(theLeft - theX) >= 0 && Math.ceil(theLeft - theX) <= 80) {
+                        $("#speed-slider").css("left", Math.ceil(theLeft - theX) + "px")
+                        eventX = event.clientX;
+                    }
+                    else if (Math.ceil(theLeft - theX) < 0) {
+                        $("#speed-slider").css("left", "0px");
+                    }
+                    else if (Math.ceil(theLeft - theX) > 80) {
+                        $("#speed-slider").css("left", "80px");
+                    }
+
+
+                    $(document).mouseup(function () {
+                        $(document).unbind("mousemove");
+                    })
+
+
+                    //if (nTimerSpeed != 100 && nTimerSpeed != 50) {
+                    //    nTimerSpeed = nTimerSpeed - 100;
+                    //}
+                    //else if (nTimerSpeed == 50) {
+                    //    return;
+                    //}
+                    //else {
+                    //    nTimerSpeed = 50;
+                    //}
+
+
+                    nTimerSpeed = (90 - theLeft) * 5;
+
+                    if (timer != null) {
+                        window.clearInterval(timer);
+                        timer = null;
+                        timer = window.setInterval(playCallback, nTimerSpeed);
+                    }
+
+
+                    return false;
+                })
+
+            })
+
+            if (getUrlParam("time") != null && getUrlParam("time") != "") {
+                var ctime = getUrlParam("time").split(' ')[0];
+                $("#txtEndDate").val(ctime);
+                $("#txtEndTime").val("23:59");
+                $("#txtStartDate").val(ctime);
+                $("#txtStartTime").val("00:00");
+            }
+        });
+
+        function CancelOperate() {
+            switch (mapOperate) {
+                case "range": //测距
+                    $("#range_check").css("background-position", "-30px 4px")
+                    $("#range_check").attr("cmd", "start");
+                    map.setDefaultCursor("default");
+                    ruler.turnOff();
+                    // mapOperate = "";
+                    break;
+                case "regionalCheck":  //区域查车
+                    //mapOperate = "";
+                    $("#checkVeh_check").css("background-position", "-30px 4px")
+                    $("#checkVeh_check").attr("cmd", "start");
+                    if (mouseTool != null) {
+                        mouseTool.close(true);
+                        mouseTool = null;
+                    }
+                    break;
+                case "displayRegional"://隐藏区域
+                    //  mapOperate = "";
+                    if (AreaArr.length > 0) {
+                        $(AreaArr).each(function () {
+                            this.polygon.setMap(null);
+                            this.infoWin.setMap(null);
+                        });
+                    }
+                    //$("#dpAreaName")[0].checked = false;
+                    $("#area").text("显示区域");
+                    $("#area").css("color", "#333");
+                    AreaArr = new Array();
+                    break;
+                case "displayGeography"://隐藏位置
+                    $("#position_check").css("background-position", "-30px 4px")
+                    $("#position_check").attr("cmd", "start");
+                    if (POIArr.length > 0) {
+                        $(POIArr).each(function () {
+                            this.marker.setMap(null);
+                            this.infoMarker.setMap(null);
+                        });
+                    }
+                    POIArr = new Array();
+                    break;
+                case "road"://隐藏线路
+                    //  mapOperate = "";
+                    if (LineArr.length > 0) {
+                        $(LineArr).each(function () {
+                            this.polyline.setMap(null);
+                            this.infoMarker.setMap(null);
+                        });
+                    }
+                    //$("#dpLineName")[0].checked = false;
+                    $("#line").text("显示线路");
+                    $("#line").css("color", "#333");
+                    LineArr = new Array();
+                    break;
+                case "displayforbid":
+                    $("#forbid_check").css("background-position", "-30px 4px")
+                    $("#forbid_check").attr("cmd", "start");
+                    if (ForbidArr.length > 0) {
+                        $(ForbidArr).each(function () {
+                            this.marker.setMap(null);
+                            this.infoMarker.setMap(null);
+                        });
+                    }
+                    ForbidArr = new Array();
+                    break;
+                    break;
+            }
+            map.setDefaultCursor("default");
+            return;
+        }
+
+        function range2() {
+            CancelOperate();
+            if (mapOperate == "range") {
+                mapOperate = "";
+            }
+            else {
+                if ($("#range_check").attr("cmd") == "end") {
+                    $("#range_check").css("background-position", "-30px 4px")
+                    $("#range_check").attr("cmd", "start");
+                    map.setDefaultCursor("default");
+                    ruler.turnOff();
+                    mapOperate = "";
+                }
+                else {
+                    mapOperate = "range";
+                    $("#range_check").css("background-position", "0px 4px")
+                    $("#range_check").attr("cmd", "end");
+                    MessageBox("开始测距,右键或双击双击完成测距", "提示", 1000)
+
+
+                    map.plugin(["AMap.RangingTool"], function () {
+                        ruler = new AMap.RangingTool(map);
+                        ruler.turnOn();
+                        AMap.event.addListener(ruler, "end", function (e) {
+                            ruler.turnOff();
+                            $("#range_check").css("background-position", "-30px 4px")
+                        });
+                    });
+                }
+            }
+        };
+
+
+        function refreshBack() {
+            var vehidFromMontior = getQueryString("vehID");
+
+            groupList = $.parseJSON(localStorage.getItem("groupList"));
+            vehicleList = $.parseJSON(sessionStorage.getItem("vehiclelist"));
+
+            //autocompleteJson();     // 处理自动补全数据
+            //autocompleteJson1(vehicleList);
+            //onToolChecked();
+
+        }
+        /***菜单js函数***/
+        function rpover() {
+            $("#rpContext").addClass("moveon");
+            $("#report").addClass("reprr");
+
+        };
+
+        function rpmove() {
+            $("#rpContext").removeClass("moveon");
+            $("#report").removeClass("reprr");
+
+        };
+        function userover() {
+            $("#userContext").addClass("userContextmoveon");
+
+        };
+
+        function usermove() {
+            $("#userContext").removeClass("userContextmoveon");
+        };
+        function cktime(t) {
+            var vle = t.value;
+            if (vle.indexOf(':') > -1) {
+                var tarr = vle.split(':');
+                if (tarr.length == 2) {
+                    if (Number(tarr[0]) < 24 && Number(tarr[1]) < 60)
+                        return;
+                    else {
+                        if (Number(tarr[0]) > 23 && Number(tarr[1]) < 60) {
+                            t.value = "00:" + tarr[1];
+                            return;
+                        }
+                        if (Number(tarr[0]) < 24 && Number(tarr[1]) > 59) {
+                            t.value = tarr[0] + ":00";
+                            return;
+                        }
+                    }
+                }
+            }
+            t.value = "00:00";
+        }
+
+        function switchMapClick() {
+
+            var plate = $("#chooseId").val();
+            var vehId = currentId;
+            var time = $("#txtEndDate").val();
+            var hwww = "btrackPlayback.html?&vehId=" + vehId + "&plate=" + escape(plate) + "&time=" + escape(time);
+            //window.location.href.replace("trackPlayback", "btrackPlayback");
+            window.location.href = hwww;
+        }
+
+    </script>
+</head>
+<body class="yui-skin-sam">
+    <!--锁屏-->
+    <div id="divLocking" style="width: 100%; height: 100%; position: absolute; opacity: 0.87; filter: alpha(opacity=90); z-index: 99999; text-align: center; background-color: #333; visibility: hidden;">
+    </div>
+    <!--头部-->
+
+    <!--头部-->
+    <!--地图-->
+    <div id="center" style="width: 100%; position: absolute;">
+        <!--<div style="width:100%;height:400px;" >-->
+        <!--地图-->
+        <div id="map" style="width: 100%;">
+            <div id="tools" style="margin: -1px 0 0 0; border-bottom-color: rgb(216, 216, 216); border-bottom-width: 1px; border-bottom-style: solid; position: absolute; z-index: 101; width: 100%; height: 31px; background: rgb(255, 255, 255); display: none;">
+                <div id="toolsButtons" style="margin: 3px 0 0 0;">
+                    <!-- <div style=" float:left; height:28px;  ">
+                        <div onclick="theDefault()" style="height:28px; width: 80px;margin-left: 40px;">
+                            <img  src="track/img/漫游.png"  style="height:16px;float:left;margin-top:5px; " />
+                            <label style=" margin-top:3px; float:left; cursor:pointer; font-size:16px;color:#0B70EF">移动</label>
+                        </div>
+                    </div>-->
+                    <div style="float: left; height: 28px;">
+                        <div onclick="range()" style="height: 28px; width: 80px; margin-left: 40px;">
+                            <img src="track/img/测距.png" style="height: 16px; float: left; margin-top: 5px;" />
+                            <label style="margin-top: 3px; float: left; cursor: pointer; font-size: 16px;" id="lblRange">测距</label>
+                        </div>
+                    </div>
+                    <!--   <div  style=" float:left; height:28px; ">
+                        <div onclick="displayFence()"  style="height:28px; width: 80px;margin-left: 40px;">
+                            <img  src="track/img/围栏icon.png"  style="height:16px;float:left;margin-top:5px; " />
+                            <label id="node" style="margin-top:3px;float:left;cursor:pointer;font-size:16px;"">显示围栏</label>
+                        </div>
+                    </div>-->
+                    <div style="float: left; height: 28px;">
+                        <div onclick="displayRegional()" style="height: 28px; width: 80px; margin-left: 40px;">
+                            <img src="track/img/区域icon.png" style="height: 16px; float: left; margin-top: 5px;" />
+                            <label id="area" style="margin-top: 3px; float: left; cursor: pointer; font-size: 16px;">显示区域</label>
+                        </div>
+                    </div>
+                    <div style="float: left; height: 28px;">
+                        <div onclick="displayGeography()" style="height: 28px; width: 100px; margin-left: 40px;">
+                            <img src="track/img/位置点.png" style="height: 16px; float: left; margin-top: 5px;" />
+                            <label id="POI" style="margin-top: 3px; float: left; cursor: pointer; font-size: 16px;">显示地理点</label>
+                        </div>
+                    </div>
+                    <div style="float: left; height: 28px;">
+                        <div onclick="road()" style="height: 28px; width: 90px; margin-left: 40px;">
+                            <img src="track/img/线路icon.png" style="height: 16px; float: left; margin-top: 5px;" />
+                            <label id="line" style="margin-top: 3px; float: left; cursor: pointer; font-size: 16px;">显示线路</label>
+                        </div>
+                    </div>
+                </div>
+                <a id="hideTool" onclick="hideToolClick()" style="cursor: pointer; display: block; position: absolute; width: 100px; height: 5px; margin-left: 50%; text-align: center; border: solid 1px #c0c4ca; border-radius: 0 0 20px 20px; top: 31px; background-color: #FFFEFC;">
+                    <span id="hideToolspan" style="display: block; position: absolute; width: 100px; height: 0px; padding-bottom: 6px; border: solid 1px #A6B2C3; text-align: center; border-radius: 0 0 20px 20px; border-right: none; background-color: #FFFEFC;">
+                        <em id="hideToolem" style="display: inline-block; width: 0; height: 0; font-size: 0; border-width: 4px 4px 4px 4px; border-style: solid; border-color: transparent transparent #293535 transparent; margin-top: -2px; overflow: hidden;"></em>
+                    </span>
+                </a>
+            </div>
+            <div class="CustomMapP_div">
+                <div class="CustomMap_div" id="range_div">
+                    <span class="CustomMap_check" cmd="start" id="range_check"></span>
+                    <span class="CustomMap_content">测距</span>
+                </div>
+            </div>
+        </div>
+        <!--控制面板-->
+        <div id="controlPanel" style="display: none; z-index: 1000; width: 480px; height: 40px; background: #f8f8f8; border: 1px solid #fff; border-radius: 3px; box-shadow: 0 1px 5px #666; position: fixed; bottom: 20px; right: 0px; overflow: hidden;">
+            <div style="padding-top: 5px; text-align: left; height: 30px; float: left;">
+                <img src="track/img/play/play.png" height="25px" width="25px" style="margin-left: 10px;" id="play" title="播放/暂停" onclick="backPlay()" />
+                <img src="track/img/play/stop.png" height="25px" width="25px" style="margin-left: 10px;" id="stop" title="停止" onclick="stopClick()" />
+
+            </div>
+            <div style="float: left; padding: 10px 0 0 5px;">
+                <span>速度：</span>
+                <em style="color: #71ADDF; font-style: normal; font-size: 12px;">慢</em>
+                <div style="width: 90px; position: relative; border: 1px solid #ccc; background-color: #F2F4F3; height: 10px; display: inline-block;">
+                    <div id="speed-slider" style="position: absolute; height: 14px; width: 8px; top: -3px; background-color: #6FD1F1; border: 1px solid #5C9DC4; cursor: pointer; left: 70px;">
+                    </div>
+                </div>
+                <em style="color: #DA9597; font-style: normal; font-size: 12px;">快</em>
+            </div>
+            <div style="margin-left: 10px; margin-top: 8px; background-image: url(track/img/processBack.png); background-repeat: no-repeat no-repeat; width: 200px; float: left; height: 18px;">
+                <input id="val" style="background-image: url(track/img/processBar.png); background-repeat: no-repeat no-repeat; float: left; width: 0%; height: 25px; line-height: 25px; font-size: 13px; border: 0px; text-align: center;" type="text" name="hid" value=" " />
+                <div id="showVal" style="width: 25px; height: 25px; padding-top: 3px; position: fixed; z-index: 10; top: -0.5px; top-border: 1px solid;"></div>
+            </div>
+
+        </div>
+
+        <!--控制面板-->
+    </div>
+    <!--</div>-->
+
+    <!--地图-->
+    <!--table-->
+    <div id="tablePanel" style="overflow: hidden; width: 100%; height: 25px; bottom: 0px; position: fixed; z-index: 9999;">
+        <div id="topBar" style="top: 0; width: 100%; text-align: left; height: 28px; background-color: #4482d5; color: white; font-weight: bold; cursor: n-resize;">
+
+            <span style="line-height: 28px; padding-left: 20px;">轨迹详情（盲点补传数据里程为空，无线设备系列里程为"--"）</span>
+            <div id="realPnl" style="height: 25px; width: 20px; float: right; border-left: 1px solid #B6B6B6; cursor: pointer;">
+                <img id="realPnlimg" src="track/img/最大化.png" style="height: 12px; margin-top: 8px; margin-left: 5px;" />
+            </div>
+            <a style="color: white; float: right; text-align: center; line-height: 28px; margin-right: 5px;" href="javascript:void(0)" id="a_export">导出</a>
+            <a id="btnLocation" style="color: white; float: right; text-align: center; line-height: 28px; margin-right: 5px; display: none;" href="javascript:void(0)" onclick="getLocationClick()">获取地址</a>
+        </div>
+        <table id="historyTb" style="background-color: #FFF;"></table>
+
+    </div>
+    <!--table结束-->
+    <!--查询面板-->
+    <!--弹出树-->
+    <div id="PanelSearch" style="z-index: 990; width: 240px; background: #f8f8f8; border: 1px solid #CDCDCD; border-radius: 3px; position: fixed; right: 0px; clear: both;">
+        <!--右侧查询面板开始-->
+        <div id="panelSearch2" style="margin-top: 10px; clear: both; overflow: hidden;">
+            <table id="searchTable" class="tb" style="width: 100%;">
+                <tr style="height: 30px">
+                    <td style="text-align: right; width: 85px">选择车辆：
+                    </td>
+                    <td colspan="2" style="text-align: left;">
+                        <input type="text" id="chooseId" placeholder="请输入车牌号" data-provide="typeahead" autocomplete="off" style="width: 120px;" />
+                        <img id="btnTree" src="img/serach.jpg" alt="" style="width: 20px; vertical-align: bottom; height: 20px; border: 0; cursor: pointer;">
+                    </td>
+                </tr>
+                <tr style="height: 30px">
+                    <td style="text-align: right; width: 85px">选择时间：
+                    </td>
+                    <td colspan="2" style="text-align: left;">
+                        <span style="text-decoration: underline;">
+                            <a href="#" id="today">今天</a>
+                            <a href="#" id="yestoday">昨天</a>
+                            <a href="#" id="beforeyestoday">前天</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr style="height: 30px">
+                    <td style="text-align: right;">开始时间：
+                    </td>
+                    <td colspan="2" style="text-align: left;">
+                        <input id="txtStartDate" style="width: 90px;" type="text" />
+                        <input id="txtStartTime" onkeyup="cktime(this);" style="width: 50px;" type="text" />
+
+                    </td>
+                </tr>
+                <tr style="height: 30px">
+                    <td style="text-align: right;">结束时间：
+                    </td>
+                    <td colspan="2" style="text-align: left;">
+                        <input id="txtEndDate" style="width: 90px;" type="text" />
+                        <input id="txtEndTime" onkeyup="cktime(this);" style="width: 50px;" type="text" />
+                    </td>
+                </tr>
+                <tr style="height: 30px">
+                    <td style="text-align: right;">静止时间：
+                    </td>
+                    <td colspan="2" style="text-align: left;">>=
+                        <input id="filterTime" style="width: 60px; text-indent: 10px;" value="0" type="text" data-provide="typeahead" autocomplete="off" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" />
+                        分钟 <a id="helpTPOP" style="position: absolute; right: 202px; top: 163px; margin-top: -2px; cursor: pointer; width: 33px; color: rgb(8, 42, 248);">
+                            <img style="width: 20px; float: left;" src="img/help.png"></a>
+                    </td>
+                </tr>
+                <tr style="height: 30px; display: none;">
+                    <td style="text-align: right;">
+                        <input type="checkbox" id="isShowTravel" />
+                    </td>
+                    <td colspan="2" style="text-align: left;">
+                        <label for="isShowTravel">是否显示轨迹点</label>
+                    </td>
+                </tr>
+                <tr style="height: 30px">
+                    <td colspan="3" style="text-align: left;">
+                        <div id="btnSearch" onclick="searchClick()" style="height: 20px; cursor: pointer; margin-left: 30px; width: 80px; text-align: center; background-color: #3896DD; color: White; border: 1px solid #0074CC; float: left;">
+                            <img src="track/img/searchWhite.png" style="height: 13px; vertical-align: middle; margin: 0 3px 0 0" />查询
+                        </div>
+                        <div id="btnSwitchMap" onclick="switchMapClick()" style="height: 20px; cursor: pointer; margin-left: 23px; width: 97px; text-align: center; background-color: #3896DD; color: White; border: 1px solid #0074CC; float: left;">
+                            切换百度地图
+                        </div>
+                        <!--<div id="btnGetLine" onclick="btnGetLineClick()" style="height: 20px; cursor: pointer; margin-left: 25px; width: 80px; text-align: center; background-color: #3896DD; color: White; border: 1px solid #0074CC; float: left;">
+                            生成线路
+                        </div>-->
+                    </td>
+                </tr>
+                <tr style="height: 30px; display: none;">
+                    <td colspan="3" style="text-align: center; color: #f00; background: #fce6a2; font-size: 12px; line-height: 30px;">有线设备：查询天数不能超过十五天。
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <div id="divShow" title="收起" style="position: fixed; right: 232px; top: 80px; height: 30px; width: 16px; background-color: #3896DD; border-radius: 10px; cursor: pointer; z-index: 989;"></div>
+    <div class="typeahead dropdown-menu1" id="TreeDiv">
+        <!--<p id="TreeTitel" style="margin: 3px; font-size: 12px; padding-left: 10px;">双击左边节点选择车组，单击右边节点选择车辆</p>-->
+        <div id="groupTree" class="ztree RpZtree"></div>
+        <div id="vehTree" class="ztree RpZtree" style="border-left: 1px solid #b0b5b9;"></div>
+    </div>
+
+    <div id="helpTPOP_div" style="background-color: #FFF9CC; z-index: 99999; top: 170px; right: 225px; width: 350px; border: 1px dashed #F4CB48; position: absolute; display: none;">
+        <div style="padding: 15px;">
+            <p>
+                <i style="font-size: 14px; font-weight: bold;">功能简介</i>
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; margin-top: 5px; line-height: 20px;">
+                <span style="color: #f00;">有线设备</span>轨迹每次查询区间不能超过 <span style="color: #f00;">15天</span>，轨迹记录默认保存 <span style="color: #f00;">3个月</span>
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; margin-top: 5px; line-height: 20px;">
+                <span style="color: #f00;">无线设备</span>轨迹每次查询区间不能超过 <span style="color: #f00;">30天</span>，轨迹记录默认保存 <span style="color: #f00;">1年</span>
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; margin-top: 5px; line-height: 20px; border-bottom: 1px solid #ccc;">
+                <span style="color: #f00;">静止时间</span>用于筛选静止时间大于或等于所输入值的停留点
+            </p>
+
+            <p style="margin: 10px 0 10px;">
+                <i style="font-size: 14px; font-weight: bold; font-style: normal">特殊设备的里程显示为估算值：</i>
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                <span id="pinfoMile_shebei" style="color: #f00;"></span>
+            </p>
+         <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                该设备不支持里程数据上传，显示里程为<span style="color: #f00;">估算值</span>，仅供参考使用！当发生以下情况，可能会导致里程<span style="color: #f00;">有误差</span>：
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                1.当设备处于<span style="color: #f00;">不定位</span>状态时（例如：停车场或处于GPS信号弱的地方）；
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                2.当设备处于<span style="color: #f00;">基站定位</span>时；
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0;">
+                3.其他可能导致<span style="color: #f00;">定位异常</span>情况；
+            </p>
+          
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,711 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <link rel="stylesheet" href="/static/css/elementUI.css">
+    <link rel="stylesheet" href="/css/home/indexhome.css">
+</head>
+<body>  
+
+    <div id='app'>
+        <div>
+            <div class='loding-img' v-show='loadding'>
+                <div>
+                </div>
+            </div>
+            <div class='user-index' :style="{height:height}">
+                <el-row>
+                    <el-col :span='17' class='border-rg'>
+                        <div class='user-info box-sd'>
+                            <div class='r-t'>
+                                <div class='icon-box'>
+                                    <img src='/static/images/home/账号.png' />
+                                </div>
+                                <span class='t-name'>总览</span>
+                            </div>
+                            <el-row class='content-user'>
+                                <el-col :span='4'>
+                                    <div class='user-ct-left'>
+                                        <div class='user-left-btn' :class="{'active-btn':isactive == 1}" @click='showinfo(1)'>
+                                            <button>车辆状态(总:{{allcar}})</button>
+                                        </div>
+                                        <div class='user-left-btn ' :class="{'active-btn':isactive == 2}" @click='showinfo(2)'>
+                                            <button>离线数({{offNum}})</button>
+                                        </div>
+                                        <div class='user-left-btn' :class="{'active-btn':isactive == 5}" @click='showinfo(5)'>
+                                            <button>待续费车辆({{renewNum}})</button>
+                                        </div>
+                                    </div>
+                                </el-col>
+                                <el-col :span='10' v-show='showchar != 5'>
+                                    <ve-pie v-if='showchar == "1"' class='pie-h' :data="chartData" :settings="chartSettings" height='330px' :colors="chartColor"></ve-pie>
+                                    <ve-pie v-if='showchar == "2"' class='pie-h' :data="cotData" :settings="chartSettings" height='330px' :colors="chartColors"></ve-pie>
+                                </el-col>
+                                <el-col :span='10' class='sl-box' v-show='showchar != 5'>
+                                    <ve-pie v-if='showchar == "1"' class='pie-h' :data="typeData" :settings="chartSettings" height='330px'></ve-pie>
+                                    <ve-pie v-if='showchar == "2"' class='pie-h' :data="lineData" :settings="chartSettings" height='330px' :colors="linecolors"></ve-pie>
+                                    <div class='detail-btn' v-show='showBtn && showchar == 2'>
+                                        <button @click='offlineDetail'>查看详情</button>
+                                    </div>
+                                </el-col>
+                                <el-col :span='19' class='sl-box' v-if='showchar == "5"'>
+                                    <div class='detail-box' v-show='showBtn'>
+                                        <button @click='detailLink'>查看详情</button>
+                                    </div>
+                                    <ve-pie height='330px' class='pie-h' :data="renewData" :settings="chartSettings"></ve-pie>
+                                </el-col>
+                                <div>
+
+                                    <div v-show='showlist' id='warninglist' >
+                                        <el-table id='tabelData' :data="tableData" @row-contextmenu='tableright' height="380" border style="width: 100%" >
+                                            <el-table-column prop="xu" label="序号" align='center' width='60'>
+                                            </el-table-column>
+                                            <el-table-column prop="plate" width='125' label="车牌号" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="alarmName" width='125' label="报警类型" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="alarmTime" width="160" label="报警时间" align='center'>
+                                            </el-table-column>
+                                            <el-table-column v-if='ispathName' prop="pathName" :label="pathNames" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="warningPath" label="报警地址" align='center'>
+                                                <template scope="scope">
+                                                    <span>{{pathdata[scope.$index].name}}</span>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column prop="warningPath" label="当前地址" align='center'>
+                                                <template scope="scope">
+                                                    <el-button type="text" class='el-btn' @click='showIndex(scope)'>{{nowLocation[scope.$index].name}}</el-button>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column prop="concernLevel" width="70" label="关注度等级" align='center'>
+                                                <template scope='scope'>
+                                                    <div class='tap' :style='{"background":scope.row.bgtap}' v-if='scope.row.concernLevel'>
+                                                        {{scope.row.concernLevel}}
+                                                    </div>
+                                                    <div v-else>未关注</div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column label="操作" width="100" align='center'>
+                                                <template scope="scope">
+                                                    <el-popover ref="popoveroffline" placement="left" width="50" trigger="hover" @hide='hidepop' :disabled='setdisabled'>
+                                                        <ul class='setting-box'>
+                                                            <li @click='SeveSetting(scope.row,1,"报警关注")'>高</li>
+                                                            <li @click='SeveSetting(scope.row,2,"报警关注")'>中</li>
+                                                            <li @click='SeveSetting(scope.row,3,"报警关注")'>低</li>
+                                                            <li @click='deleteVeh(scope.row)'>清除关注</li>
+                                                        </ul>
+                                                    </el-popover>
+                                                    <el-button class='detaillbtn' v-popover:popoveroffline type="text" size="small">关注</el-button>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                        <div class='paginabox'>
+                                            <div class='exportBox'>
+                                                <el-button type="primary" size="small" @click='exportData("tabelData")'>
+                                                    <i class='exportimg'></i>导出</el-button>
+                                            </div>
+                                            <el-pagination style='text-align:end;flex:1;' @current-change="handleCurrentChange1" :current-page.sync="currentPage1" :page-size="pages"
+                                                layout="total, prev, pager, next" :total="total">
+                                            </el-pagination>
+                                        </div>
+                                    </div>
+                                    <div v-show='false' id='ConcernBox'>
+                                        <el-table id='ConcernData' :data="ConcernData" @row-contextmenu='tableright' height="380" border style="width: 100%" v-loading="loadingC"
+                                            element-loading-text="拼命加载中">
+                                            <el-table-column prop="xu" label="序号" align='center' width='60'>
+                                            </el-table-column>
+                                            <el-table-column prop="P" width='125' label="车牌号" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="T" width='80' label="设备类型" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="S" width="70" label="速度" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="R" label="最后上线时间" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="G" label="定位" width='80' align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="D" label="离线时长" width='100' align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="B" label="报警类型" width='80' align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="address" label="当前地址" align='center'>
+                                                <template scope="scope">
+                                                    <el-button type="text" class='el-btn' @click='showIndex(scope)'>{{nowLocation[scope.$index].name}}</el-button>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column prop="concernLevel" width="70" label="关注度等级" align='center'>
+                                                <template scope='scope'>
+                                                    <div class='tap' :style='{"background":scope.row.bgtap}' v-if='scope.row.CL'>
+                                                        {{scope.row.concernLevel}}
+                                                    </div>
+                                                    <div v-else>未关注</div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column label="操作" width="70" align='center'>
+                                                <template scope="scope">
+                                                    <el-popover ref="popoveroffline" placement="left" width="50" trigger="hover" @hide='hidepop' :disabled='setdisabled'>
+                                                        <ul class='setting-box'>
+                                                            <li @click='SeveSetting(scope.row,1,"重点关注")'>高</li>
+                                                            <li @click='SeveSetting(scope.row,2,"重点关注")'>中</li>
+                                                            <li @click='SeveSetting(scope.row,3,"重点关注")'>低</li>
+                                                            <li @click='deleteVeh(scope.row)'>清除关注</li>
+                                                        </ul>
+                                                    </el-popover>
+                                                    <el-button class='detaillbtn' v-popover:popoveroffline type="text" size="small">关注</el-button>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                        <div class='paginabox'>
+                                            <div class='exportBox'>
+                                                <el-button type="primary" size="small" @click='exportData("ConcernData")'>
+                                                    <i class='exportimg'></i>导出</el-button>
+                                            </div>
+                                            <el-pagination style='text-align:end;flex:1;' @current-change="handleCurrentChange2" :current-page.sync="currentPage3" :page-size="pages"
+                                                layout="total, prev, pager, next" :total="total">
+                                            </el-pagination>
+                                        </div>
+
+                                    </div>
+                                    <div id='area' v-show='false'>
+                                        <el-row>
+                                            <el-col :span='12' class='areaname'>
+                                                <nav class='nav-header'>围栏绑定名称</nav>
+                                                <div>
+                                                    <ul>
+                                                        <li v-for='(item,index) in arealist' @click='isActives(item,index)' :class='{"area-list":true,"Active-item":Activeitem == index}'>{{item.pathName}}
+                                                            <i v-if='Activeitem == index' class='el-icon-caret-right'></i>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span='12' class='areaname-right'>
+                                                <nav class='nav-header '>围栏绑定车辆、车组</nav>
+                                                <div>
+                                                    <ul>
+                                                        <li class='area-list-right' v-for='item in carlist' v-if='item.groupName'>
+                                                            <span class='carspan'>{{item.groupName}}</span>
+                                                            <el-tag :type="item.type === 1 ? 'warning':'primary'">{{item.type == 1 ?'车组':'车辆'}}</el-tag>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                    </div>
+                                    <div v-show='false' id='offlineDetail'>
+                                        <div class='offlinebtn-box'>
+                                            <div>
+                                                <a @click='offlineSeach(0,1)' :class='{offlineActive:offlineActive == 1}'>离线一天内</a>
+                                            </div>
+                                            <div>
+                                                <a @click='offlineSeach(1,3)' :class='{offlineActive:offlineActive == 3}'>离线1-3天</a>
+                                            </div>
+                                            <div>
+                                                <a @click='offlineSeach(3,7)' :class='{offlineActive:offlineActive == 7}'>离线3-7天</a>
+                                            </div>
+                                            <div>
+                                                <a @click='offlineSeach(7,30)' :class='{offlineActive:offlineActive == 30}'>离线7天-1个月</a>
+                                            </div>
+                                            <div>
+                                                <a @click='offlineSeach(30,0)' :class='{offlineActive:offlineActive == 0}'>离线超过一个月</a>
+                                            </div>
+                                            <div style='margin-left:20px;'>
+                                                <el-radio-group @change='changeline' v-model="radioline">
+                                                    <el-radio :label="0">全部</el-radio>
+                                                    <el-radio :label="1">无线</el-radio>
+                                                    <el-radio :label="2">有线</el-radio>
+                                                </el-radio-group>
+                                            </div>
+                                        </div>
+                                        <el-table :data="offlineData" border style="width: 100%" height='400' element-loading-text="拼命加载中"
+                                            id='offlinebox'>
+                                            <el-table-column prop="xu" label="序号" align='center' width="60">
+                                            </el-table-column>
+                                            <el-table-column prop="p" align='center' label="车牌号" width="130">
+                                            </el-table-column>
+                                            <el-table-column prop="m" align='center' width="120" label="SIM卡号">
+                                            </el-table-column>
+                                            <el-table-column prop="n" align='center' label="终端编号">
+                                            </el-table-column>
+                                            <el-table-column prop="g" align='center' label="所属车组" width="100">
+                                            </el-table-column>
+                                            <el-table-column prop="engineNo" align='center' label="发动机号">
+                                            </el-table-column>
+                                            <el-table-column prop="y" align='center' label="车辆类型" width="110">
+                                            </el-table-column>
+                                            <el-table-column prop="t" align='center' label="最后在线时间">
+                                            </el-table-column>
+                                            <el-table-column prop="s" align='center' label="离线时间">
+                                            </el-table-column>
+                                            <el-table-column prop="address" align='center' label="位置">
+                                                <template scope="scope">
+                                                    <el-button v-if='offlineaddress[scope.$index].address != "无效经纬度获取失败！"' type="text" class='el-btn' @click='showIndex(scope)'>{{offlineaddress[scope.$index].address}}</el-button>
+                                                    <div v-else>{{offlineaddress[scope.$index].address}}</div>
+                                                </template>
+                                            </el-table-column>
+
+                                            <el-table-column prop="concernLevel" width="70" label="关注度等级" align='center'>
+                                                <template scope='scope'>
+                                                    <div class='tap' :style='{"background":scope.row.bgtap}' v-if='scope.row.concernLevel'>
+                                                        {{scope.row.concernLevel}}
+                                                    </div>
+                                                    <div v-else>未关注</div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column label="操作" width="50" align='center'>
+                                                <template scope="scope">
+                                                    <el-popover ref="popovertable" placement="left" width="50" trigger="hover" @hide='hidepop' :disabled='setdisabled'>
+                                                        <ul class='setting-box'>
+                                                            <li @click='SeveSetting(scope.row,1,false)'>高</li>
+                                                            <li @click='SeveSetting(scope.row,2,false)'>中</li>
+                                                            <li @click='SeveSetting(scope.row,3,false)'>低</li>
+                                                            <li @click='deleteVeh(scope.row)'>清除关注</li>
+                                                        </ul>
+                                                    </el-popover>
+                                                    <el-button class='detaillbtn' v-popover:popovertable @click="detaill(scope.row,scope.$index)" type="text" size="small">关注</el-button>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                        <div class='paginabox'>
+                                            <div class='exportBox'>
+                                                <el-button type="primary" size="small" @click='exportOffline'>
+                                                    <i class='exportimg'></i>导出</el-button>
+                                            </div>
+                                            <el-pagination style='flex:1;'  @current-change="offlineChange" :current-page.sync="offlinepages"
+                                                :page-size="offlineSize" layout="total, prev, pager, next" :total="offlineDatalength">
+                                            </el-pagination>
+                                        </div>
+                                    </div>
+                                    <div v-show='showlongstay' id='longstayBox'>
+                                        <el-popover ref="popover2" class='provent' placement="top-start" :disabled="popdisabled" title="设置" width="200" trigger="click">
+                                            <div class='longstaryhd'>
+                                                <span>停留超长范围:</span>
+                                                <input type='text' v-model='longstarttime' maxlength="2" class='timeinput' autocomplete='off' />&nbsp天
+                                                <span>~</span>
+                                                <input type='text' v-model='longendtime' maxlength="2" class='timeinput' autocomplete='off' />&nbsp天
+                                            </div>
+                                            <div style='text-align:center;padding-bottom: 10px;'>
+                                                <el-button type="primary" size="small" @click='Saveslider'>保存</el-button>
+                                            </div>
+                                        </el-popover>
+                                        <el-table id='longStay' :data="longStayData" height="380" border style="width: 100%" v-loading="loading4" element-loading-text="拼命加载中">
+                                            <el-table-column prop="xu" label="序号" align='center' width='70'>
+                                            </el-table-column>
+                                            <el-table-column prop="plate" width='150' label="车牌号" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="terminalNo" width='150' label="终端号" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="displayTime" width="160" label="停留时间" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="address" label="当前地址" align='center'>
+                                                <template scope="scope">
+                                                    <el-button type="text" class='el-btn' @click='showIndex(scope)'>{{scope.row.address}}</el-button>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                        <div class='paginabox'>
+                                            <div class='setting'>
+                                                <el-button type="primary" size="small" @click='exportData("longStay")'>
+                                                    <i class='exportimg'></i>导出</el-button>
+                                                <span v-popover:popover2 @click='settings'>设置查看停留时长</span>
+                                               
+                                            </div>
+                                            <div  style="  position: absolute;  left: 300px;   bottom: 60px;   color: #f00;">
+                                                  <span>停车超长：显示停留时间在所设置范围的所有车辆</span>
+                                            </div>
+                                           
+                                            <el-pagination style='text-align:end;flex:1;' @current-change="longsraychange" :page-size="pages" layout="total, prev, pager, next"
+                                                :total="longstayNum">
+                                            </el-pagination>
+                                        </div>
+                                    </div>
+                                    <div v-show='showdetail' id='detaillist'>
+                                        <el-table id='detaillTable' :data="detailData" height="400" border style="width: 100%" v-loading="loading3" element-loading-text="拼命加载中">
+                                            <el-table-column prop="xu" label="序号" align='center' width='80'>
+                                            </el-table-column>
+                                            <el-table-column prop="plate" width='180' :label="platelabel" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="groupName" width='160' :label="grouplabel" align='center'>
+                                            </el-table-column>
+                                            <el-table-column prop="ssd" :label="namelabel" align='center' v-if='!showtag'>
+                                                <template scope="scope">
+                                                    {{scope.row.name}}
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column prop="name" label="限制停留点位置(家庭)" align='center' v-if='showtag'>
+                                                <template scope="scope">
+                                                    <el-button type="text" class='el-btn' @click='showmap(scope.row)'>{{scope.row.name}}</el-button>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column prop="site" label="限制停留点位置(公司)" align='center' v-if='showtag'>
+                                                <template scope="scope">
+                                                    <el-button type="text" class='el-btn' @click='showmap(scope.row)'>{{scope.row.site}}</el-button>
+                                                </template>
+                                            </el-table-column>
+
+                                        </el-table>
+                                        <div class='paginabox'>
+                                            <div class='exportBox'>
+                                                <el-button type="primary" size="small" @click='exportData("detaillTable")'>
+                                                    <i class='exportimg'></i>导出</el-button>
+                                            </div>
+                                            <el-pagination style='text-align:end;flex:1;' @current-change="CurrentChange" :current-page.sync="currentPage2" :page-size="pages"
+                                                layout="total, prev, pager, next" :total="total2">
+                                            </el-pagination>
+                                        </div>
+                                    </div>
+                                </div>
+                            </el-row>
+                        </div>
+
+                        <div class='marg-line'></div>
+                        <div id='footer-box'>
+                            <!-- footerItemBox -->
+                            <div class='item-box box-sd'>
+                                <div class='item item-one none-line'>
+                                    <div class='r-t'>
+                                        <div class='icon-box'>
+                                            <img src='/static/images/home/风控助手2.png' />
+                                        </div>
+                                        <span class='t-name'>风控</span>
+                                    </div>
+                                    <div class='border-bj'>
+                                        <el-row type="flex">
+                                            <el-col :span='4' class='bd-rg fontweight'>重点关注:
+                                                <span @click='openConcer()'>{{warningNum.concernNum}}</span>
+                                            </el-col>
+                                            <el-col :span='4' class='bd-rg fontweight'>拆除报警：
+                                                <span @click='openlist("拆除报警")'>{{warningNum.removeNum}}</span>
+                                            </el-col>
+                                            <el-col :span='4' class='bd-rg fontweight'>掉电报警：
+                                                <span @click='openlist("掉电报警")'>{{warningNum.electricNum}}</span>
+                                            </el-col>
+                                            <!-- <el-col :span='4' class='bd-rg fontweight'>分离报警：
+                                                <span @click='openlist("超速报警",0)'>{{warningNum.speedNum}}</span>
+                                            </el-col> -->
+                                            <el-col :span='4' class='bd-rg fontweight'>停车超长:
+                                                <span @click='longstay()'>{{longStopNum}}</span>
+                                            </el-col>
+                                            <el-col :span='4' class='bd-rg fontweight'>超速报警：
+                                                <span @click='openlist("超速报警")'>{{warningNum.speedNum}}</span>
+                                            </el-col>
+                                            <el-col :span='5' class='bd-rg fontweight'>紧急报警：
+                                                <span @click='openlist("紧急报警",3)'>{{warningNum.urgentNum}}</span>
+                                            </el-col>
+                                            <el-col :span='4' class='bd-rg fontweight' style='border-right:none;'>其他报警：
+                                                <span @click='openlist("其他报警")'>{{warningNum.other}}</span>
+                                            </el-col>
+                                        </el-row>
+                                    </div>
+                                    <div class='item-one-li'>
+                                        <el-row type="flex">
+                                            <el-col :span='6' class='wd-bg wd-skyblue'>
+                                                <el-row class='wd-left'>
+                                                    <el-col :span='12'>
+                                                        <img src="/static/images/home/二押点.png">
+                                                    </el-col>
+                                                    <el-col :span='12' class='wd-font col0'>
+                                                        <div @click='openlist("二押风险")'>
+                                                            <span class='counts'>{{warningNum.twoNum}}</span>
+                                                            <span>个</span>
+                                                        </div>
+                                                        <span class='pad-span'>二押点报警</span>
+                                                    </el-col>
+                                                </el-row>
+                                                <el-row class='wd-ft-bg'>
+                                                    <el-col :span='24'>
+                                                        <span class='box' @click='showModal("二押点",2)' data-msg='jdosjaosd'>已设置{{twoCount}}个二押风险点</span>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-col>
+                                            <el-col :span='6' class='wd-bg wd-yesol'>
+                                                <el-row class='wd-left'>
+                                                    <el-col :span='12'>
+                                                        <img src="/static/images/home/区域.png">
+                                                    </el-col>
+                                                    <el-col :span='12' class='wd-font co1'>
+                                                        <div @click='openlist("限制区域")'>
+                                                            <span class='counts'>{{warningNum.regionNum}}</span>
+                                                            <span>个</span>
+                                                        </div>
+                                                        <span class='pad-span'>区域报警</span>
+                                                    </el-col>
+                                                </el-row>
+                                                <el-row class='wd-ft-bg'>
+                                                    <el-col :span='24'>
+                                                        <span @click='showModal("限制区域",1)'> 已设置{{regionCount}}个限制区域</span>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-col>
+                                            <el-col :span='6' class='wd-bg wd-zong'>
+                                                <el-row class='wd-left'>
+                                                    <el-col :span='12'>
+                                                        <img src="/static/images/home/出省.png">
+                                                    </el-col>
+                                                    <el-col :span='12' class='wd-font co2'>
+                                                        <div @click='openlist("禁止出省")'>
+                                                            <span class='counts'>{{warningNum.superNum}}</span>
+                                                            <span>个</span>
+                                                        </div>
+                                                        <span class='pad-span'>禁止出省报警</span>
+                                                    </el-col>
+                                                </el-row>
+                                                <el-row class='wd-ft-bg'>
+                                                    <el-col :span='24'>
+                                                        <span @click='showModal("禁止出省",1)'>已限制{{superCount}}台车辆禁止出省</span>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-col>
+                                            <el-col :span='6' class='wd-bg wd-ol'>
+                                                <el-row class='wd-left'>
+                                                    <el-col :span='12'>
+                                                        <img src="/static/images/home/停留点.png">
+                                                    </el-col>
+                                                    <el-col :span='12' class='wd-font co3'>
+                                                        <div @click='openlist("经常停留点")'>
+                                                            <span class='counts'>{{warningNum.stopNum}}</span>
+                                                            <span>个</span>
+                                                        </div>
+                                                        <span class='pad-span'>异常停留点报警</span>
+                                                        <!-- <span>已设置{{stopCount}}个</span> -->
+                                                    </el-col>
+                                                </el-row>
+                                                <el-row class='wd-ft-bg'>
+                                                    <el-col :span='24'>
+                                                        <span @click='showModal("经常停留点",1)'>已设置{{stopCount}}个经常停留点</span>
+                                                    </el-col>
+                                                </el-row>
+                                            </el-col>
+                                        </el-row>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class='marg-line'>
+
+                            </div>
+                        </div>
+                    </el-col>
+                    <el-col :span='7'>
+                        <div class='r-b box-sd'>
+                            <div class='r-t'>
+                                <div class='icon-box'>
+                                    <img src='/static/images/home/贷款.png' />
+                                </div>
+                                <span class='t-name'>风控评估</span>
+                                <a @click='linkPs'>剩余钻石(
+                                    <span>{{incrementMoney}}</span> )</a>
+                            </div>
+                            <div class='r-content'>
+                                <el-row>
+                                    <el-col :span='8' class='card-box'>
+                                        <div>
+                                            <img src='/static/images/home/手机定位查询.png' />
+                                        </div>
+                                        <div class='m-t'>手机定位查询
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow' @click='pushlist'>查询</button>
+                                        </div>
+                                        <div class='hot-img'>
+                                            <img src='/static/images/home/1.gif' />
+                                        </div>
+                                    </el-col>
+                                    <el-col :span='8' class='card-box'>
+                                        <div>
+                                            <img src='/static/images/home/手机通话查询.png' />
+                                        </div>
+                                        <div class='m-t'>手机通话查询
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow'>查询</button>
+                                        </div>
+                                        <div class='hot-img'>
+                                            <img src='/static/images/home/1.gif' />
+                                        </div>
+                                    </el-col>
+
+                                    <el-col :span='8' class='card-box'>
+                                        <div>
+                                            <img src='/static/images/home/多头借贷.png' />
+                                        </div>
+                                        <div class='m-t'>多头借贷
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow'>查询</button>
+                                        </div>
+                                        <div class='new-img'>
+                                            <div></div>
+                                        </div>
+                                    </el-col>
+                                </el-row>
+
+                                <el-row>
+
+
+                                    <el-col :span='8' class='card-box'>
+                                        <div>
+                                            <img src='/static/images/home/出险查询.png' />
+                                        </div>
+                                        <div class='m-t'>出险查询
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow'>查询</button>
+                                        </div>
+                                        <div class='new-img'>
+                                            <div></div>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span='8' class='card-box'>
+                                        <div>
+                                            <img src='/static/images/home/违章查询.png' />
+                                        </div>
+
+                                        <div class='m-t'>违章查询
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow'>查询</button>
+                                        </div>
+                                        <div class='new-img'>
+                                            <div></div>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span='8' class='card-box'>
+                                        <div>
+                                            <img src='/static/images/home/驾驶查询.png' />
+                                        </div>
+                                        <div class='m-t'>行驶证查询
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow' @click='pushlist'>查询</button>
+                                        </div>
+                                        <div class='new-img'>
+                                            <div></div>
+                                        </div>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+
+                                    <el-col :span='8' class='card-box'>
+                                        <div>
+                                            <img style='width:32px' src='/static/images/home/homeMax/社保40.png' />
+                                        </div>
+                                        <div class='m-t'>社保
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow'>查询</button>
+                                        </div>
+                                        <div class='new-img'>
+                                            <div></div>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span='8' class='card-box'>
+                                        <div>
+                                            <img style='width:32px' src='/static/images/home/homeMax/公积金40.png' />
+                                        </div>
+                                        <div class='m-t'>公积金
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow' @click='pushlist'>查询</button>
+                                        </div>
+                                        <div class='new-img'>
+                                            <div></div>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span='8' class='card-box' >
+                                        <div>
+                                            <img src='/static/images/home/学历.png' />
+                                        </div>
+                                        <div class='m-t'>学历查询
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow' @click='pushlist'>查询</button>
+                                        </div>
+                                    </el-col>
+
+                                </el-row>
+                                <el-row>
+
+
+
+
+
+                                    <el-col :span='8' class='card-box'>
+                                        <div>
+                                            <img src='/static/images/home/taobao.png' />
+                                        </div>
+                                        <div class='m-t'>淘宝报告
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow' @click='pushlist'>查询</button>
+                                        </div>
+
+                                    </el-col>
+                                    <el-col :span='8' class='card-box'>
+                                        <div>
+                                            <img src='/static/images/home/zhifubao.png' />
+                                        </div>
+                                        <div class='m-t'>支付宝报告
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow' @click='pushlist'>查询</button>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span='8' class='card-box'>
+                                        <div>
+                                            <img src='/static/images/home/手机.png' />
+                                        </div>
+                                        <div class='m-t'>手机身份验证
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow' @click='pushlist'>查询</button>
+                                        </div>
+
+                                    </el-col>
+
+                                </el-row>
+                                <el-row>
+
+                                    <el-col :span='8' class='card-box' style='border-bottom:none;'>
+                                        <div>
+                                            <img src='/static/images/home/黑名单.png' />
+                                        </div>
+                                        <div class='m-t'>失信被执行
+                                        </div>
+                                        <div class='btn-box'>
+                                            <button class='hvr-grow' @click='pushlist'>查询</button>
+                                        </div>
+
+                                    </el-col>
+                                    <el-col :span='8' class='card-box' style='padding-top: 30px;border-bottom:none;'>
+                                        <div>
+                                            <img src='/static/images/home/更多.png' />
+                                        </div>
+                                        <div class='m-t more' style='color: #20A0FF;cursor: pointer;'>进入风控评估模块
+                                        </div>
+                                        <div class='btn-box'>
+                                        </div>
+                                    </el-col>
+                                </el-row>
+                            </div>
+                        </div>
+                    </el-col>
+                </el-row>
+            </div>
+        </div>
+    </div>
+
+<script src='/static/js/vue.min.js'></script>
+<script src="/static/js/index.js"></script>
+<script src="/static/js/echarts.min.js"></script>
+<script src="/static/js/index.min.js"></script>
+<script src="/static/js/jquery.js?v=1.1"></script>
+<script src="/static/js/layer.js"></script>
+<script src='/static/js/jquery.table2excel.min.js'></script>
+<script src='/js/home/indexhome.js'></script>
+</body>
+
+</html>

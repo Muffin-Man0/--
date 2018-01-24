@@ -1,0 +1,359 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="css/PolicyStyle.css" rel="stylesheet" />
+    <link href="assets/timepicker/jquery.datetimepicker.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div style="height: 100%; width: 100%; background-color: white; position: absolute; left: 0; z-index: 3; top: 0; overflow: hidden;">
+        <!--FILTER BOX-->
+        <div class="filter_box">
+            <div style="width: 290px;" class="item">
+                <div class="contor">
+                    条件:
+                    <select class="filter_condition" style="width: 110px; margin-top: -1px; border: none;">
+                        <option value="">全部</option>
+                        <option value="serialnumber">序列号</option>
+                        <option value="insuranceNo">保单号</option>
+                        <option value="owner">车主姓名</option>
+                        <option value="phone">车主电话</option>
+                        <option value="brand">车型/品牌</option>
+                        <option value="plate">车牌号</option>
+                        <option value="sim">终端SIM</option>
+                        <option value="terminalNo">终端编号</option>
+                    </select>
+                    <input class="filter_keyword" placeholder="输入查询条件" style="width: 90px; border: none;" />
+                </div>
+            </div>
+            <div style="width: 170px;" class="item">
+                <div class="contor">
+                    状态:
+                    <select class="filter_status" style="width: 90px; margin-top: -1px; border: none;">
+                        <option value="-1">全部</option>
+                        <option value="0">未打印</option>
+                        <option value="1">已打印</option>
+                    </select>
+                </div>
+            </div>
+            <!--<div style="width: 180px;" class="item">
+                <div class="contor">
+                    设备类型:
+                    <input placeholder="全部" class="filter_terminalType" style="width:80px;margin-top:-1px;border:none;" />
+                    <select class="filter_terminalType" style="width:90px;margin-top:-1px;border:none;">
+                        <option>全部</option>
+                        <option>A5E</option>
+                    </select>
+                </div>
+            </div>-->
+            <div class="tool-btn">
+                <button class="btn btn-primary filter_btn_find">查找</button>
+                <button class="btn btn-info policy_btn_create">新增保单</button>
+                <button class="btn btn-danger policy_btn_remove">批量删除</button>
+                <button class="btn btn-info scanCode">扫码支付</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--END FILTER BOX-->
+        <div class="group col-lg-12 content-box">
+            <!--DATA TABLE-->
+            <table id="policy_table"></table>
+            <!--END DATA TABLE-->
+        </div>
+    </div>
+    <!--POLICY CREATE VIEW-->
+    <div class="modal fade" id="PolicyCreateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="height: 580px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">新增保单</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal" role="form">
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">保单编号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " id="c_insuranceNo" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">序列号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " id="c_serialnumber" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label class="col-md-3 control-label">车主:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " data-ucoding="1" id="c_owner" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group  col-md-6">
+                            <label class=" col-md-3 control-label">证件号码:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " maxlength="18" id="c_license" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">联系电话:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " id="c_phone" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label class="col-md-3 control-label">车牌号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control plate" data-ucoding="1" id="c_plate" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group  col-md-6">
+                            <label class="col-md-3 control-label">车型/品牌:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " data-ucoding="1" id="c_brand" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">车价(元):</label>
+                            <div class="col-md-9">
+                                <input class="form-control price" id="c_price" type="number">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label class="col-md-3 control-label">车架号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " id="c_frameNo" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label class=" col-md-3 control-label">发动机号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " id="c_engineNo" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group  col-md-6">
+                            <label class="col-md-3 control-label">终端编号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control terminalNo" oninput="terminalNoInput(this)" id="c_terminalNo" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label class=" col-md-3 control-label">SIM卡号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " id="c_sim" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-3 control-label">保险开始时间:</label>
+                            <div class="col-md-9">
+                                <input class="form-control exdate" id="c_insuranceBegin" type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">保险结束时间:</label>
+                            <div class="col-md-9">
+                                <input class="form-control exdate" id="c_insuranceEnd" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">保单期限(年):</label>
+                            <div class="col-md-9">
+                                <input class="form-control safeguardPeriod" id="c_safeguardPeriod" type="text" />
+                                <!--  onkeyup="this.value=this.value.replace(/\D/g,'')"-->
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-3 control-label">第一受益人:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " data-ucoding="1" id="c_beneficiary" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-3 control-label">地址:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " data-ucoding="1" id="c_address" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 text-center">
+                            <button class="btn btn-info c_Save" style="margin-right: 20px;">新增</button>
+                            <button onclick='$("#PolicyCreateModel").modal("hide");' class="btn btn-default">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END POLICY CREATE VIEW-->
+    <!--POLICY EDITOR VIEW-->
+    <div class="modal fade" id="PolicyEditorModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="height: 600px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">编辑保单</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal" role="form">
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">保单编号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " id="u_insuranceNo" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">序列号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " id="u_serialnumber" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label class="col-md-3 control-label">车主:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " disabled="disabled" data-ucoding="1" id="u_owner" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group  col-md-6">
+                            <label class=" col-md-3 control-label">证件号码:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " disabled="disabled" maxlength="18" id="u_license" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">联系电话:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " id="u_phone" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label class="col-md-3 control-label">车牌号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control plate" disabled="disabled" data-ucoding="1" id="u_plate" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group  col-md-6">
+                            <label class="col-md-3 control-label">车型/品牌:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " disabled="disabled" data-ucoding="1" id="u_brand" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">车价(元):</label>
+                            <div class="col-md-9">
+                                <input class="form-control price" id="u_price" type="number">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label class="col-md-3 control-label">车架号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " disabled="disabled" id="u_frameNo" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label class=" col-md-3 control-label">发动机号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " disabled="disabled" id="u_engineNo" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group  col-md-6">
+                            <label class="col-md-3 control-label">终端编号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control terminalNo" oninput="terminalNoInput(this)" id="u_terminalNo" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <label class=" col-md-3 control-label">SIM卡号:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " disabled="disabled" id="u_sim" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-3 control-label">保险开始时间:</label>
+                            <div class="col-md-9">
+                                <input class="form-control exdate" id="u_insuranceBegin" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">保险结束时间:</label>
+                            <div class="col-md-9">
+                                <input class="form-control exdate" id="u_insuranceEnd" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class=" col-md-3 control-label">保单期限(年)</label>
+                            <div class="col-md-9">
+                                <input class="form-control safeguardPeriod" id="u_safeguardPeriod" type="text" />
+
+                                <!--  onkeyup="this.value=this.value.replace(/\D/g,'')"-->
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-3 control-label">第一受益人:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " data-ucoding="1" id="u_beneficiary" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-3 control-label">地址:</label>
+                            <div class="col-md-9">
+                                <input class="form-control " disabled="disabled" data-ucoding="1" id="u_address" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" style="clear: left;">
+                            <label class="col-md-3 control-label">状态:</label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="u_status">
+                                    <option value="0">未打印</option>
+                                    <option value="1">已打印</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 text-center">
+                            <button class="btn btn-info u_Save" style="margin-right: 20px;">保存</button>
+                            <button onclick='$("#PolicyEditorModel").modal("hide");' class="btn btn-default">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END POLICY EDITOR VIEW-->
+    <!--POLICY PRINT VIEW-->
+    <iframe id="policyPrintForm"></iframe>
+    <!--END POLICY PRINT VIEW-->
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/timepicker/jquery.datetimepicker.js"></script>
+    <script src="layer/layer.js"></script>
+
+
+    <script src="/js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/policySetingTianAn.js" });
+
+            GetVersions(arr);
+        });
+    </script>
+
+</body>
+</html>

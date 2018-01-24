@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--<link href="css/navbar-fixed-top.css" rel="stylesheet">-->
+
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+
+    <style type="text/css">
+        .amap-logo {
+            display: none;
+        }
+
+        .amap-copyright {
+            display: none;
+        }
+
+        /*!
+ * Css Document
+ * 
+ * @author	zongxian.chen at 2012/04/16 build.
+ * @version $Id$
+ */
+
+
+        /************************* Just Reset Browser Default CSS : BEGIN ***************************/
+        html {
+            background-color: #fff;
+        }
+
+        body, div, h1, h2, h3, h4, ul, li, form, input, dl, dt, dd, p {
+            margin: 0;
+            padding: 0;
+            /*font-family:微软雅黑;*/
+        }
+
+        h3 {
+            +font-size:14px;
+            _font-size: 14px;
+        }
+
+        img {
+            border: none;
+        }
+
+        .c {
+            clear: both;
+        }
+
+        ul, ol, li {
+            list-style: none;
+        }
+
+        /*清除浮动*/
+        .clearfix:after {
+            content: ".";
+            visibility: hidden;
+            display: block;
+            height: 0;
+            overflow: hidden;
+            clear: both;
+        }
+
+        /* no ie mac \*/
+        * html .clearfix {
+            height: 1%;
+        }
+        /* end */
+        * + html .clearfix {
+            height: 1%;
+        }
+
+        body {
+            /*font: 12px/1.5em 微软雅黑,Arial,Verdana,Helvetica,sans-serif;*/
+            color: #333;
+        }
+
+        button, input, select, textarea {
+            color: #999;
+        }
+
+            input[type="button"] {
+                padding: 0 5px;
+                color: white;
+            }
+
+        .demo_box {
+            width: 760px;
+        }
+        /* map style */
+        #iCenter {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #F6F6F6;
+        }
+
+        #r_title {
+            line-height: 28px;
+            padding-left: 5px;
+            background-color: #D1EEEE;
+            font-weight: bold;
+        }
+
+        #result {
+            overflow: auto;
+            margin-bottom: 5px;
+            /*	width:661px;*/
+            height: 255px;
+        }
+            /*  结果项 */
+            #result .sub_result {
+                font-size: 12px;
+                cursor: pointer;
+                line-height: 20px;
+                /*padding:0px 0 4px 2px;*/
+                border-bottom: 1px solid #C1FFC1;
+            }
+
+                #result .sub_result .detail {
+                }
+
+                    #result .sub_result .detail h3 {
+                        color: #00A6AC;
+                    }
+
+        a {
+            color: #067EC0;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: none;
+            }
+
+        .note {
+            color: #999;
+        }
+
+        /*** layerout stylesheet ***/
+        /* 修改背景URL */
+        div.change {
+            background-image: url(http://pages.haozu.ajkcdn.com/20110909/img/map/marker-h.png);
+        }
+
+            div.change div {
+                background-image: url(http://pages.haozu.ajkcdn.com/20110909/img/map/marker-h-l.gif);
+            }
+
+        /*** copied from demo #39 添加自定义点覆盖物 ***/
+        /* 定义自定义点样式 */
+        .markerContentStyle {
+            position: relative;
+        }
+
+            .markerContentStyle span {
+                background-color: #FFFFFF;
+                color: #FF1493;
+                width: 120px;
+                heigth: 80px;
+                border: 2px solid #D8BFD8;
+                FONT-FAMILY: 华文行楷;
+                position: absolute;
+                top: -10px;
+                left: 25px;
+                white-space: nowrap -webkit-border-radius:5px;
+                border-radius: 5px;
+            }
+
+        /*** copied from demo #43 添加自定义信息窗体 ***/
+        /* 定义自定义信息窗体样式 */
+        div.info {
+            position: relative;
+            z-index: 100;
+            border: 1px solid #BCBCBC;
+            box-shadow: 0 0 10px #B7B6B6;
+            border-radius: 8px;
+            background-color: rgba(255,255,255,0.9);
+            transition-duration: 0.25s;
+        }
+
+            div.info:hover {
+                box-shadow: 0px 0px 15px #0CF;
+            }
+
+        div.info-top {
+            position: relative;
+            background: none repeat scroll 0 0 #F9F9F9;
+            border-bottom: 1px solid #CCC;
+            border-radius: 5px 5px 0 0;
+        }
+
+            div.info-top div {
+                display: inline-block;
+                color: #333333;
+                font-size: 14px;
+                font-weight: bold;
+                line-height: 31px;
+                padding: 0 10px;
+            }
+
+            div.info-top img {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                transition-duration: 0.25s;
+            }
+
+                div.info-top img:hover {
+                    box-shadow: 0px 0px 5px #000;
+                }
+
+        div.info-middle {
+            font-size: 12px;
+            padding: 10px;
+            line-height: 21px;
+        }
+
+        div.info-bottom {
+            height: 0px;
+            width: 100%;
+            clear: both;
+            text-align: center;
+        }
+
+            div.info-bottom img {
+                position: relative;
+                z-index: 104;
+            }
+        /*** -------------------------***/
+
+
+        #panel {
+            position: absolute;
+            background-color: white;
+            max-height: 80%;
+            overflow-y: auto;
+            top: 50px;
+            right: 10px;
+            width: 280px;
+        }
+
+        .closeSearchList {
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            border: 0px;
+            cursor: pointer;
+            background-color: white;
+            color: #7DC1FB;
+        }
+
+            .closeSearchList:hover {
+                background-color: #7DC1FB;
+                color: white;
+            }
+    </style>
+</head>
+<body style="margin: 0px;">
+    <div id="right" style="float: right; height: 100%; width: 40%;">
+        <div id="EditGroup" class="form-horizontal" role="form" style="padding: 15px;">
+            <div class="form-group">
+                <div class="col-sm-10">
+
+                    <!--   <textarea id="txtHome"   class="form-control" style="height: 70px; resize: none" placeholder="输入公司地址"> </textarea>-->
+                    <textarea id="txtHome" class="form-control" style="height: 70px; resize: none" placeholder="请输入家庭住址"></textarea>
+                </div>
+                <button id="Button1" type="button" onclick="setHomeCenter();" data-loading-text="Loading" value="1" class="btn btn-primary col-sm-2" style="width: 35px;">
+                    <i class="fa fa-map-marker" style="margin-right: 3px;"></i>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-10">
+                    <textarea id="txtCompany" class="form-control" style="height: 70px; resize: none" placeholder="请输入公司地址"></textarea>
+                </div>
+                <button id="Button2" type="button" onclick="setCompanyCenter();" data-loading-text="Loading" value="1" class="btn btn-info  col-sm-2" style="width: 35px;"><i class="fa fa-map-marker" style="margin-right: 3px;"></i></button>
+            </div>
+
+            <!--<div class="form-group">
+                <div class="col-sm-12">
+                    <select id="cbAreaType" class="form-control m-bot15">
+                        <option value="0">家庭住址</option>
+                        <option value="1">公司地址</option>
+
+                    </select>
+                </div>
+            </div>-->
+
+
+
+            <div class="form-group">
+                <div class=" col-sm-12">
+                    <button id="saveArea" type="button" onclick="save();" data-loading-text="Loading" value="1" class="btn btn-danger" style="float: right;">启用</button>
+                </div>
+            </div>
+            <div style="color: #f00; position: absolute; bottom: 20px; background-color: rgb(234, 249, 255); padding: 10px; width: 290px; border: 1px solid rgb(177, 196, 234);">
+                <p>
+                    用法：地图上任选两点，作为家庭住址以及公司地址。
+                </p>
+                <p>
+                    逻辑：当车辆连续三天不经过您设置的两点(范围：1000米)，系统会自动推送车辆异常停留报警。
+                </p>
+
+            </div>
+        </div>
+
+
+
+        <div id="BindGroup" class=" form-horizontal" role="form" style="padding: 15px; display: none;">
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label">区域名称:</label>
+                <div class="col-sm-8">
+                    <label id="labelBindAreaName" class=" control-label" style="float: left; padding-left: 0px;"></label>
+                    <!--<button id="Button1" type="submit" class="btn btn-info btn-xs" style="float: left;    margin: 5px;"><i class="fa fa-pencil-square-o" style="padding-right:5px;" ></i>编辑围栏</button>-->
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">区域类型:</label>
+
+                <div class="col-sm-8">
+                    <label id="labelBindAreaType" class="col-sm-8 control-label" style="padding-left: 0px;"></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label">关联目标:</label>
+                <div class="col-sm-8">
+
+                    <div class="radios" style="padding-top: 6px;">
+                        <label class="label_radio r_on" for="radio-01" style="float: left; margin-right: 10px;">
+                            <input name="sample-radio" class="rd" id="radio-01" checked="checked" value="0" type="radio" aria-checked="true">
+                            车辆
+                        </label>
+                        <label class="label_radio r_off" for="radio-02" style="float: left; margin-right: 10px;">
+                            <input name="sample-radio" class="rd" id="radio-02" value="1" type="radio" disabled="disabled">
+                            车组
+                        </label>
+                        <label class="label_radio r_off" for="radio-02" style="float: left; margin-right: 10px;">
+                            <input name="sample-radio" class="rd" id="radio1" value="2" type="radio" disabled="disabled" />
+                            输入
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-8">
+                    <button id="bindParking" type="submit" class="btn btn-danger" style="float: right;">保存</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div id="container" style="float: left; height: 100%; width: 60%;">
+    </div>
+
+
+
+
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8ebe8b1bf92a362d7e8bc8a75c01be8f&plugin=AMap.Autocomplete,AMap.PlaceSearch,AMap.Geocoder"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+
+
+
+    <script type="text/javascript" src="js/jquery.js?v=1.1"></script>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+
+
+    <script src="js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript">
+        var map;
+        var trafficLayer;
+        var normalLayer;
+        var satelliteLayer;
+        var roadNetLayer;
+        var placeSearch;
+
+
+        var homeMark;
+        var companyMark;
+        var vehid = 0;
+
+        var geocoderCompany;
+        var geocoderHome;
+        $(document).ready(function () {
+
+            normalLayer = new AMap.TileLayer();
+            satelliteLayer = new AMap.TileLayer.Satellite();
+
+            map = new AMap.Map('container', {
+                resizeEnable: true
+            });
+            AMap.event.addListener(map, 'complete', function () {
+                $('.amap-toolbar').css('top', '50px');
+                //  parent.monitorresize();
+            });
+
+
+            vehid = getUrlParam("vehid");
+            //type = getUrlParam("type");
+
+
+            //输入提示
+            var autoHomeOptions = {
+                input: "txtHome"
+            };
+            var autoHome = new AMap.Autocomplete(autoHomeOptions);
+
+            geocoderHome = new AMap.Geocoder({
+                radius: 1000,
+                extensions: "all"
+            });
+
+
+            //构造地点查询类
+            AMap.event.addListener(autoHome, "select", selectHome);//注册监听，当选中某条记录时会触发
+            function selectHome(e) {
+                //e.poi.location.lat
+                //e.poi.location.lng
+                if (homeMark == undefined) {
+                    if (e.poi.location != undefined & e.poi.location != "") {
+                        homeMark = {
+                            mark: new AMap.Marker({
+                                position: [e.poi.location.lng, e.poi.location.lat],
+                                draggable: true,
+                                cursor: 'move',
+                                raiseOnDrag: true,
+                                icon: new AMap.Icon({
+                                    size: new AMap.Size(30, 35),  //图标大小
+                                    image: "boyunImg/locationHome.png",
+                                    imageOffset: new AMap.Pixel(0, 0)
+                                }),
+                                map: map
+                            }),
+                            circle: drawCircle(e.poi.location.lng, e.poi.location.lat, 1000, "#41cac0")
+                        }
+
+                        homeMark.mark.on('dragend', function (MapsEvent) {
+                            setTimeout(function () { homeMark.circle.setCenter(homeMark.mark.getPosition()); }, 1000);
+
+                            geocoderHome.getAddress(homeMark.mark.getPosition(), function (status, result) {
+                                if (status === 'complete' && result.info === 'OK') {
+                                    var address = result.regeocode.formattedAddress; //返回地址描述 
+                                    $('#txtHome').val(address);
+                                }
+                            });
+
+                        });
+
+                        map.setZoomAndCenter(14, [e.poi.location.lng, e.poi.location.lat]);
+                    } else { layer.msg('地址不够具体，请重新输入！', { icon: 3 }); }
+                } else {
+                    if (e.poi.location != undefined && e.poi.location != "") {
+                        homeMark.mark.setPosition([e.poi.location.lng, e.poi.location.lat]);
+                        homeMark.circle.setCenter([e.poi.location.lng, e.poi.location.lat]);
+                        map.setZoomAndCenter(14, [e.poi.location.lng, e.poi.location.lat]);
+                    } else { layer.msg('地址不够具体，请重新输入！', { icon: 3 }); }
+                }
+
+
+
+            }
+
+
+
+
+
+            var autoCompanyOptions = {
+                input: "txtCompany"
+            };
+            var autoCompany = new AMap.Autocomplete(autoCompanyOptions);
+
+            geocoderCompany = new AMap.Geocoder({
+                radius: 1000,
+                extensions: "all"
+            });
+
+            //构造地点查询类
+            AMap.event.addListener(autoCompany, "select", selectCompany);//注册监听，当选中某条记录时会触发
+            function selectCompany(e) {
+                //e.poi.location.lat
+                //e.poi.location.lng
+                if (companyMark == undefined) {
+                    if (e.poi.location != undefined & e.poi.location != "") {
+                        companyMark = {
+                            mark: new AMap.Marker({
+                                position: [e.poi.location.lng, e.poi.location.lat],
+                                draggable: true,
+                                cursor: 'move',
+                                raiseOnDrag: true,
+                                icon: new AMap.Icon({
+                                    size: new AMap.Size(30, 35),  //图标大小
+                                    image: "boyunImg/locationCompany.png",
+                                    imageOffset: new AMap.Pixel(0, 0)
+                                }),
+                                map: map
+                            }),
+                            circle: drawCircle(e.poi.location.lng, e.poi.location.lat, 1000, "#41cac0")
+                        };
+                        companyMark.mark.on('dragend', function (MapsEvent) {
+                            setTimeout(function () { companyMark.circle.setCenter(companyMark.mark.getPosition()); }, 1000);
+                            geocoderCompany.getAddress(companyMark.mark.getPosition(), function (status, result) {
+                                if (status === 'complete' && result.info === 'OK') {
+                                    var address = result.regeocode.formattedAddress; //返回地址描述 
+                                    $('#txtCompany').val(address);
+                                }
+                            });
+                        });
+                        map.setZoomAndCenter(14, [e.poi.location.lng, e.poi.location.lat]);
+                    } else { layer.msg('地址不够具体，请重新输入！', { icon: 3 }); }
+                } else {
+
+                    if (e.poi.location != undefined && e.poi.location != "") {
+                        companyMark.mark.setPosition([e.poi.location.lng, e.poi.location.lat]);
+                        companyMark.circle.setCenter([e.poi.location.lng, e.poi.location.lat]);
+                        map.setZoomAndCenter(14, [e.poi.location.lng, e.poi.location.lat]);
+                    } else { layer.msg('地址不够具体，请重新输入！', { icon: 3 }); }
+                }
+
+            }
+
+
+            if (getUrlParam("str") != null && getUrlParam("str") != "") {
+                var str = getUrlParam("str");
+
+                var maxlat = 0;
+                var maxlng = 0;
+                var minlat = 11000;
+                var minlng = 11000;
+
+                var points = str.split(';');
+                for (var i = 0; i < points.length; i++) {
+                    var dataItems = points[i].split(',');
+                    if (dataItems.length = 4) {
+                        switch (dataItems[0]) {
+                            case "1":
+                                var point = GPS.delta(parseFloat(dataItems[1]), parseFloat(dataItems[2]));
+                                homeMark = {
+                                    mark: new AMap.Marker({
+                                        position: [point.lon, point.lat],
+                                        draggable: false,
+                                        cursor: 'move',
+                                        raiseOnDrag: true,
+                                        icon: new AMap.Icon({
+                                            size: new AMap.Size(30, 35),  //图标大小
+                                            image: "boyunImg/locationHome.png",
+                                            imageOffset: new AMap.Pixel(0, 0)
+                                        }),
+                                        map: map
+                                    }),
+                                    circle: drawCircle(point.lon, point.lat, parseInt(dataItems[3]), "#41cac0"),
+                                    //line: new AMap.Polyline({
+                                    //    path: poinsLine,          //设置线覆盖物路径
+                                    //    strokeColor: "#41cac0", //线颜色
+                                    //    strokeOpacity: 1,       //线透明度
+                                    //    strokeWeight: 2,        //线宽
+                                    //    strokeStyle: "dashed",   //线样式
+                                    //    strokeDasharray: [10, 5], //补充线样式
+                                    //    map: map
+                                    //})
+                                }
+
+
+                                if (parseFloat(dataItems[1]) > maxlat) {
+                                    maxlat = parseFloat(dataItems[1]);
+                                }
+                                if (parseFloat(dataItems[2]) > maxlng) {
+                                    maxlng = parseFloat(dataItems[2]);
+                                }
+
+                                if (parseFloat(dataItems[1]) < minlat) {
+                                    minlat = parseFloat(dataItems[1]);
+                                }
+                                if (parseFloat(dataItems[2]) < minlng) {
+                                    minlng = parseFloat(dataItems[2]);
+                                }
+
+                                geocoderHome.getAddress(homeMark.mark.getPosition(), function (status, result) {
+                                    if (status === 'complete' && result.info === 'OK') {
+                                        var address = result.regeocode.formattedAddress; //返回地址描述 
+                                        $('#txtHome').val(address);
+                                    }
+                                });
+                                break;
+
+                            case "2":
+                                var point = GPS.delta(parseFloat(dataItems[1]), parseFloat(dataItems[2]));
+                                companyMark = {
+                                    mark: new AMap.Marker({
+                                        position: [point.lon, point.lat],
+                                        draggable: false,
+                                        cursor: 'move',
+                                        raiseOnDrag: true,
+                                        icon: new AMap.Icon({
+                                            size: new AMap.Size(30, 35),  //图标大小
+                                            image: "boyunImg/locationCompany.png",
+                                            imageOffset: new AMap.Pixel(0, 0)
+                                        }),
+                                        map: map
+                                    }),
+                                    circle: drawCircle(point.lon, point.lat, parseInt(dataItems[3]), "#41cac0"),
+                                }
+                                if (parseFloat(dataItems[1]) > maxlat) {
+                                    maxlat = parseFloat(dataItems[1]);
+                                }
+                                if (parseFloat(dataItems[2]) > maxlng) {
+                                    maxlng = parseFloat(dataItems[2]);
+                                }
+                                if (parseFloat(dataItems[1]) < minlat) {
+                                    minlat = parseFloat(dataItems[1]);
+                                }
+                                if (parseFloat(dataItems[2]) < minlng) {
+                                    minlng = parseFloat(dataItems[2]);
+                                }
+                                geocoderCompany.getAddress(companyMark.mark.getPosition(), function (status, result) {
+                                    if (status === 'complete' && result.info === 'OK') {
+                                        var address = result.regeocode.formattedAddress; //返回地址描述 
+                                        $('#txtCompany').val(address);
+                                    }
+                                });
+                                break;
+                        }
+                    }
+                }
+
+
+                var bounds = new AMap.Bounds(new AMap.LngLat(minlng - 0.01, minlat - 0.01), new AMap.LngLat(maxlng + 0.01, maxlat + 0.01));
+                map.setBounds(bounds);
+
+            } else {
+                get(vehid);
+            }
+
+
+        });
+
+
+
+        function get(vehid) {
+            var index = layer.load(2);
+            var groupid = 0;
+            if (parent.vehList != null) {
+                if (parent.vehList[vehid] != undefined) {
+                    groupid = parent.vehList[vehid].groupId;
+                }
+                else if (parent.vehList.topVehList[vehid] != undefined) {
+                    groupid = parent.vehList.topVehList[vehid].groupId;
+                } else { groupid = parent.$("#mapframe")[0].contentWindow.focusAlarm.gps.groupId }
+
+            } else {
+                groupid = getUrlParam("groupid");
+            }
+
+            myAjax({
+                type: 'GET',
+                url: ajax("http/SafetyZone/GetVehicleStayPoint.json?groupId=" + groupid + "&vehicleId=" + vehid),
+                dataType: 'json',                           //指定服务器返回的数据类型
+                timeout: 20000,                              //请求超时时间
+                cache: false,                               //是否缓存上一次的请求数据
+                async: true,                                //是否异步 
+                success: function (data) {
+                    if (data.flag == 1) {
+
+                        var maxlat = 0;
+                        var maxlng = 0;
+                        var minlat = 11000;
+                        var minlng = 11000;
+
+                        if (data.obj != undefined) {
+                            var points = data.obj.split(';');
+                            for (var i = 0; i < points.length; i++) {
+                                var dataItems = points[i].split(',');
+                                if (dataItems.length = 4) {
+                                    switch (dataItems[0]) {
+                                        case "1":
+                                            var point = GPS.delta(parseFloat(dataItems[1]), parseFloat(dataItems[2]));
+                                            homeMark = {
+                                                mark: new AMap.Marker({
+                                                    position: [point.lon, point.lat],
+                                                    draggable: false,
+                                                    cursor: 'move',
+                                                    raiseOnDrag: true,
+                                                    icon: new AMap.Icon({
+                                                        size: new AMap.Size(30, 35),  //图标大小
+                                                        image: "boyunImg/locationHome.png",
+                                                        imageOffset: new AMap.Pixel(0, 0)
+                                                    }),
+                                                    map: map
+                                                }),
+                                                circle: drawCircle(point.lon, point.lat, parseInt(dataItems[3]), "#41cac0"),
+                                                //line: new AMap.Polyline({
+                                                //    path: poinsLine,          //设置线覆盖物路径
+                                                //    strokeColor: "#41cac0", //线颜色
+                                                //    strokeOpacity: 1,       //线透明度
+                                                //    strokeWeight: 2,        //线宽
+                                                //    strokeStyle: "dashed",   //线样式
+                                                //    strokeDasharray: [10, 5], //补充线样式
+                                                //    map: map
+                                                //})
+                                            }
+
+
+                                            if (parseFloat(dataItems[1]) > maxlat) {
+                                                maxlat = parseFloat(dataItems[1]);
+                                            }
+                                            if (parseFloat(dataItems[2]) > maxlng) {
+                                                maxlng = parseFloat(dataItems[2]);
+                                            }
+
+                                            if (parseFloat(dataItems[1]) < minlat) {
+                                                minlat = parseFloat(dataItems[1]);
+                                            }
+                                            if (parseFloat(dataItems[2]) < minlng) {
+                                                minlng = parseFloat(dataItems[2]);
+                                            }
+
+                                            geocoderHome.getAddress(homeMark.mark.getPosition(), function (status, result) {
+                                                if (status === 'complete' && result.info === 'OK') {
+                                                    var address = result.regeocode.formattedAddress; //返回地址描述 
+                                                    $('#txtHome').val(address);
+                                                }
+                                            });
+                                            break;
+
+                                        case "2":
+                                            var point = GPS.delta(parseFloat(dataItems[1]), parseFloat(dataItems[2]));
+                                            companyMark = {
+                                                mark: new AMap.Marker({
+                                                    position: [point.lon, point.lat],
+                                                    draggable: false,
+                                                    cursor: 'move',
+                                                    raiseOnDrag: true,
+                                                    icon: new AMap.Icon({
+                                                        size: new AMap.Size(30, 35),  //图标大小
+                                                        image: "boyunImg/locationCompany.png",
+                                                        imageOffset: new AMap.Pixel(0, 0)
+                                                    }),
+                                                    map: map
+                                                }),
+                                                circle: drawCircle(point.lon, point.lat, parseInt(dataItems[3]), "#41cac0"),
+                                                //line: new AMap.Polyline({
+                                                //    path: poinsLine,          //设置线覆盖物路径
+                                                //    strokeColor: "#41cac0", //线颜色
+                                                //    strokeOpacity: 1,       //线透明度
+                                                //    strokeWeight: 2,        //线宽
+                                                //    strokeStyle: "dashed",   //线样式
+                                                //    strokeDasharray: [10, 5], //补充线样式
+                                                //    map: map
+                                                //})
+                                            }
+
+
+                                            if (parseFloat(dataItems[1]) > maxlat) {
+                                                maxlat = parseFloat(dataItems[1]);
+                                            }
+                                            if (parseFloat(dataItems[2]) > maxlng) {
+                                                maxlng = parseFloat(dataItems[2]);
+                                            }
+                                            if (parseFloat(dataItems[1]) < minlat) {
+                                                minlat = parseFloat(dataItems[1]);
+                                            }
+                                            if (parseFloat(dataItems[2]) < minlng) {
+                                                minlng = parseFloat(dataItems[2]);
+                                            }
+                                            geocoderCompany.getAddress(companyMark.mark.getPosition(), function (status, result) {
+                                                if (status === 'complete' && result.info === 'OK') {
+                                                    var address = result.regeocode.formattedAddress; //返回地址描述 
+                                                    $('#txtCompany').val(address);
+                                                }
+                                            });
+                                            break;
+                                    }
+                                }
+                            }
+                            if (parent.vehList != null) {
+                                if (parent.vehList[vehid] == undefined) {
+                                    if (parent.vehList.topVehList[vehid] != undefined) {
+                                        if (parent.vehList.topVehList[vehid].y > maxlat) {
+                                            maxlat = parent.vehList.topVehList[vehid].y
+                                        }
+                                        if (parent.vehList.topVehList[vehid].x > maxlng) {
+                                            maxlng = parent.vehList.topVehList[vehid].x;
+                                        }
+                                        if (parent.vehList.topVehList[vehid].y < minlat) {
+                                            minlat = parent.vehList.topVehList[vehid].y;
+                                        }
+                                        if (parent.vehList.topVehList[vehid].x < minlng) {
+                                            minlng = parent.vehList.topVehList[vehid].x;
+                                        }
+                                    } else {
+                                        if (parent.$("#mapframe")[0].contentWindow.focusAlarm.gps.y > maxlat) {
+                                            maxlat = parent.$("#mapframe")[0].contentWindow.focusAlarm.gps.y
+                                        }
+                                        if (parent.$("#mapframe")[0].contentWindow.focusAlarm.gps.x > maxlng) {
+                                            maxlng = parent.$("#mapframe")[0].contentWindow.focusAlarm.gps.x;
+                                        }
+                                        if (parent.$("#mapframe")[0].contentWindow.focusAlarm.gps.y < minlat) {
+                                            minlat = parent.$("#mapframe")[0].contentWindow.focusAlarm.gps.y;
+                                        }
+                                        if (parent.$("#mapframe")[0].contentWindow.focusAlarm.gps.x < minlng) {
+                                            minlng = parent.$("#mapframe")[0].contentWindow.focusAlarm.gps.x;
+                                        }
+                                    }
+                                } else {
+                                    if (parent.vehList[vehid].y > maxlat) {
+                                        maxlat = parent.vehList[vehid].y;
+                                    }
+                                    if (parent.vehList[vehid].x > maxlng) {
+                                        maxlng = parent.vehList[vehid].x;
+                                    }
+                                    if (parent.vehList[vehid].y < minlat) {
+                                        minlat = parent.vehList[vehid].y;
+                                    }
+                                    if (parent.vehList[vehid].x < minlng) {
+                                        minlng = parent.vehList[vehid].x;
+                                    }
+                                }
+
+                            }
+
+                            var bounds = new AMap.Bounds(new AMap.LngLat(minlng - 0.01, minlat - 0.01), new AMap.LngLat(maxlng + 0.01, maxlat + 0.01));
+                            map.setBounds(bounds);
+
+
+                        }
+
+
+                    } else { layer.msg('没有设置经常停留点', { icon: 3 }); }
+
+                    layer.close(index);
+                },
+                error: function (msg) {
+                    layer.close(index);
+                    layer.msg('查看经常停留点失败:' + msg.statusText, { icon: 2 });
+
+                }
+            });
+        }
+
+        function setHomeCenter() {
+            map.setZoomAndCenter(14, homeMark.mark.getPosition());
+        }
+
+        function setCompanyCenter() {
+            map.setZoomAndCenter(14, companyMark.mark.getPosition());
+        }
+
+
+        function drawCircle(lat, lon, radius, fillColor, strokeColor) {
+            var circle = new AMap.Circle({
+                center: new AMap.LngLat(lat, lon),// 圆心位置
+                radius: radius, //半径
+                strokeColor: strokeColor, //线颜色
+                strokeOpacity: 1, //线透明度
+                strokeWeight: 3, //线粗细度
+                fillColor: fillColor, //填充颜色
+                fillOpacity: 0.35//填充透明度
+            });
+            circle.setMap(map);
+
+            return circle;
+        }
+
+
+        function save() {
+
+            var param = "";
+            if (homeMark != undefined) {
+                var homeLatLng = homeMark.mark.getPosition();
+                var point = GPS.deltaOut(parseFloat(homeLatLng.lat), parseFloat(homeLatLng.lng));
+                param += "1," + point.lat + "," + point.lon + "," + 1000 + ";"
+            }
+
+            if (companyMark != undefined) {
+                var companyLatLng = companyMark.mark.getPosition();
+                var point = GPS.deltaOut(parseFloat(companyLatLng.lat), parseFloat(companyLatLng.lng));
+                param += "2," + point.lat + "," + point.lon + "," + 1000;
+            }
+            var groupid = 0;
+            if (parent.vehList != null) {
+
+                if (parent.vehList[vehid] != undefined) {
+                    groupid = parent.vehList[vehid].groupId;
+                } else if (parent.vehList.topVehList[vehid] != undefined) {
+                    groupid = parent.vehList.topVehList[vehid].groupId;
+                } else { groupid = parent.$("#mapframe")[0].contentWindow.focusAlarm.gps.groupId }
+            } else {
+                groupid = getUrlParam("groupid");
+            }
+
+            if (param != "") {
+                var type = getUrlParam("type");
+                if (type != null && type == "rt") {
+                    parent.rt_parkingCircleSetting_cl(param);
+                    parent.layer.closeAll();
+                    return false;
+                }
+
+                //param
+
+                var list_pastr = param.split(';');
+
+                var str__1 = "";
+                var str__2 = "";
+                $.each(list_pastr, function (i) {
+                    if (Number(this.split(',')[0]) == 1) {
+                        str__1 = this;
+                    } else if (Number(this.split(',')[0]) == 2) {
+                        str__2 = this;
+                    }
+                });
+
+         
+                if ($("#txtCompany").val().replace(/(^\s*)|(\s*$)/g, "") == "") {
+                    str__2 = "";
+                }
+                if ($("#txtHome").val().replace(/(^\s*)|(\s*$)/g, "") == "") {
+                 
+                    str__1 = "";
+                }
+                if (str__1 != "") {
+                    param = str__1 + ";" + str__2;
+                } else {
+                    param = str__2;
+                }
+
+
+           
+
+
+
+                $("#saveArea").button('loading');
+                myAjax({
+                    type: 'GET',
+                    url: ajax("http/SafetyZone/ReplaceVehicleStayPoint.json?groupId=" + groupid + "&vehicleId=" + vehid + "&staypoint=" + param),
+                    dataType: 'json',                             //指定服务器返回的数据类型
+                    timeout: 20000,                               //请求超时时间
+                    cache: false,                                 //是否缓存上一次的请求数据
+                    async: true,                                  //是否异步 
+                    success: function (data) {
+                        $("#btnsearch").button('reset');
+                        if (data.flag == 1) {
+
+                            //{radii: 200, lon: 120.3934220533171, lat: 36.11082318809015}
+                            //Circles[veh.vehicleId] = drawCircle(data.obj.lat, data.obj.lon, data.obj.radii, "#000000");
+                            //Circles[veh.vehicleId].onMouseMove('click', function (MapsEvent) {
+                            //    mouseControl(MapsEvent);
+                            //});
+                            layer.msg(data.msg, { icon: 1 });
+                            if (getUrlParam("groupid") == null) {
+                                setTimeout(
+                              function () {
+                                  parent.closeWindow();
+                              }, 300);
+                            } else {
+
+                                //if (getUrlParam("indexhome") != null) {
+                                //    parent.vm.parkingCircleSetting_indexclose();
+                                //} else {
+                                    setTimeout(
+                         function () {
+                             parent.layer.closeAll();
+                         }, 300);
+                                }
+
+                          //  }
+
+                            parent.getstayPaint(param);
+
+                        } else { layer.msg('添加经常停留点失败:' + data.msg, { icon: 3 }); }
+
+
+                    },
+                    error: function (msg) {
+                        layer.msg('添加经常停留点失败:' + msg.statusText, { icon: 2 });
+                        $("#saveArea").button('reset');
+                    }
+                });
+            } else { layer.msg('请先设置经常停留点!', { icon: 2 }); }
+        }
+
+
+    </script>
+
+
+</body>
+</html>

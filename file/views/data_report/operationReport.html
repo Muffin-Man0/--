@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+    <title>Dynamic Table</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <!--right slidebar-->
+    <link href="css/slidebars.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+      <link href="assets/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body style="height: 100%;">
+
+    <section id="container" class="" style="height: 100%; overflow: hidden;">
+
+
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper" style="padding-top: 15px; margin-top: 0px;">
+                <!-- page start-->
+                <div id="div_search" class="row" style="background-color: white; padding: 15px; margin-left: 15px; margin-right: 15px; /* margin-bottom: 10px; */
+    padding-bottom: 0px; border-bottom: 1px solid #f0f1f6; padding-bottom: 0px;">
+
+
+
+                    <div class="row">
+                        <div style="float: left; height: 33px; line-height: 33px; font-weight: bold;">
+                            选择日期：
+                        </div>
+                        <div class="col-sm-2" style="padding-left: 3px; padding-right: 3px;">
+                            <section class="panel">
+                                <input id="startTime" type="text" placeholder="请输入开始时间" class="form-control cor_bck" readonly="" size="16">
+                            </section>
+                        </div>
+
+                        <div class="col-sm-2" style="padding-left: 3px; padding-right: 3px;">
+                            <section class="panel">
+                                <input id="endTime" type="text" placeholder="请输入结束时间" class="form-control cor_bck" readonly="" size="16">
+                            </section>
+                        </div>
+
+
+                        <div style="float: left; height: 33px; margin-left: 30px; line-height: 33px; color: #096fc7;">
+                            <a class="atime">今天</a>
+                            <a>|</a>
+                            <a class="atime">昨天</a>
+                            <a>|</a>
+                            <a class="atime">近三天</a>
+                            <a>|</a>
+                            <a class="atime">近七天</a>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div style="padding-left: 3px; padding-right: 3px; width: 266px; float: left;">
+                            <div style="float: left; height: 33px; line-height: 33px; font-weight: bold;">
+                                操作类型：
+                            </div>
+
+                            <select id="flag" onchange="flagzz()" class="form-control m-bot15 cor_bck" style="float: left; width: 188px;">
+                                <option value="0">用户操作记录</option>
+                                <option value="1">车辆操作记录</option>
+                            </select>
+
+                        </div>
+
+                        <div style="float: left;">
+                            <div id="chooseIddiv" style="display: none;">
+                                <div style="padding-right: 3px; width: 350px;">
+                                    <div style="float: left; height: 33px; line-height: 33px; font-weight: bold;">
+                                        车辆车组：
+                                    </div>
+                                    <section class="panel input-group m-bot15" style="padding-left: 3px; float: left; width: 250px;">
+                                        <input id="chooseId" type="text" placeholder="请选择车组或者车辆" data-provide="typeahead" autocomplete="off" class="form-control input-small cor_bck">
+                                        <span class="input-group-btn">
+                                            <button id="btnChooseId" class="btn btn-white" type="button" style="border-radius: 0px;"><i id="iChooseId" class="fa fa-sitemap"></i></button>
+                                        </span>
+                                    </section>
+                                </div>
+                                <div class="typeahead dropdown-menu" id="TreeDiv">
+                                      <p id="TreeTitel" style="margin: 3px; font-size: 12px; padding-left: 10px;">
+                                <i style="font-weight: 900; color: #f00;">“双击”</i>左边节点选择<i style="font-weight: 900; color: #f00;">“车组”</i>，
+                                 <i style="font-weight: 900; color: #f00;">“单击”</i>右边节点选择<i style="font-weight: 900; color: #f00;">“车辆”</i>
+                            </p>
+                                    <div id="groupTree" class="ztree RpZtree"></div>
+                                    <div id="vehTree" class="ztree RpZtree" style="border-left: 1px solid #b0b5b9;"></div>
+                                </div>
+                            </div>
+                            <div id="userNamediv">
+                                <div style="float: left; height: 33px; line-height: 33px; font-weight: bold;">
+                                    选择用户：
+                                </div>
+                                <div style="float: left; height: 33px; line-height: 33px; font-weight: bold;">
+                                    <input id="userNameTxt" type="text" placeholder="请输入用户名" data-provide="typeahead" autocomplete="off" style="width: 190px;" class="form-control input-small cor_bck" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3" style="padding-left: 3px; padding-right: 3px; float: right;">
+                            <button id="btnOutPut" type="button" data-loading-text="Loading..." class="btn btn-success" style="float: right; margin-left: 10px; background-color: #ffffff; border-color: #c5c5c5; color: #165082;">
+                                <i class="fa  fa-share-square"></i>导出</button>
+                            <button id="btnsearch" type="button" data-loading-text="Loading..." class="btn btn-success" style="float: right; margin-left: 30px; background-color: #165082; border-color: #1a5284; color: #FFFFFF;">
+                                <i class="fa fa-search"></i>搜索</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-13">
+                        <div id="prompt" class="alert alert-block alert-danger fade in" style="margin-left: 15px; margin-right: 15px; display: none;">
+                            <button data-dismiss="alert" class="close close-sm" type="button">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <strong>查询失败!</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="adv-table">
+                                    <table id="operationTable"></table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+    </section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="layer/layer.js"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="js/respond.min.js"></script>
+
+    <!--right slidebar-->
+    <script src="js/slidebars.min.js"></script>
+
+
+    <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
+    <!--<script src="js/advanced-form-components.js"></script>-->
+
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <script src="js/Common.js"></script>
+    <script src="assets/timepicker/jquery.datetimepicker.js"></script>
+    <link href="assets/timepicker/jquery.datetimepicker.css" rel="stylesheet" />
+   
+    <script type="text/javascript" src="js/jquery.table2excel.js"></script>
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+ <!--    <script src="js/operationReport.js"></script>
+    <script src="js/ckTree.js"></script>-->
+
+     <script src="/js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/operationReport.js" });
+            arr.push({ src: "/js/ckTree.js" });
+            GetVersions(arr);
+        });
+    </script>
+    <style>
+        .search {
+            width: 200px;
+        }
+
+        .btn-info, .btn-info:hover, .btn-info:active:hover, .btn-info.active:hover, .open > .dropdown-toggle.btn-info:hover, .btn-info:active:focus, .btn-info.active:focus, .open .dropdown-toggle.btn-info, .open > .dropdown-toggle.btn-info:focus, .btn-info:active.focus, .btn-info.active.focus, .open > .dropdown-toggle.btn-info.focus {
+            background-color: #b0b5b9;
+            border-color: #b0b5b9;
+        }
+
+        .btn:hover, .btn:focus, .btn.focus {
+            color: #fff;
+            text-decoration: none;
+            background-color: #165082;
+        }
+
+        .atime {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            .atime:hover {
+                color: #165082;
+                text-decoration: underline;
+            }
+
+        #userNamediv .dropdown-menu {
+            left: 360px;
+        }
+        
+        i {
+            font-style: normal;
+        }
+        #TreeDiv {
+      left:365px;
+        }
+    </style>
+</body>
+</html>

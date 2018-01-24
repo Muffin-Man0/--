@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+    <link rel="stylesheet" href="/css/Element2.css">
+    <style>
+        body,
+        html {
+            background: #fff;
+            margin: 0px;
+            padding: 0px;
+            /* overflow: hidden; */
+            -webkit-font-smoothing: antialiased;
+            font-family: 'PingFangSC', 'helvetica neue', 'hiragino sans gb', 'arial', 'microsoft yahei ui', 'microsoft yahei', 'simsun', 'sans-serif'!important;
+        }
+
+        h1,
+        p,
+        div,
+        h3,
+        h4 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .normal-flex-item {
+            display: flex;
+            display: -webkit-flex;
+            flex-wrap: wrap;
+        }
+
+        .normal-item {
+            border: 1px solid #ececec;
+            border-radius: 3px;
+            background: #fcfcfc;
+            padding-top: 45px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            line-height: 40px;
+            height: 135px;
+            /* width: 23%; */
+            /* height: 30px; */
+        }
+
+        .normal-item:hover {
+            box-shadow: 1px 1px 5px 0 rgba(12, 4, 7, .1);
+        }
+
+        .normal-box {
+            padding: 0 10px;
+            min-width: 1100px;
+            margin: auto;
+        }
+
+        .normal-item-top {
+            padding: 0 24px;
+        }
+
+        .normal-item-top>img {
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .item-padding {
+            padding: 0 30px;
+        }
+
+        .item-title {
+            color: #666;
+            font-size: 16px;
+            height: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-align: center;
+            margin: 10px 0 0 0;
+        }
+
+        .item-description {
+            color: #bbb;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .flex-box {
+            display: flex
+        }
+
+        .flex-item {
+            flex: 1;
+            margin: 0 10px;
+            width: 220px;
+            min-width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class='normal-box'>
+            <div>
+                <div>
+                    <img style='margin: 0 auto;display: block;' src='/img/homeMax/title.png' />
+                </div>
+            </div>
+            <!-- !!!!!!!!!! -->
+            <div class='flex-box'>
+                <div class='flex-item'>
+                    <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/home/homeicon/手机定位查询.png' />
+                            <div class='item-title'>手机定位查询</div>
+                            <p class='item-description'>实时查询手机持有人位置</p>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class='flex-item'>
+                    <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/homeMax/shuju.png' />
+                            <div class='item-title'>手机通话查询</div>
+                            <p class='item-description'>通话记录查询，通话时长排名</p>
+                        </div>
+                        <div></div>
+                    </div>
+
+                </div>
+                <div class='flex-item'>
+                    <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/home/homeicon/多头借贷.png' />
+                            <div class='item-title'>多头借贷</div>
+                            <p class='item-description'>近期贷款记录</p>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class='flex-item'>
+                    <!-- <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/home/homeicon/维保查询.png' />
+                            <div class='item-title'>维保查询</div>
+                            <p class='item-description'>车辆维修保养记录</p>
+                        </div>
+                        <div></div>
+                    </div> -->
+                    <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/homeMax/黑名单.png' />
+                            <div class='item-title'>失信被执行</div>
+                            <p class='item-description'>查询是否在不执行法院判决的黑名单中</p>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- !!! -->
+            <div class='flex-box'>
+                <div class='flex-item'>
+                    <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/home/homeicon/出险查询.png' />
+                            <div class='item-title'>出险查询</div>
+                            <p class='item-description'>车辆出险记录</p>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class='flex-item'>
+                    <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/home/homeicon/违章查询.png' />
+                            <div class='item-title'>违章查询</div>
+                            <p class='item-description'>车辆违章记录</p>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class='flex-item'>
+                    <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/home/homeicon/驾驶查询.png' />
+                            <div class='item-title'>行驶证查询</div>
+                            <p class='item-description'>查询机动车所有人，发动机号，vin等信息</p>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+
+
+
+                <div class='flex-item'>
+                    <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/homeMax/学历.png' />
+                            <div class='item-title'>学历查询</div>
+                            <p class='item-description'>查询最高学历，大学名称，专业信息</p>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- !!!! -->
+            <div class='flex-box'>
+                <div class='flex-item'>
+                    <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/homeMax/社保40.png' />
+                            <div class='item-title'>社保</div>
+                            <p class='item-description'>社保缴费记录</p>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class='flex-item'>
+                    <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/homeMax/公积金40.png' />
+                            <div class='item-title'>公积金</div>
+                            <p class='item-description'>公积金缴费记录</p>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+         
+                <div class='flex-item'>
+                    <div class='normal-item'>
+                        <div class='normal-item-top'>
+                            <img src='/img/homeMax/zhifubao.png' />
+                            <div class='item-title'>支付宝报告</div>
+                            <p class='item-description'>支付宝基本信息、收入与支出信息</p>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+
+
+                <div class='flex-item'>
+
+                </div>
+        </div>
+
+
+</body>
+
+</html>
+
+
+
+<script src='/js/vue.min.js'></script>
+<script src="/js/element.js"></script>
+<script src='/js/jquery.js?v=1.1'>
+</script>
+<script>
+    $(function () {
+        $(".normal-item").click(function () {
+            var type = $(this).find($('.item-title')).html().replace(/\ +/g, "")
+            parent.parent.addedcoinUseget(type)
+        });
+    });
+
+    new Vue({
+        el: '#app',
+        data: function () {
+            // return { visible: false }
+        }
+    })
+</script>

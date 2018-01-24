@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="/js/jquery.js?v=1.1"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-reset.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/layer/layer.js"></script>
+    <script src="/js/bootstrap-typeahead.js"></script>
+    <script src="/js/versions.js"></script>
+    <link href="/css/dataQuery.css" rel="stylesheet" />
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/addedcoin/dataQuery.js" });
+            GetVersions(arr);
+
+           
+        });
+    </script>
+</head>
+<body>
+    <div style="width: 80%; float: left;" >
+
+
+        <div class="header-box">
+            <div id="tile" style="font-size: 28px; font-weight: 400; text-align: center; display: block; margin-bottom: 20px;">
+            </div>
+            <form id="datafrom" style="width: 458px; margin: 0px   auto;">
+                <div style="height: 0px; overflow: hidden">
+                    <input type="text" />
+                    <input type="password" />
+                </div>
+
+                <div class="txt pu yy gjj shebao">
+                    <div class="txt_name">
+                        真实姓名：
+                    </div>
+                    <div class="txt_div">
+                        <input id="chooseId" type="text" name="trueName" value="" onkeydown="if(event.keyCode==32) return false" />
+                        <!--   <input type="button" value="历史" />-->
+                        <ul class="typeahead dropdown-menu dropdownul" style="top: 120px; left: 31%; z-index: 1001; width: 288px; max-height: 300px; overflow-y: auto; display: none;  " id="quanbu">
+                        </ul>
+
+                    </div>
+                    <div class="tile" data-str="*请输入真实姓名">
+                        *请输入真实姓名
+                    </div>
+                </div>
+                <div class="txt pu">
+                    <div class="txt_name">
+                        身份证：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="idCard" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入身份证">
+                        *请输入身份证
+                    </div>
+                </div>
+
+                <div class="txt pu gjj shebao">
+                    <div class="txt_name">
+                        手机号：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="mobile" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入手机号">
+                        *请输入手机号
+                    </div>
+                </div>
+                <div class="txt jd" style="display: none;">
+                    <div class="txt_name">
+                        京东账号：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="jdUser" value="" onkeydown="if(event.keyCode==32) return false" />
+                    </div>
+                    <div class="tile" data-str="*请输入京东账号">
+                        *请输入京东账号
+                    </div>
+                </div>
+                <div class="txt jd" style="display: none;">
+                    <div class="txt_name">
+                        京东账号密码：
+                    </div>
+                    <div class="txt_div">
+                        <!--      <input type="text" name="ycjdPassword" oninput="pws_txt('ycjdPassword')" value="" />-->
+                        <input type="password" name="jdPassword" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入京东账号密码">
+                        *请输入京东账号密码
+                    </div>
+
+                </div>
+                <div class="txt yys" style="display: none;">
+                    <div class="txt_name">
+                        服务密码：
+                    </div>
+                    <div class="txt_div">
+                        <input type="password" name="password" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入服务密码">
+                        *请输入服务密码
+                    </div>
+
+                </div>
+                <div class="txt yysx" style="display: none;">
+                    <div class="txt_name">
+                        详细地址：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="userAddress" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入详细地址">
+                        *请输入详细地址
+                    </div>
+
+                </div>
+                <div class="txt yysx" style="display: none;">
+                    <div class="txt_name">
+                        居住城市：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="userCity" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入居住城市">
+                        *请输入居住城市
+                    </div>
+
+                </div>
+                <div class="txt yysx" style="display: none;">
+                    <div class="txt_name">
+                        居住省份：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="userProvince" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入居住省份">
+                        *请输入居住省份
+                    </div>
+                </div>
+                <div class="txt yy" style="display: none;">
+                    <div class="txt_name" style="padding-top: 0px;">
+                        个人信用信息服务平台账号：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="user" value="" onkeydown="if(event.keyCode==32) return false" />
+                    </div>
+                    <div class="tile" data-str="*请输入个人信用信息服务平台账号">
+                        *请输入个人信用信息服务平台账号
+                    </div>
+                </div>
+
+                <div class="txt yy" style="display: none;">
+                    <div class="txt_name">
+                        账号密码：
+                    </div>
+                    <div class="txt_div">
+                        <input type="password" name="passwordz" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入账号密码">
+                        *请输入账号密码
+                    </div>
+                </div>
+                <div class="txt yy" style="display: none;">
+                    <div class="txt_name">
+                        身份验证码：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="authCode" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入身份验证码">
+                        *请输入身份验证码
+                    </div>
+                </div>
+
+                <div id="cityCodediv" class="txt gjj shebao" style="display: none;">
+                    <div class="txt_name">
+                        查询城市：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" id="cityCode" name="cityCode" value="" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+                        <!--   <select id="cityCode" name="cityCode">
+                            <option value="">请选择</option>
+                        </select>-->
+                        <ul id="cityCode_ul" class="typeahead dropdown-menu dropdownul" style="top: 253px; left: 31.5%; z-index: 1001; width: 288px; max-height: 300px; overflow-y: auto; display: none;">
+                        </ul>
+                    </div>
+                    <div class="tile" data-str="*请输入查询城市">
+                        *请输入查询城市
+                    </div>
+                </div>
+                <div class="txt" style="display: none;">
+                    <div class="txt_name">
+                        登陆类型：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" id="loginType" name="loginType" value="" />
+                    </div>
+                    <div class="tile" data-str="">
+                    </div>
+                </div>
+
+                <div class="txt gjj shebao" style="display: none;">
+                    <div class="txt_name" id="gjjdtname">
+                        账号：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="account" value="" />
+                    </div>
+                    <div class="tile" id="gjjdtnametile" data-str="*请输入查询账号">
+                        *请输入查询账号
+                    </div>
+                </div>
+
+                <div class="txt gjj shebao" style="display: none;">
+                    <div class="txt_name">
+                        密码：
+                    </div>
+                    <div class="txt_div">
+                        <input type="password" name="passwordGjj" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入密码">
+                        *请输入密码
+                    </div>
+                </div>
+                <div class="txt  car " style="display: none;">
+                    <div class="txt_name">
+                        车牌号：
+                    </div>
+                    <div class="txt_div">
+                        <input id="PlateNo" type="text" name="PlateNo" value="" />
+                        <ul class="typeahead dropdown-menu dropdownul" style="top: 120px; left: 31%; z-index: 1001; width: 288px; max-height: 300px; overflow-y: auto; display: none; max-height: 300px;" id="PlateNo_quanbu">
+                        </ul>
+                    </div>
+                    <div class="tile" data-str="*请输入车牌号">
+                        *请输入车牌号
+                    </div>
+                </div>
+                <div class="txt  weizhang  weibao " style="display: none;">
+                    <div class="txt_name">
+                        车架号：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="vin" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入车架号">
+                        *请输入车架号
+                    </div>
+                </div>
+
+                <div class="txt  weizhang " style="display: none;">
+                    <div class="txt_name">
+                        发动机号：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="engineNum" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入发动机号">
+                        *请输入发动机号
+                    </div>
+                </div>
+                <div class="txt   " style="display: none;">
+                    <div class="txt_name">
+                        车主名：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="vehicleOwner" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入车主名">
+                        *请输入车主名
+                    </div>
+                </div>
+                <div class="txt   " style="display: none;">
+                    <div class="txt_name">
+                        车主身份证：
+                    </div>
+                    <div class="txt_div">
+                        <input type="text" name="ownerIdCard" value="" />
+                    </div>
+                    <div class="tile" data-str="*请输入车主身份证">
+                        *请输入车主身份证
+                    </div>
+                </div>
+                   <div class="txt  duotou " style="display: none;">
+                    <div class="txt_name">
+                        是否查询黑名单：
+                    </div>
+                    <div class="txt_div" style="margin-top:7px;">
+                        <select name="searchType"  onchange="searchTypeonchange(this)">
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </div>
+                 
+                </div>
+
+
+                <div class="txt">
+                    <div class="txt_name" style="height: 5px;">
+                        消耗：
+                    </div>
+                    <div class="txt_div">
+                        <span style="color: #f00; float: left; margin-top: 6px; font-size: 18px;">
+                            <span id="mocot">10</span></span><img src="/img/coin.png" style="float: left; width: 21px; margin-top: 7px; margin-left: 2px;" />
+                        <span style="float: left; margin-top: 7px; margin-left: 2px; color: #f00; letter-spacing: 2px; font-size: 17px;">/次</span>
+                        <!--      <span style="color: #f00;">查询一次消耗个钻石</span>-->
+                        <span style="float: left; margin-top: 8px; margin-left: 15px;">剩余钻石：</span>
+                        <img src="/img/coinp.png" style="float: left; margin-top: 2px; width: 34px; margin-left: 0px;" />
+                        <span id="incrementMoney" style="float: left; color: #f00; font-size: 18px; margin-top: 8px; margin-left: 9px;">-</span>
+
+                    </div>
+                </div>
+
+                <div class="txt">
+                    <div class="txt_name" style="height: 5px;">
+                    </div>
+                    <div class='check-x' style="text-align: left;">
+                        <input type='checkbox' id="open" checked="checked" />
+                        <span>同意</span>
+                        <span id="shouquanSpam" style="color: #6866ff; cursor: pointer;" onclick="authorization()">《授权协议》</span>
+
+                    </div>
+                </div>
+
+                <div class="txt" style="margin-top: 10px;">
+                    <div class="txt_name" style="height: 5px;">
+                    </div>
+                    <div class="txt_div">
+                        <input type="button" id="btnsearch" value="查询" class="button" onclick="query()" />
+                        <!--     <a href="javascript:void(0)" onclick="showdata_sl()"  >结果示例</a>-->
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <div class="header-box" style="clear: both;">
+            <!--  <div style="margin-top: 10px; width: 100%; font-size: 20px;">
+            <div id="tilediv" style="margin-left: 42%;">
+                查询结果
+            </div>
+        </div>-->
+            <div id="maindiv_hhh">
+            </div>
+        </div>
+
+    </div>
+    <div style="width: 20%; float: left;">
+        <div class="header-box" style="clear: both; margin-left: 0px; min-height: 400px;">
+
+            <div class="dt-title">
+                <div class="dios"></div>
+                <div class="dt-font">使用步骤</div>
+            </div>
+            <div id="jiesao_div">
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>

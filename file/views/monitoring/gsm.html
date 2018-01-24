@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>lbs</title>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="http://webapi.amap.com/maps?v=1.3&key=8ebe8b1bf92a362d7e8bc8a75c01be8f&plugin=AMap.Geocoder"></script>
+    <script type="text/javascript" src="js/jquery.js?v=1.1"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <div id="divLabelCountDown" style="top: 3px; left: 3px; position: absolute; background-color: white; height: 30px; line-height: 30px; border: 1px solid rgb(226, 226, 226); width: 250px; /* text-align: center; */
+    z-index: 1000; font-size: 14px; padding-left: 10px;">
+        <img src="boyunImg/locationRed.png" style="height: 15px;">为最终位置。
+        <img src="boyunImg/locationHome.png" style="height: 15px;">为多基站辅助定位点。
+    </div>
+    <script>
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            zoom: 11,
+            //center: [116.397428, 39.90923]
+        });
+
+        $(document).ready(function () {
+            var params = getQueryString();
+            var str = params[0].value;
+
+            $.getJSON("http://120.76.69.92:8080/LbsMulti/v1.json?MoreLBSShow=" + str + "&jsoncallback=?", function (result) {
+
+
+                var obj = [];
+
+                var pois = result.split(':');
+
+                for (var i = 0; i < pois.length; i++) {
+                    var gps = {};
+                    if (pois[i].indexOf('@') > 0) {
+                        var poiParams = pois[i].split('@');
+                        if (poiParams.length > 1) {
+                            poiParams = poiParams[1].split(',');
+
+                            gps.x = poiParams[0];
+                            gps.y = poiParams[1];
+                            //  new newMark(poiParams[0], poiParams[1], 'red');
+                        }
+                    } else {
+                        poiParams = pois[i].split(',');
+                        if (poiParams[0] != 0 & poiParams[0] != "0") {
+                            gps.x = poiParams[0];
+                            gps.y = poiParams[1];
+                            // new newMark(poiParams[0], poiParams[1], 'blue');
+                        }
+                    }
+                    obj.push(gps);
+                }
+
+                
+
+                $.getJSON("http://120.76.69.92:8080/LbsMulti/v1.json?MoreLBS=" + str + "&jsoncallback=?", function (d) {
+
+                    var lis = d.split(',');
+
+                    $.each(obj, function (i) {
+                        if (this.x != null && this.y != null) {
+                            if (this.x == lis[0] && this.y == lis[1]) {
+                                new newMark(this.x, this.y, 'red');
+                            } else {
+                                new newMark(this.x, this.y, 'blue');
+                            }
+                        }
+                    });
+                });
+            });
+        });
+
+
+        function newMark(x, y, t) {
+            var imgUrl = "boyunImg/locationRed.png";
+            var info = "最终定位点";
+            var zx = 100;
+            if (t != "red") {
+                imgUrl = "boyunImg/locationHome.png";
+                info = "辅助定位点";
+                zx = 1;
+            }
+
+            var latlon = GPS.delta(parseFloat(y), parseFloat(x));
+            var lnglatXY = [latlon.lon, latlon.lat];
+            var mark = new AMap.Marker({
+                map: map,
+                position: lnglatXY,
+                title: info,
+                zIndex: zx,
+                icon: new AMap.Icon({
+                    size: new AMap.Size(40, 50),  //图标大小
+                    image: imgUrl,
+                    imageOffset: new AMap.Pixel(0, 0)
+                })
+            });
+            if (t == "red") {
+                map.setZoomAndCenter(15, mark.getPosition());
+            }
+            //var marker = new AMap.Marker({
+            //    map: map,
+            //    position: [info.x, info.y],
+            //    title: info,
+            //    icon: new AMap.Icon({
+            //        size: new AMap.Size(30, 35),  //图标大小
+            //        image: imgUrl,
+            //        imageOffset: new AMap.Pixel(0, 0)
+            //    })
+            //});
+            //new AMap.Marker({
+            //    map: map,
+            //    position: [parseFloat(x), parseFloat(y)],
+            //});
+        }
+
+
+
+    </script>
+</body>
+</html>

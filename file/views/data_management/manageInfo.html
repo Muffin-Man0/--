@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>Modal</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="assets/gritter/css/jquery.gritter.css" />
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        ::-webkit-scrollbar-track {
+            background-color: #b46868;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .layui-layer-title {
+            color: #fff!important;
+            background-color: #165082 !important;
+        }
+    </style>
+</head>
+
+<body style="height: 100%; margin: 0px; padding: 0px;">
+
+    <section id="container" class="">
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <div style="height: 150px; background-color: #165082; line-height: 150px; text-align: center;">
+                    <img src="img/信息.png" />
+                </div>
+                <ul class="sidebar-menu" id="nav-accordion" style="margin-top: 0;">
+
+                    <li class="sub-menu">
+                        <a href="javascript:;" class="active">
+                            <b></b>
+                            <i class="fa fa-user"></i>
+                            用户管理 
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-truck"></i>
+                            车辆管理 
+                        </a>
+                    </li>
+                    <!--     <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-bell"></i>
+                            库存管理 
+                        </a>
+                    </li>-->
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-cloud-upload"></i>
+                            批量导入 
+                        </a>
+                    </li>
+                    <!--   <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-dollar"></i>
+                            充值 
+                        </a>
+                    </li>-->
+                    <!--      <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-dollar"></i>
+                            充值统计 
+                        </a>
+                    </li>-->
+                    <!--  <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-dollar"></i>
+                            车币划拨 
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-dollar"></i>
+                            车币划拨记录 
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-dollar"></i>
+                            车辆续费 
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-dollar"></i>
+                            车辆续费记录 
+                        </a>
+                    </li>-->
+
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-dollar"></i>
+                            车辆续费
+                        </a>
+                    </li>
+
+                      #if($setAlarm)
+                        <li class="sub-menu">
+                              <a href="javascript:;">
+                                  <b></b>
+                                  <i class="fa fa-warning"  ></i>
+                                  报警设置
+                              </a>
+                          </li>
+      				#end
+                </ul>
+            </div>
+        </aside>
+
+        <section id="main-content" class="main-content-exa" style="height: 100%;">
+            <iframe id="mainframe" width="100%" src="" frameborder="no" border="0" style="height: 100%;"></iframe>
+        </section>
+        <div class="modal fade modal-dialog-center" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content-wrap">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Modal Tittle</h4>
+                        </div>
+                        <div class="modal-body">
+                            <iframe id="modalframe" width="100%" height="350px" frameborder="no" border="0"></iframe>
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="/js/jquery.js?v=1.1"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/layer/layer.js"></script>
+    <script src="/js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/manageInfo.js" });
+            GetVersions(arr);
+        });
+    </script>
+
+
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+
+</body>
+</html>

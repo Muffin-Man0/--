@@ -1,0 +1,282 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>授权</title>
+</head>
+<body>
+    <script src="/js/jquery.js?v=1.1"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-reset.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/layer/layer.js"></script>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body,
+        html {
+            height: 100%;
+            background: #F1EFFA;
+            font-size: 0.32rem;
+        }
+
+        .top-bg {
+            width: 100%;
+            /* height: 4rem; */
+            background: #ffffff;
+        }
+
+        header > div {
+            display: inline-block;
+            margin-left: 0.2rem;
+        }
+
+        header {
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            line-height: 0.5rem;
+        }
+
+            header > div:last-child {
+                font-size: 0.25rem;
+            }
+
+        .logo {
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .font {
+            font-size: 0.25rem;
+            padding: 0.6rem 0;
+            text-align: center;
+        }
+
+        .radios {
+            padding: 0.2rem;
+        }
+
+            .radios > input {
+                border: 1px solid #333;
+                border-radius: 0;
+            }
+
+            .radios span {
+                font-size: 0.23rem;
+                display: inline-block;
+                margin-top: -0.2rem;
+                margin-left: 0.1rem;
+                color: #C1C0C8;
+            }
+
+        button {
+            border: #108CE4;
+            width: 80%;
+            height: 0.6rem;
+            color: #fff;
+            border-radius: 3px;
+            background: #108CE4;
+            outline: none;
+        }
+
+        .btn-box {
+            text-align: center;
+            margin-top: 0.7rem;
+        }
+
+        .disabled {
+            background-color: #eef1f6!important;
+            border-color: #d1dbe5!important;
+            color: #bbb!important;
+            cursor: not-allowed !important;
+        }
+    </style>
+    <script src="/js/app.js"></script>
+
+    <div>
+        <div class='top-bg'>
+            <header>
+                <!--  <div>x</div>-->
+                <div id="tile_div"></div>
+            </header>
+            <div>
+                <!--    <div class='logo'>
+                    <img src='/img/logo.png' />
+                </div>-->
+                <div class='font' style="text-align:left; text-indent:0.5rem;padding:0.3rem 0;">
+                    <p>
+                        您正在向本网站授权查询您的淘宝数据！
+                    </p>
+                    <p>
+                        数据内容包括但不限于会员名、会员账号、绑定的支付宝信息、历史交易记录、历史评价、消费金额、支付方式、消费习惯等信息
+                    </p>
+                    <p>
+                        如已阅读并理解本次授权协议的全部内容请确认授权
+                    </p>
+                </div>
+                 
+            </div>
+        </div>
+        <div class='radios' style="display: none;">
+
+            <input name="Fruit" type="checkbox" value="1" checked="checked" /><span>
+                此处是授权详情</span>
+
+        </div>
+        <div class='btn-box'>
+            <button id="to_gp" onclick="to_g()">
+                确认授权
+            </button>
+        </div>
+    </div>
+
+
+    <div style="display: none">
+        <input type="text" id="tz_url_txt" value="" />
+    </div>
+    <script>
+
+        var tz_url_txtID = null;
+        var queshouquanID = null;
+        var creditCode = null;
+        var type = "";
+
+        $(function () {
+            bin();
+        });
+        function bin() {
+            type = getUrlParam("type");
+            switch (type) {
+                case "taobao":
+                    $("#tile_div").html("查询淘宝数据");
+                    break;
+                case "zhifubao":
+                    $("#tile_div").html("查询支付宝数据");
+                    break;
+            }
+        }
+        function to_g() {
+            //开始授权
+            $("#to_gp").button('loading');
+            var key = getUrlParam("key");
+            var id = getUrlParam("id");
+            var url = "";
+            switch (type) {
+                case "taobao":
+                    url = "/credit/taoBaoReport/SubmitTaoBaoInquire.json?";
+                    break;
+                case "zhifubao":
+                    url = "/credit/ZhiFuBaoReport/SubmitZhiFuBaoInquire.json?";
+                    break;
+            }
+            url += "key=" + key + "&id=" + id;
+            myAjax({
+                url: ajax(url),
+                type: 'get',
+                //data: data,
+                dataType: 'json',
+                beforeSend: function () {
+                },
+                success: function (d) {
+                    if (d.flag == 1) {
+                        yzm(d.obj);
+                        creditCode = d.obj.token;
+                        tz_url_txtID = setInterval("myrefresh()", "500");
+                        queshouquanID = setInterval("queshouquan()", "500");
+                    } else {
+                        layer.msg(d.msg, { icon: 2 });
+                    }
+                }
+            });
+
+        }
+        function yzm(d) {
+            var data = {};
+            data.id = d.id;
+            data.token = d.token;
+            data.smsCode = "";
+            //
+            var url = "";
+            switch (type) {
+                case "jingdong":
+                    //     url = "/credit/JingDongReport/GetJingDongReportData.json?";
+                    break;
+                case "taobao":
+                    url = "/credit/taoBaoReport/GetTaoBaoReportData.json?";
+                    break;
+                case "zhifubao":
+                    url = "/credit/ZhiFuBaoReport/GetZhiFuBaoReportData.json?";
+                    break;
+                case "yanhang":
+                    //    url = "/credit/CentralBankCredit/GetCentralBankCreditData.json?";
+                    break;
+                case "yunyingshang":
+                    //  url = "/credit/OperatorReport/GetMobileReportData.json?";
+                    break;
+            }
+            myAjax({
+                url: ajax(url),
+                type: 'post',
+                data: data,
+                dataType: 'json',
+                timeout: 999999999, //超时时间设置，单位毫秒
+                beforeSend: function () {
+                },
+                success: function (d) {
+                    console.log(d);
+                }
+            });
+        }
+        function queshouquan() {
+
+            var txt = $("#tz_url_txt").val();
+
+            if (txt != "") {
+                //结束授权
+                $("#to_gp").button('reset');
+                if (txt == "1") {
+                    layer.msg("授权失败！超过有效时间。");
+                } else {
+                    //跳转页面
+                    window.location.href = txt;
+                }
+                clearTimeout(queshouquanID);
+            }
+        }
+
+        function myrefresh() {
+            myAjax({
+                url: ajax("/InquireUrl/GetUrl.json?token=" + creditCode),
+                type: 'get',
+                //data: data,
+                dataType: 'json',
+                beforeSend: function () {
+                },
+                success: function (d) {
+                    if (d.obj == null) {
+                        $("#tz_url_txt").val("1");
+                        clearTimeout(tz_url_txtID);
+                    } else if (d.obj != null && d.obj != "notCached") {
+                        $("#tz_url_txt").val(d.obj);
+                        clearTimeout(tz_url_txtID);
+                    }
+                }
+            });
+        }
+
+
+
+
+
+    </script>
+
+
+
+</body>
+</html>

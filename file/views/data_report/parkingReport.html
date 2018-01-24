@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="height: 100%; overflow: hidden;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>Dynamic Table</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--right slidebar-->
+    <link href="css/slidebars.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/bootstrap-select.min.css" rel="stylesheet" />
+
+    <link href="assets/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body style="height: 100%; overflow: hidden;">
+
+    <section id="container" class="" style="height: 100%;">
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper" style="padding-top: 15px; margin-top: 0px;">
+                <!-- page start-->
+                <div id="div_search" class="row" style="background-color: white; padding: 15px; margin-left: 15px; margin-right: 15px; /* margin-bottom: 10px; */
+    padding-bottom: 0px; border-bottom: 1px solid #f0f1f6;">
+
+                    <div class="row">
+                        <div style="padding-right: 3px; width: 350px;">
+                            <div style="float: left; height: 33px; line-height: 33px; font-weight: bold;">
+                                车辆车组：
+                            </div>
+                            <section class="panel input-group m-bot15" style="padding-left: 3px; float: left; width: 250px;">
+                                <input id="chooseId" type="text" placeholder="请选择车组或者车辆" data-provide="typeahead" autocomplete="off" class="form-control input-small cor_bck">
+                                <span class="input-group-btn">
+                                    <button id="btnChooseId" class="btn btn-white" type="button" style="border-radius: 0px;"><i id="iChooseId" class="fa fa-sitemap"></i></button>
+                                </span>
+                            </section>
+                        </div>
+                        <div class="typeahead dropdown-menu" id="TreeDiv">
+                            <p id="TreeTitel" style="margin: 3px; font-size: 12px; padding-left: 10px;">
+                                <i style="font-weight: 900; color: #f00;">“双击”</i>左边节点选择<i style="font-weight: 900; color: #f00;">“车组”</i>，
+                                 <i style="font-weight: 900; color: #f00;">“单击”</i>右边节点选择<i style="font-weight: 900; color: #f00;">“车辆”</i>
+                            </p>
+                            <div id="groupTree" class="ztree RpZtree"></div>
+                            <div id="vehTree" class="ztree RpZtree" style="border-left: 1px solid #b0b5b9;"></div>
+                        </div>
+                        <div class="col-sm-2" style="width: 200px; display: none;">
+                            <div style="float: left; height: 33px; line-height: 33px; font-weight: bold;">
+                                设备类型：
+                            </div>
+                            <select class="form-control m-bot15 cor_bck" id="Etype" style="width: 90px">
+                            </select>
+                        </div>
+
+                        <div class="panel input-group m-bot15" style="float: left; line-height: 26px;">
+                            停留时间 >=：
+                            <input type="text" id="dtxt" value="0" style="width: 80px; text-indent: 5px;" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" />（天） 
+                             <input type="text" id="stxt" value="1" style="width: 80px; text-indent: 5px;" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" />（时）
+                        </div>
+
+                        <div class="col-sm-3" style="float: left; width: 250px;">
+                            <button id="btnsearch" type="button" data-loading-text="Loading..." class="btn btn-success" style="background-color: #165082; border-color: #1a5284; color: #FFFFFF;">
+                                <i class="fa fa-search"></i>搜索</button>
+                            <button id="btnOutPut" type="button" data-loading-text="Loading..." class="btn btn-success" style="margin-left: 10px; background-color: #ffffff; border-color: #c5c5c5; color: #165082;">
+                                <i class="fa  fa-share-square"></i>导出</button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-sm-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="adv-table">
+                                    <table id="AlarmAnalysis"></table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                    </div>
+                </div>
+
+            </section>
+        </section>
+    </section>
+
+
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="js/respond.min.js"></script>
+
+    <!--right slidebar-->
+    <script src="js/slidebars.min.js"></script>
+
+    <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
+    <!--<script src="js/advanced-form-components.js"></script>-->
+
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+    <script type="text/javascript" src="js/bootstrap-select.js"></script>
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+
+    <script src="assets/timepicker/jquery.datetimepicker.js"></script>
+    <link href="assets/timepicker/jquery.datetimepicker.css" rel="stylesheet" />
+
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+    <script src="js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/parkingReport.js" });
+            arr.push({ src: "/js/ckTree.js" });
+            GetVersions(arr);
+        });
+    </script>
+    <!--   <script type="text/javascript" src="js/parkingReport.js"></script>-->
+    <script type="text/javascript" src="js/jquery.table2excel.js"></script>
+    <script type="text/javascript" src="js/jquery.nicescroll.js"></script>
+   <!-- <script src="js/ckTree.js"></script>-->
+
+
+    <style>
+        .search {
+            width: 200px;
+        }
+
+        .btn-info, .btn-info:hover, .btn-info:active:hover, .btn-info.active:hover, .open > .dropdown-toggle.btn-info:hover, .btn-info:active:focus, .btn-info.active:focus, .open .dropdown-toggle.btn-info, .open > .dropdown-toggle.btn-info:focus, .btn-info:active.focus, .btn-info.active.focus, .open > .dropdown-toggle.btn-info.focus {
+            background-color: #b0b5b9;
+            border-color: #b0b5b9;
+        }
+
+        .btn:hover, .btn:focus, .btn.focus {
+            color: #fff;
+            text-decoration: none;
+            background-color: #165082;
+        }
+
+        .btn-white {
+            background-clip: padding-box;
+            background-color: #f7f7f7;
+            border-color: rgba(150, 160, 180, 0.3);
+            border: 1px solid #ccc;
+        }
+
+        .close {
+            float: right;
+            font-size: 21px;
+            font-weight: bold;
+            line-height: 1;
+            color: #ffffff;
+            text-shadow: 0 1px 0 #fff;
+            filter: alpha(opacity=20);
+            /* opacity: .8; */
+            opacity: 1;
+        }
+            /* opacity: .8; */
+            .close:hover, .close:focus {
+                color: #fff;
+                text-decoration: none;
+                cursor: pointer;
+                filter: alpha(opacity=50);
+                /*opacity: .5;*/
+                opacity: 1;
+            }
+
+        .form-control {
+            color: #23527c !important;
+        }
+
+        .atime {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            .atime:hover {
+                color: #165082;
+                text-decoration: underline;
+            }
+
+        i {
+            font-style: normal;
+        }
+
+        .alarmTypeTab {
+            text-indent: 20px;
+        }
+
+            .alarmTypeTab td:first-child {
+                width: 50px;
+            }
+
+        .col-sm-2 {
+            width: 255px;
+        }
+
+        .chetypediv {
+            margin-left: 20px;
+            width: 171px;
+            float: left;
+        }
+
+        .layui-layer-title {
+            background-color: #165082;
+            color: #fff;
+        }
+
+        .dibtu {
+            margin-top: 20px;
+            clear: both;
+            text-align: right;
+            border-top: #000;
+            margin-right: 10px;
+        }
+
+            .dibtu input {
+                background-color: #165082;
+                color: #fff;
+                border: 0px;
+                padding: 6px 12px;
+            }
+
+        #TreeDiv {
+            top: 63px;
+            left: 99px;
+        }
+    </style>
+
+
+</body>
+</html>

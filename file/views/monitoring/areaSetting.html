@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--<link href="css/navbar-fixed-top.css" rel="stylesheet">-->
+
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+
+    <style type="text/css">
+        .amap-logo {
+            display: none;
+        }
+
+        .amap-copyright {
+            display: none;
+        }
+
+        /*!
+ * Css Document
+ * 
+ * @author	zongxian.chen at 2012/04/16 build.
+ * @version $Id$
+ */
+
+
+        /************************* Just Reset Browser Default CSS : BEGIN ***************************/
+        html {
+            background-color: #fff;
+        }
+
+        body, div, h1, h2, h3, h4, ul, li, form, input, dl, dt, dd, p {
+            margin: 0;
+            padding: 0;
+            /*font-family:微软雅黑;*/
+        }
+
+        h3 {
+            +font-size:14px;
+            _font-size: 14px;
+        }
+
+        img {
+            border: none;
+        }
+
+        .c {
+            clear: both;
+        }
+
+        ul, ol, li {
+            list-style: none;
+        }
+
+        /*清除浮动*/
+        .clearfix:after {
+            content: ".";
+            visibility: hidden;
+            display: block;
+            height: 0;
+            overflow: hidden;
+            clear: both;
+        }
+
+        /* no ie mac \*/
+        * html .clearfix {
+            height: 1%;
+        }
+        /* end */
+        * + html .clearfix {
+            height: 1%;
+        }
+
+        body {
+            /*font: 12px/1.5em 微软雅黑,Arial,Verdana,Helvetica,sans-serif;*/
+            color: #333;
+        }
+
+        button, input, select, textarea {
+            color: #999;
+        }
+
+            input[type="button"] {
+                padding: 0 5px;
+                color: white;
+            }
+
+        .demo_box {
+            width: 760px;
+        }
+        /* map style */
+        #iCenter {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #F6F6F6;
+        }
+
+        #r_title {
+            line-height: 28px;
+            padding-left: 5px;
+            background-color: #D1EEEE;
+            font-weight: bold;
+        }
+
+        #result {
+            overflow: auto;
+            margin-bottom: 5px;
+            /*	width:661px;*/
+            height: 255px;
+        }
+            /*  结果项 */
+            #result .sub_result {
+                font-size: 12px;
+                cursor: pointer;
+                line-height: 20px;
+                /*padding:0px 0 4px 2px;*/
+                border-bottom: 1px solid #C1FFC1;
+            }
+
+                #result .sub_result .detail {
+                }
+
+                    #result .sub_result .detail h3 {
+                        color: #00A6AC;
+                    }
+
+        a {
+            color: #067EC0;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: none;
+            }
+
+        .note {
+            color: #999;
+        }
+
+        /*** layerout stylesheet ***/
+        /* 修改背景URL */
+        div.change {
+            background-image: url(http://pages.haozu.ajkcdn.com/20110909/img/map/marker-h.png);
+        }
+
+            div.change div {
+                background-image: url(http://pages.haozu.ajkcdn.com/20110909/img/map/marker-h-l.gif);
+            }
+
+        /*** copied from demo #39 添加自定义点覆盖物 ***/
+        /* 定义自定义点样式 */
+        .markerContentStyle {
+            position: relative;
+        }
+
+            .markerContentStyle span {
+                background-color: #FFFFFF;
+                color: #FF1493;
+                width: 120px;
+                heigth: 80px;
+                border: 2px solid #D8BFD8;
+                FONT-FAMILY: 华文行楷;
+                position: absolute;
+                top: -10px;
+                left: 25px;
+                white-space: nowrap -webkit-border-radius:5px;
+                border-radius: 5px;
+            }
+
+        /*** copied from demo #43 添加自定义信息窗体 ***/
+        /* 定义自定义信息窗体样式 */
+        div.info {
+            position: relative;
+            z-index: 100;
+            border: 1px solid #BCBCBC;
+            box-shadow: 0 0 10px #B7B6B6;
+            border-radius: 8px;
+            background-color: rgba(255,255,255,0.9);
+            transition-duration: 0.25s;
+        }
+
+            div.info:hover {
+                box-shadow: 0px 0px 15px #0CF;
+            }
+
+        div.info-top {
+            position: relative;
+            background: none repeat scroll 0 0 #F9F9F9;
+            border-bottom: 1px solid #CCC;
+            border-radius: 5px 5px 0 0;
+        }
+
+            div.info-top div {
+                display: inline-block;
+                color: #333333;
+                font-size: 14px;
+                font-weight: bold;
+                line-height: 31px;
+                padding: 0 10px;
+            }
+
+            div.info-top img {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                transition-duration: 0.25s;
+            }
+
+                div.info-top img:hover {
+                    box-shadow: 0px 0px 5px #000;
+                }
+
+        div.info-middle {
+            font-size: 12px;
+            padding: 10px;
+            line-height: 21px;
+        }
+
+        div.info-bottom {
+            height: 0px;
+            width: 100%;
+            clear: both;
+            text-align: center;
+        }
+
+            div.info-bottom img {
+                position: relative;
+                z-index: 104;
+            }
+        /*** -------------------------***/
+
+
+        #panel {
+            position: absolute;
+            background-color: white;
+            max-height: 80%;
+            overflow-y: auto;
+            top: 50px;
+            right: 10px;
+            width: 280px;
+        }
+
+        .closeSearchList {
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            border: 0px;
+            cursor: pointer;
+            background-color: white;
+            color: #7DC1FB;
+        }
+
+            .closeSearchList:hover {
+                background-color: #7DC1FB;
+                color: white;
+            }
+
+        .checkboxes label, .radios label {
+            display: block;
+            cursor: pointer;
+            line-height: 20px;
+            padding-bottom: 2px;
+            font-weight: 300;
+        }
+
+        .form-group {
+            margin-bottom: 2px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 15px;
+            z-index: 1000;
+            width: 300px;
+            display: none;
+            float: left;
+            min-width: 160px;
+            font-size: 14px;
+            text-align: left;
+            background-color: rgb(255, 255, 255);
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            box-shadow: rgba(0, 0, 0, 0.172549) 0px 6px 12px;
+            padding: 5px 0px;
+            margin: 2px 0px 0px;
+            list-style: none;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.14902);
+            border-image: initial;
+            border-radius: 4px;
+        }
+
+        #TreeDiv {
+            top: 35px;
+            left: -250px;
+            height: 326px;
+        }
+
+        .RpZtree {
+            height: 280px;
+        }
+    </style>
+    <link href="assets/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+</head>
+<body style="margin: 0px;">
+    <div id="right" style="float: right; height: 100%; width: 40%;">
+        <div id="EditGroup" class="form-horizontal" role="form" style="padding: 15px;">
+            <div class="form-group">
+
+                <label class="col-sm-4 control-label">区域名称:</label>
+                <div class="col-sm-8">
+                    <input id="txtAreaName" type="text" class="form-control" placeholder="">
+                </div>
+            </div>
+            <div class="form-group" style="height: 36px; overflow: hidden;">
+                <label class="col-sm-4 control-label">区域类型:</label>
+
+                <div class="col-sm-8">
+                    <select id="cbAreaType" class="form-control m-bot15">
+                        <option value="31">禁止驶入区域</option>
+                        <option value="30">禁止驶出区域</option>
+                        <!--     <option value="">区域超速</option>-->
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label" style="width: 122px; padding-right: 0px;">停留时间（分）:</label>
+
+                <div class="col-sm-8" style="padding-left: 0px; width: 196px;">
+                    <input id="cbAreaTime" type="text" class="form-control" value="0" placeholder="" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" />
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 10px;">
+                <div class="col-lg-offset-2 col-lg-8">
+                    <button id="saveArea" type="button" data-loading-text="Loading" value="1" class="btn btn-danger" style="float: right;">保存</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="BindGroup" class=" form-horizontal" role="form" style="padding: 15px; display: none;">
+
+            <div class="form-group">
+
+                <label class="col-sm-4 control-label">区域名称:</label>
+                <div class="col-sm-8">
+                    <label id="labelBindAreaName" class=" control-label" style="float: left; padding-left: 0px;"></label>
+                    <!--<button id="Button1" type="submit" class="btn btn-info btn-xs" style="float: left;    margin: 5px;"><i class="fa fa-pencil-square-o" style="padding-right:5px;" ></i>编辑围栏</button>-->
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">区域类型:</label>
+
+                <div class="col-sm-8">
+                    <label id="labelBindAreaType" class="col-sm-8 control-label" style="padding-left: 0px;"></label>
+                </div>
+            </div>
+
+            <div class="form-group" style="display: none;">
+                <label class="col-sm-4 control-label">关联目标:</label>
+                <div class="col-sm-8">
+
+                    <div class="radios" style="padding-top: 6px;">
+                        <label class="label_radio r_on" for="radio-01" style="float: left; margin-right: 10px;">
+                            <input name="sample-radio" class="rd" id="radio-01" checked="checked" value="0" type="radio" aria-checked="true">
+                            车辆
+                        </label>
+                        <label class="label_radio r_off" for="radio-02" style="float: left; margin-right: 10px;">
+                            <input name="sample-radio" class="rd" id="radio-02" value="1" type="radio" disabled="disabled">
+                            车组
+                        </label>
+                        <label class="label_radio r_off" for="radio-02" style="float: left; margin-right: 10px;">
+                            <input name="sample-radio" class="rd" id="radio1" value="2" type="radio" disabled="disabled" />
+                            输入
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="vehGroupSearch" class="form-group" style="display: none;">
+                <label class="col-sm-4 control-label">车组搜索:</label>
+                <div class="col-sm-8">
+                    <input id="typeaheadGroup" data-provide="typeaheadGroup" autocomplete="off" type="text" class="form-control" placeholder="请输入车组名称搜索">
+                </div>
+            </div>
+
+            <div id="vehGroupBind" class="form-group" style="display: none;">
+                <label class="col-sm-4 control-label">绑定车组:</label>
+                <div class="col-sm-8">
+                    <select id="vehGroupSelected" multiple="" class="form-control" style="height: 130px;">
+                        <!--             <option>11</option>
+                                                                      <option>21</option>
+                                                                      <option>3</option>
+                                                                      <option>4</option>
+                                                                      <option>5</option>-->
+                    </select>
+
+
+
+                    <button id="btnClearVehGroup" type="submit" class="btn btn-default btn-xs" style="float: right; margin: 5px;"><i class="fa fa-bitbucket" style="padding: 5px;"></i>清空</button>
+
+                    <button id="btnDelSeletedVehGroup" type="submit" class="btn btn-default btn-xs" style="float: right; margin: 5px;"><i class="fa fa-minus-circle" style="padding: 5px;"></i>删除选中</button>
+
+                </div>
+            </div>
+
+
+
+            <div id="vehSearch" class="form-group">
+                <!--    <label class="col-sm-4 control-label">车辆搜索:</label>-->
+                <div class="col-sm-12">
+                    <div class="iconic-input">
+                        <i class="fa  fa-search" style="color: #2a77b9"></i>
+                        <input id="typeaheadVeh" name="plate" data-provide="typeaheadVeh" type="text" autocomplete="off" class="form-control input-sm" placeholder="输入车牌号/车组名" style="border: 1px solid #bdbdcc; margin-bottom: 5px; margin-top: 5px; color: #3c3737 !important; font-size: 10px; border-radius: 20px;">
+                        <!-- </div>-->
+                    </div>
+                    <div class="typeahead dropdown-menu" id="TreeDiv">
+                        <p id="TreeTitel" style="margin: 3px; font-size: 12px; padding-left: 10px;">
+                            <i style="font-weight: 900; color: #f00;">“双击”</i>左边节点选择<i style="font-weight: 900; color: #f00;">“车组”</i>，
+                                 <i style="font-weight: 900; color: #f00;">“单击”</i>右边节点选择<i style="font-weight: 900; color: #f00;">“车辆”</i>
+                        </p>
+                        <div id="groupTree" class="ztree RpZtree"></div>
+                        <div id="vehTree" class="ztree RpZtree" style="border-left: 1px solid #b0b5b9;"></div>
+                    </div>
+                    <!-- <input id="typeaheadVeh" name="plate" data-provide="typeaheadVeh" autocomplete="off" type="text" class="form-control" placeholder="请输入车牌号">-->
+                </div>
+            </div>
+
+            <div id="vehBind" class="form-group">
+                <!--      <label class="col-sm-4 control-label">绑定车辆:</label>-->
+                <div class="col-sm-12">
+                    <select multiple="" id="vehSelected" class="form-control" style="height: 260px;">
+                        <!--              <option>11</option>
+                                                                      <option>21</option>
+                                                                      <option>3</option>
+                                                                      <option>4</option>
+                                                                      <option>5</option>-->
+                    </select>
+                    <button id="btnClearVeh" type="submit" class="btn btn-default btn-xs" style="float: right; margin: 5px;"><i class="fa fa-bitbucket" style="padding: 5px;"></i>清空</button>
+
+                    <button id="btnDelSeletedVeh" type="submit" class="btn btn-default btn-xs" style="float: right; margin: 5px;"><i class="fa fa-minus-circle" style="padding: 5px;"></i>删除选中</button>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-8">
+                    <button id="bindArea" type="submit" class="btn btn-danger" style="float: right;">保存</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="tilebangding" style="position: absolute; bottom: 3px; right: 30px; display: none;">
+            <p style="color: #f00; width: 100%; text-align: center; font-size: 16px;">按车组绑定时不会自动包含下级车组 </p>
+        </div>
+    </div>
+    <textarea id="txtHome" class="form-control" style="margin: 10px; height: 50px; width: 469px; resize: none;" placeholder="请输入所在地"></textarea>
+
+    <div id="container" style="width: 60%; margin-top: 70px;">
+    </div>
+
+
+
+    <div class="toolBar  alert alert-info  " style="bottom: 0px; width: 60%; height: 33px; margin-bottom: 0px; color: #012544; padding: 0px; border-radius: 0px; position: absolute; float: left; line-height: 30px; padding-left: 10px; border-bottom: 1px solid #E6E6E6; z-index: 999; border-top: 1px solid #E6E2E2; background-color: #F9F9F9;">
+        开始绘制后，单击绘点，双击结束绘制！ 
+    </div>
+    <button id="beginDraw" type="button" class="btn btn-primary" style="position: absolute; left: 42%; top: 100px;"><i class="fa fa-pencil-square-o"></i>开始绘制</button>
+
+
+    <!-- <input id="search" type="text" style="position: absolute; width: 60%;" class="form-control" placeholder="输入关键字模糊收">-->
+    <script src="js/jquery.js?v=1.1"></script>
+
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8ebe8b1bf92a362d7e8bc8a75c01be8f&plugin=AMap.Autocomplete,AMap.PlaceSearch,AMap.Geocoder,AMap.MouseTool"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+
+
+    <script>
+        var totalGroup = [];
+        var VehGroup = function (my) {
+            my.tree = null;//树形结构
+            //*************数据相关*************
+            my.initData = function (ID, Data) {
+                if (Data.ErrorCode == "undefined" || Data.ErrorCode == undefined) {
+                    var list = [];
+                    $.each(Data, function () {
+                        if (ID == "#groupTree") {
+                            this.icon = "img/sitemap.png";
+                        } else {
+                            this.icon = "img/car.png";
+                        }
+                    })
+                    my.initTree(ID, Data);//生成树结构
+                }
+            }
+
+            var addDiyDom = function (treeId, treeNode) {
+                var aObj = $("#" + treeNode.tId + "_a");
+                //var searchGroupBtn = "";
+                ////console.log(treeNode.type);
+                //if (treeNode.type == "group") {
+                //    searchGroupBtn = "<a id='gid_" + treeNode.id + "' href='javascript:void(0)' class='groupTree ck_cl right-span' class='fa btnSearch' title='车组搜索' nodeid='" + treeNode.id + "' name='" + treeNode.name + "' groupId='" + treeNode.id + "' type='" + treeNode.type + "' onclick='searchGroup(this)' >选择</a>";
+                //} else {
+                //    searchGroupBtn = "<a id='vid_" + treeNode.id + "' href='javascript:void(0)' class='vehicleTree ck_cl right-span' class='fa btnSearch' title='车辆搜索' nodeid='" + treeNode.id + "' name='" + treeNode.name + "' groupId='" + treeNode.groupId + "' type='" + treeNode.type + "' onclick='searchGroup(this)' >选择</a>";
+                //}
+
+                //aObj.after(searchGroupBtn);
+                if (treeNode.type == "group" && totalGroup) {
+                    var total = 0;
+                    for (var i = 0; i < totalGroup.length; i++) {
+                        if (totalGroup[i].groupId == treeNode.id) {
+                            total = totalGroup[i].an;
+                            break;
+                        }
+                    }
+                    aObj.after($("<span>(" + total + ")</span>"));
+                }
+            }
+
+            //***********树相关*************
+            //tree设置
+            var setting = {
+                //treeId: "",
+                //treeObj: "",
+                check: {
+                    enable: false,
+                    nocheckInherit: false,
+                    chkDisabledInherit: false
+                },
+                view: {
+                    //fontCss: {},
+                    showIcon: true,
+                    addDiyDom: addDiyDom,
+                    //addHoverDom: function (treeId, treeNode) {
+                    //    if (totalGroup && totalGroup.length > 0)
+                    //    {
+
+                    //    }
+
+                    //    $("#" + treeNode.tId + "_a").after("<span>(" + treeNode.total + ")</span>");
+                    //},
+                    //removeHoverDom: removeHoverDom,
+                    selectedMulti: false
+                },
+                data: {
+                    key: {
+                        name: "name",
+                    },
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pid",
+                        rootPId: -1
+                    }
+                },
+                callback: {
+                    onClick: function (event, treeId, treeNode) {
+                        if (treeNode.type == "group") {
+                            var GroupID = treeNode.id;
+                            $("#vehTree").empty();
+                            myAjax({
+                                type: 'Get',
+                                url: ajax('http/Vehicle/getVehiclesByGroupRds.json?&groupId=' + GroupID),
+                                dataType: 'json',                           //指定服务器返回的数据类型
+                                timeout: 15000,                              //请求超时时间
+                                cache: false,                               //是否缓存上一次的请求数据
+                                async: true,                                //是否异步
+                                data: { "groupId": GroupID },
+                                beforeSend: function () {
+                                    //layer.msg('请求之前:' + JSON.stringify(groupId), { icon: 3 });
+                                },
+                                success: function (data) {
+                                    if (data.flag == 1) {
+                                        var VehList = [];
+                                        $.each(data.obj, function () {
+                                            VehList.push({ id: this.vehicleId, name: this.plate, pid: this.groupId, groupId: GroupID, type: "vehicle" });
+                                        });
+                                        if (VehList.length > 0)
+                                            VehGroup.initData("#vehTree", VehList);
+                                    } else {
+                                        console.log("车组已装车辆获取失败");
+                                    }
+                                },
+                                error: function (msg) {
+                                    getVehListByGroupId(GroupID);
+                                    console.log("readyState：" + msg.readyState + ",responseText：" + msg.responseText + ",status：" + msg.status + ",statusText：" + msg.statusText);
+                                }
+                            });
+                        } else {
+                            //var id = "#vid_" + treeNode.id;
+                            //$(id).click();
+                            //$("#chooseId").val(treeNode.name);
+                            //flag = 1;
+                            //chooseId = treeNode.id
+                            //groupId = treeNode.groupId;
+                            //selectName = treeNode.name;
+                            var item = {};
+                            // item.gi = treeNode.groupId;
+                            item.plate = treeNode.name;
+                            item.vehicleId = treeNode.id;
+
+                            if ($("#v_" + item.vehicleId).length == 0) {
+                                vehList.push(item);
+                                $("#vehSelected").append("<option id='v_" + item.vehicleId + "'  tt='1' value='" + item.vehicleId + "'>[车辆]" + item.plate + "</option>");
+                            }
+
+
+
+
+                            $("#TreeDiv").hide();
+                        }
+                    },
+                    onDblClick: zTreeOnDblClick
+                }
+            }
+            //生成部门树结构
+            my.initTree = function (ID, Data) {
+                my.tree = $.fn.zTree.init($(ID), setting, Data);
+                my.tree.expandAll(false);//默认折叠所有节点
+                if (Data && Data.length > 0) {
+                    var dfObj = Data[0];
+                    if (dfObj.type == "group") {
+                        $("#groupTree_1_a").click();
+                    }
+                } else {
+                    layer.tips('暂时无车组,请模糊搜索车辆', '#chooseId', { tips: 3 });
+                }
+            }
+            return my;
+        }(VehGroup || {});
+
+        function zTreeOnDblClick(event, treeId, treeNode) {
+            if (treeNode.type && treeNode.type == "group") {
+                //var id = "#gid_" + treeNode.id;
+                //$(id).click();
+                //$("#chooseId").val(treeNode.name);
+                //flag = 0;
+                //chooseId = treeNode.id
+                //groupId = treeNode.id;
+                //selectName = treeNode.name;
+                var item = {};
+                item.gi = treeNode.id;
+
+                item.gn = treeNode.name;
+                if ($("#g_" + item.gi).length == 0) {
+                    vehList.push(item);
+                    $("#vehSelected").append("<option id='g_" + item.gi + "' tt='0' value='" + item.gi + "'>[车组]" + item.gn + "</option>");
+                }
+                $("#TreeDiv").hide();
+            }
+        };
+        $(function () {
+
+
+
+
+        });
+
+        function showTreeDiv() {
+            var groupList = [];
+            var data = parent.parent.groupList;
+            $.each(data, function () {
+                groupList.push({ id: this.groupId, name: this.groupName, pid: this.parentId, type: "group" });
+            });
+
+            myAjax({
+                url: ajax('http/Monitor/AddUpVehicleStatusCount.json'),
+                type: 'Get',
+                dataType: 'json',
+                timeout: 10000,
+                success: function (data) {
+                    if (data.flag == 1) {
+                        totalGroup = data.obj.groupList;
+                        VehGroup.initData("#groupTree", groupList);
+                    } else {
+                        layer.msg(data.msg, { icon: 2 });
+                    }
+                    if ($("#groupTree").html() != "") {
+                        $("#TreeDiv").show();
+                    }
+                },
+                error: function (msg) {
+
+                }
+            });
+        }
+
+    </script>
+    <script type="text/javascript">
+        var map;
+        var trafficLayer;
+        var normalLayer;
+        var satelliteLayer;
+        var roadNetLayer;
+        var placeSearch;
+
+        var vehList = [];
+        var areaPoints = [];
+        var pathId;
+
+        var marker;
+
+        var homeMark;
+        $(document).ready(function () {
+
+
+
+            $("#container").height($(window).height() - 70);
+            normalLayer = new AMap.TileLayer();
+            satelliteLayer = new AMap.TileLayer.Satellite();
+
+            map = new AMap.Map('container', {
+                resizeEnable: true
+            });
+            AMap.event.addListener(map, 'complete', function () {
+                $('.amap-toolbar').css('top', '50px');
+                parent.monitorresize();
+            });
+
+            var autoHomeOptions = {
+                input: "txtHome"
+            };
+            var autoHome = new AMap.Autocomplete(autoHomeOptions);
+
+            //构造地点查询类
+            AMap.event.addListener(autoHome, "select", selectHome);//注册监听，当选中某条记录时会触发
+
+
+
+
+            var mouseTool = new AMap.MouseTool(map);
+
+
+            AMap.event.addDomListener(document.getElementById('beginDraw'), 'click', function () {
+                var polygons = map.getAllOverlays("polygon");
+                map.remove(polygons);
+                areaPoints = [];
+                mouseTool.polygon();
+            }, false);
+
+
+            AMap.event.addListener(mouseTool, 'draw', function (type, obj) {
+                //type.obj.G.path  点 type.obj.H.path
+                var points = type.obj.getPath();
+                var arr = [];
+                for (var i = 0; i < points.length; i++) {
+                    arr.push({ lat: points[i].lat, lng: points[i].lon });
+                    var point = GPS.deltaOut(points[i].lat, points[i].lng);
+                    areaPoints.push({ orilon: point.lon, orilat: point.lat });
+                }
+                //console.log("高德地图经纬度：" + JSON.stringify(arr));
+                //console.log("纠偏后的经纬度：" + JSON.stringify(areaPoints));
+                mouseTool.close();
+                map.setDefaultCursor("pointer");
+            });
+
+
+            initVehSearchSource();
+            initGroupSearchSource($('#userIframe', window.parent.document)[0].contentWindow.treeGroupList);
+            //monitorresize();
+
+            var x, y, type = 0;
+            var i = getUrlParam("index");
+            type = getUrlParam("type");
+            //0新增,1编辑,2绑定,3删除
+            if (type == 2) {
+                $("#EditGroup").css("display", "none");
+                $("#BindGroup").css("display", "block");
+                $("#tilebangding").show();
+
+                $("#beginDraw").hide();
+                $("#txtHome").hide();
+                $("#container").css("margin-top", "16px");
+                $("#container").css("height", "425px");
+            }
+            if (i != undefined) {
+                var area = parent.areaList[i];
+                pathId = area.pathId;
+                x = area.pointList[0].oriLon;
+                y = area.pointList[0].oriLat;
+                //  parent.$("#mapframe")[0].contentWindow.showArea([area]);
+
+                var points = []
+                $.each(area.pointList, function () {
+                    var point = GPS.delta(this.oriLat, this.oriLon);
+                    points.push([point.lon, point.lat]);
+                })
+                var polygon = new AMap.Polygon({
+                    path: points,//设置多边形边界路径
+                    strokeColor: "#FF33FF", //线颜色
+                    strokeOpacity: 0.2, //线透明度
+                    strokeWeight: 3,    //线宽
+                    fillColor: "#1791fc", //填充色
+                    fillOpacity: 0.35, //填充透明度
+                    title: area.pathName
+                });
+                polygon.setMap(map);
+                getAreaBounVeh(pathId);
+                if (x > 0) {
+                    map.setZoomAndCenter(13, [x, y]);
+                }
+            } else {
+                x = getUrlParam("lng");
+                y = getUrlParam("lat");
+                if (x > 0) {
+                    new AMap.Marker({
+                        map: map,
+                        position: [x, y],
+                        icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+                    });
+                    map.setZoomAndCenter(13, [x, y]);
+                }
+            }
+
+
+            $("#beginDraw").click(function () {
+
+                parent.showError("开始绘制围栏...双击结束绘制！")
+                map.setDefaultCursor("crosshair");
+
+            });
+
+            $("#btnClearVeh").click(function () {
+                $("#vehSelected").empty();
+                vehList = [];
+            });
+
+            $("#btnDelSeletedVeh").click(function () {
+                var selectedList = $("#vehSelected").find("option:selected");
+                for (var i = 0; i < selectedList.length; i++) {
+                    var item = selectedList[i];
+                    item.remove();
+                    for (var j = 0; j < vehList.length; j++) {
+                        if (vehList[j].vehicleId != undefined) {
+                            if (vehList[j].vehicleId == item.value) {
+                                vehList.splice(j, 1);
+                                break;
+                            }
+                        }
+                        if (vehList[j].groupId != undefined) {
+                            if (vehList[j].groupId == item.value) {
+                                vehList.splice(j, 1);
+                                break;
+                            }
+                        }
+
+                    }
+                }
+            });
+
+
+            $("#btnClearVehGroup").click(function () {
+                $("#vehGroupSelected").empty();
+                vehGroupList = [];
+                groupIdList = [];
+                idlist = [];
+            });
+
+            $("#btnDelSeletedVehGroup").click(function () {
+                var selectedList = $("#vehGroupSelected").find("option:selected");
+                for (var i = 0; i < selectedList.length; i++) {
+                    var item = selectedList[i];
+                    item.remove();
+                    for (var j = 0; j < vehGroupList.length; j++) {
+                        if (vehGroupList[j].gi == item.value) {
+                            vehGroupList.splice(j, 1);
+                            break;
+                        }
+                    }
+                }
+            });
+
+
+            var currentArea;
+            $("#saveArea").click(function () {
+                if (areaPoints.length <= 0) {
+                    //  parent.showError("请先绘制区域！");
+
+                    layer.tips("请先绘制区域！", '#beginDraw');
+                    return;
+                }
+                if ($("#txtAreaName").val() == "") {
+                    //parent.showError("区域名称不能为空！");
+                    layer.tips("区域名称不能为空！", '#txtAreaName');
+                    return;
+                }
+                if ($("#txtAreaName").val().trim(' ') == "") {
+                    // parent.showError("区域名称不合法！");
+                    layer.tips("区域名称不合法！", '#txtAreaName');
+                    return;
+                } else {
+                    if ($("#txtAreaName").val().length > 15) {
+                        //   parent.showError("围栏名称长度不能大于15！");
+                        layer.tips("围栏名称长度不能大于15！", '#txtAreaName');
+                        return;
+                    }
+                }
+
+                if ($("#cbAreaTime").val() == "") {
+                    // parent.showError("停留时间不能为空！");
+                    layer.tips("停留时间不能为空！", '#cbAreaTime');
+                    return;
+                }
+
+                if (Number($("#cbAreaTime").val()) > 999) {
+                    // parent.showError("停留时间不能为空！");
+                    layer.tips("停留时间不能不能大于999分钟！", '#cbAreaTime');
+                    return;
+                }
+
+                $(this).button('loading');
+                var pathType, param, pathName;
+                var selectedList = $("#cbAreaType").find("option:selected");
+
+                switch (selectedList.val()) {
+                    case "31":
+                        pathType = 3;
+                        param = 1;
+                        break;
+                    case "30":
+                        pathType = 3;
+                        param = 0;
+                        break;
+                    case "区域超速":
+                        break;
+                    default:
+
+                }
+                var currentArea = {
+                    pathId: pathId,
+                    pathName: $("#txtAreaName").val(),
+                    pathType: pathType,
+                    param: param,
+                    pointList: areaPoints,
+                    settingTime: $("#cbAreaTime").val()
+                };
+
+                var obj = { jsonData: JSON.stringify(currentArea) };
+                var url = 'http/SafetyZone/addPath.json?';
+                if ($("#saveArea").val() == "0") {
+                    url = 'http/SafetyZone/updatePath.json?'
+                }
+
+                myAjax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: ajax(url),
+                    data: obj,
+                    timeout: 10000,                              //请求超时时间
+                    cache: false,                               //是否缓存上一次的请求数据
+                    async: true,                                //是否异步
+                    success: function (data) {
+                        if (data.flag == 1) {
+                            parent.showError("围栏保存成功!");
+                            currentArea = data.obj;
+                            pathId = currentArea.pathId;
+                            if ($("#saveArea").val() == "0") {
+                                //修改围栏成功,更新点
+                                $.each(parent.areaList, function (index) {
+                                    if (this.pathId == data.obj.pathId) {
+                                        parent.areaList[index] = data.obj;
+                                    }
+                                })
+                                $.each(parent.$(".areaDiv"), function () {
+                                    if (parseInt($(this).attr("pathid")) == data.obj.pathId) {
+                                        $(this).text(data.obj.pathName);
+                                    }
+                                })
+
+                                parent.refreshArea(currentArea);
+                            } else {
+                                parent.addNewArea(currentArea);
+
+                            }
+                            $("#labelBindAreaName").text(data.obj.pathName);
+                            if (data.obj.pathType == 3 & data.obj.param == 1) {
+                                $("#labelBindAreaType").text("禁止驶入区域");
+                            } else if (data.obj.pathType == 3 & data.obj.param == 0) {
+                                $("#labelBindAreaType").text("禁止驶出区域");
+                            }
+                            //$("#labelBindAreaType").show();
+                            $("#EditGroup").css("display", "none");
+                            $("#BindGroup").css("display", "block");
+                            $("#saveArea").button('reset');
+                            $("#tilebangding").show();
+
+
+                        } else {
+                            $("#saveArea").button('reset');
+                            parent.showError(data.msg);
+                        }
+                    },
+                    error: function (data) {
+                        parent.showError("围栏保存失败:" + data.msg);
+                        $("#saveArea").button('reset');
+                    }
+                });
+
+                //pointList
+                //pathType 	// 线路分段限速为1，线路偏移为2，位置点是18)
+                //private int pathType;
+                //private int param;
+                //private int param;
+
+
+            })
+
+
+            $(".rd").click(function (e) {
+
+                switch (e.currentTarget.value) {
+                    case "0":
+                        $("#vehSearch").css("display", "block");
+                        $("#vehBind").css("display", "block");
+
+                        $("#vehGroupSearch").css("display", "none");
+                        $("#vehGroupBind").css("display", "none");
+
+                        break;
+
+                    case "1":
+                        $("#vehSearch").css("display", "none");
+                        $("#vehBind").css("display", "none");
+
+                        $("#vehGroupSearch").css("display", "block");
+                        $("#vehGroupBind").css("display", "block");
+                        break;
+                    case "2":
+                        break;
+                    default:
+                        break;
+
+                }
+            });
+
+            $("#bindArea").click(function () {
+                var idlist = [];
+                var groupIdList = [];
+                if ($("#vehSelected").find("option").length == 0) {
+                    //layer.msg('请选择车辆');
+                    //return false;
+                } else {
+                    $.each($("#vehSelected").find("option"), function () {
+                        switch ($(this).attr("tt")) {
+                            case '0':
+                                groupIdList.push(this.value);
+                                break;
+                            case '1':
+                                idlist.push(this.value);
+                                break;
+                        }
+                    })
+                }
+
+                var info = new Object();
+                info.pathId = getUrlParam('pathId');
+                info.pathId = pathId;
+                //info.id = "113477,113480";
+                info.vids = "";
+                info.gids = "";
+                info.vids = idlist.join(',');
+                info.gids = groupIdList.join(',');
+
+                myAjax({
+                    type: 'POST',
+                    url: ajax('http/VehBindPath/bindVehicleToPath.json?'),
+                    dataType: 'json',                           //指定服务器返回的数据类型
+                    timeout: 30000,                              //超时时间
+                    cache: false,                               //是否缓存上一次的请求数据
+                    async: true,                                //是否异步
+                    data: info,
+                    beforeSend: function () {
+                        //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 });
+                    },
+                    success: function (data) {
+                        if (data.flag == 1) {
+                            parent.layer.msg(data.msg, { icon: 1 });
+                            parent.closeWindow();
+                        } else {
+                            layer.msg(data.msg, { icon: 2 });
+                        }
+                    },
+                    error: function (msg) {
+                        $("#btnsearch").button('reset');
+                        layer.msg('请求发生错误' + msg.statusText, { icon: 2 });
+                    }
+                });
+            })
+
+
+
+        });
+
+
+
+
+
+
+        function getAreaBounVeh(pathId) {
+            myAjax({
+                type: 'Get',
+                url: ajax('http/SafetyZone/getVehicleInfo.json?pathId=' + pathId),
+                dataType: 'json',                           //指定服务器返回的数据类型
+                timeout: 30000,                              //超时时间
+                cache: false,                               //是否缓存上一次的请求数据
+                async: true,                                //是否异步
+                //data: info,
+                beforeSend: function () {
+                    //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 });
+                },
+                success: function (data) {
+                    if (data.flag == 1) {
+                        for (var i = 0 ; i < data.obj.g.length; i++) {
+                            //private Integer id; // 序号
+                            //private Integer pathId; // 区域ID
+                            //private Long gvid; // 车辆ID
+                            //private Type type;
+
+                            vehList.push(data.obj.g[i]);
+                            $("#vehSelected").append("<option id='g_" + data.obj.g[i].groupId + "' tt='0' value='" + data.obj.g[i].groupId + "'>[车组]" + data.obj.g[i].groupName + "</option>");
+                        }
+
+                        for (var i = 0; i < data.obj.v.length; i++) {
+                            vehList.push(data.obj.v[i]);
+                            $("#vehSelected").append("<option id='v_" + data.obj.v[i].vehicleId + "'  tt='1' value='" + data.obj.v[i].vehicleId + "'>[车辆]" + data.obj.v[i].plate + "</option>");
+                        }
+
+
+
+
+                    }
+                    //else {
+                    //    layer.msg(data.msg, { icon: 2 });
+                    //}
+                },
+                error: function (msg) {
+                    $("#btnsearch").button('reset');
+                    layer.msg('请求发生错误' + msg.statusText, { icon: 2 });
+                }
+            });
+
+        }
+
+        function setCurrent(obj) {
+
+            currentArea = obj;
+            $("#labelBindAreaName").text(obj.pathName);
+
+            if (obj.pathType == 3 & obj.param == 1) {
+                $("#labelBindAreaType").text("禁止驶入区域");
+            } else if (obj.pathType == 3 & obj.param == 0) {
+                $("#labelBindAreaType").text("禁止驶出区域");
+            }
+            $("#labelBindAreaType").show();
+
+
+        }
+
+        function EditArea(obj) {
+
+            console.log(obj)
+            currentArea = obj;
+            pathId = currentArea.pathId;
+            $.each(currentArea.pointList, function () {
+                //var point = GPS.delta(this.oriLat, this.oriLon);
+                //  var point = GPS.deltaOut(parseFloat(this.oriLat), parseFloat(this.oriLon));
+                areaPoints.push({ orilat: this.oriLat, orilon: this.oriLon });
+            })
+            //areaPoints = currentArea.pointList;
+            //console.log("地图经纬度：" + JSON.stringify(areaPoints));
+            $("#txtAreaName").val(obj.pathName);
+            if (obj.settingTime == null || obj.settingTime == "") {
+                $("#cbAreaTime").val("0");
+            } else {
+                $("#cbAreaTime").val(obj.settingTime);
+            }
+
+            var h = (obj.pathType * 10) + obj.param;
+            $("#cbAreaType").val(h);
+            $("#saveArea").val("0");
+
+        }
+
+
+        $('#typeaheadVeh').click(function () {
+            $('#typeaheadVeh').typeahead('lookup');
+            showTreeDiv();
+
+        });
+        $("body").click(function (e) {
+            var id = $(e.toElement).attr('id') || "";
+            if (!(id == "btnChooseId" || id.indexOf("Tree") != -1 || id == "iChooseId" || id.indexOf("choose") != -1)) {
+                $("#TreeDiv").hide();
+            }
+        });
+        function initVehSearchSource() {
+
+            $.fn.typeahead.Constructor.prototype.blur = function () {
+                var that = this;
+                setTimeout(function () { that.hide() }, 1500);
+            };
+
+
+            $('#typeaheadVeh').typeahead({
+                minLength: 2,
+                items: 10,
+                source: function (query, process) {
+                    //return vehName;
+
+                    $('#typeaheadVeh').addClass('spinner');
+                    //http/Monitor/searchVehicle.json
+                    return myAjax({
+                        url: ajax('http/Monitor/SearchBindingOfVehicles.json?plate=' + $('#typeaheadVeh').val() + ''),
+                        type: 'post',
+                        data: { plate: query },
+                        dataType: 'json',
+
+                        success: function (o) {
+
+                            var gnlist = parent.$("#userIframe")[0].contentWindow.treeGroupList;
+                            var nArr = [];
+                            if (gnlist && gnlist.length > 0) {
+                                for (var i = 0; i < gnlist.length; i++) {
+                                    if (gnlist[i].gn.toLowerCase().indexOf(query.toLowerCase()) != -1) {
+                                        nArr.push(gnlist[i]);
+                                    }
+                                }
+                            }
+                            if (o.obj && o.obj.length > 0) {
+                                for (var i = 0; i < o.obj.length; i++) {
+
+                                    //if (o.obj[i].type == 1)
+                                    nArr.push(o.obj[i]);
+                                    //else if (o.obj[i].type == 2)
+                                    //    nArr.push({
+                                    //        groupId: o.obj[i].groupId,
+                                    //        terminalNo: o.obj[i].terminalNo
+                                    //    });
+                                    //else if (o.obj[i].type == 3)
+                                    //    nArr.push({
+                                    //        groupId: o.obj[i].groupId,
+                                    //        sim: o.obj[i].sim
+                                    //    });
+
+                                }
+                            }
+                            $('#typeaheadVeh').removeClass('spinner');
+
+                            return process(nArr);
+                        }, error: function (msg) {
+                            // layer.msg('用户请求失败' + msg.statusText, { icon: 3 });
+                            showError("模糊搜索失败:" + msg.responseText);
+                            $('#typeaheadVeh').removeClass('spinner');
+                        }
+
+                    });
+                },
+                updater: function (item) {
+                    //"{"terminalNo":"12345678901","sim":"12345678903","groupId":2386,"plate":"123455","vehicleId":19473}" 
+                    var item = JSON.parse(item);
+                    if (item.groupName == undefined) {
+                        lastSearchVeh = item;
+                    }
+                    if (item.gn != undefined) {
+                        if ($("#g_" + item.gi).length == 0) {
+                            vehList.push(item);
+                            $("#vehSelected").append("<option id='g_" + item.gi + "' tt='0' value='" + item.gi + "'>[车组]" + item.gn + "</option>");
+                        }
+                    } else {
+                        if ($("#v_" + item.vehicleId).length == 0) {
+                            vehList.push(item);
+                            $("#vehSelected").append("<option id='v_" + item.vehicleId + "'  tt='1' value='" + item.vehicleId + "'>[车辆]" + item.plate + "</option>");
+                        }
+                    }
+                    $("#TreeDiv").hide();
+
+                    //$("#vehframe")[0].contentWindow.searchVehbyPlate(item);
+
+
+                }, matcher: function (obj) {
+
+                    //return ~obj.plate.toLowerCase().indexOf(this.query.toLowerCase())
+
+                    if (obj.gn)
+                        return ~obj.gn.toLowerCase().indexOf(this.query.toLowerCase())
+                    else if (obj.plate)
+                        return ~obj.plate.toLowerCase().indexOf(this.query.toLowerCase())
+                    else if (obj.terminalNo)
+                        return ~obj.terminalNo.toLowerCase().indexOf(this.query.toLowerCase())
+                    else if (obj.sim)
+                        return ~obj.sim.toLowerCase().indexOf(this.query.toLowerCase())
+                },
+                sorter: function (items) {
+                    //var beginswith = [], caseSensitive = [], caseInsensitive = [], item;
+                    //while (aItem = items.shift()) {
+                    //    var item = aItem;
+                    //    if (!item.plate.toLowerCase().indexOf(this.query.toLowerCase()))
+                    //        beginswith.push(JSON.stringify(item));
+                    //    else if (~item.plate.indexOf(this.query)) caseSensitive.push(JSON.stringify(item));
+                    //    else caseInsensitive.push(JSON.stringify(item));
+                    //}
+
+                    //return beginswith.concat(caseSensitive, caseInsensitive)
+
+
+
+                    var result = new Array(), item;
+                    while (item = items.shift()) {
+                        if (item.gn) {
+                            if (item.gn.toLowerCase().indexOf(this.query.toLowerCase()) != -1) {
+                                var gf = false;
+                                for (var i = 0; i < result.length; i++) {
+                                    var l = JSON.parse(result[i]);
+                                    if (l.gn && l.gn.toLowerCase() == item.gn.toLowerCase()) {
+                                        gf = true;
+                                        break;
+                                    }
+                                }
+                                if (!gf)
+                                    result.push(JSON.stringify(item));
+                            }
+                        } else if (item.plate) {
+                            if (item.plate.toLowerCase().indexOf(this.query.toLowerCase()) != -1) {
+                                var cf = false;
+                                for (var c = 0; c < result.length; c++) {
+                                    var r = JSON.parse(result[c]);
+                                    if (r.vehicleId && r.vehicleId == item.vehicleId) {
+                                        cf = true;
+                                        break;
+                                    }
+                                }
+                                if (!cf)
+                                    result.push(JSON.stringify(item));
+                            }
+                        } else if (item.terminalNo) {
+                            if (item.terminalNo.toLowerCase().indexOf(this.query.toLowerCase()) != -1) {
+                                var cf = false;
+                                for (var c = 0; c < result.length; c++) {
+                                    var r = JSON.parse(result[c]);
+                                    if (r.terminalNo && r.terminalNo == item.terminalNo) {
+                                        cf = true;
+                                        break;
+                                    }
+                                }
+                                if (!cf)
+                                    result.push(JSON.stringify(item));
+                            }
+                        } else if (item.sim) {
+                            if (item.sim.toLowerCase().indexOf(this.query.toLowerCase()) != -1) {
+                                var cf = false;
+                                for (var c = 0; c < result.length; c++) {
+                                    var r = JSON.parse(result[c]);
+                                    if (r.sim && r.sim == item.sim) {
+                                        cf = true;
+                                        break;
+                                    }
+                                }
+                                if (!cf)
+                                    result.push(JSON.stringify(item));
+                            }
+                        }
+                    }
+                    return result;
+
+                },
+                highlighter: function (obj) {
+                    var item = JSON.parse(obj);
+                    var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+                    if (item.gn) {
+                        return item.gn.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+                            return '<strong>' + match + '</strong>'
+                        }) + "<span class=\"right-span\">车组</span>";
+                    }
+                    else if (item.plate) {
+                        return item.plate.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+                            return '<strong>' + match + '</strong>'
+                        }) + "<span class=\"right-span\">车辆</span>";
+                    }
+                    else if (item.sim) {
+                        return item.sim.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+                            return '<strong>' + match + '</strong>'
+                        }) + "<span class=\"right-span\">SIM</span>";
+                    }
+                    else if (item.terminalNo) {
+                        return item.terminalNo.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+                            return '<strong>' + match + '</strong>'
+                        }) + "<span class=\"right-span\">终端</span>";
+                    }
+                },
+            });
+
+
+        }
+
+        var vehGroupList = [];
+        function initGroupSearchSource(source) {
+
+            var groupsName = [];
+            for (var i = 0; i < source.length; i++) {
+                groupsName.push(source[i]);
+            }
+
+            $.fn.typeahead.Constructor.prototype.blur = function () {
+                var that = this;
+                setTimeout(function () { that.hide() }, 250);
+            };
+
+
+            $('#typeaheadGroup').typeahead({
+                items: 10,
+                matcher: function (item) {
+                    return item.gn.toLowerCase().indexOf(this.query.toLowerCase())
+                },
+                source: function (query, process) {
+                    var ls = []
+                    $.each(source, function () {
+                        if (this.gn.indexOf(query) > -1) {
+                            if (this.gn == "车组" | this.gn == "库存") {
+
+                            } else {
+                                ls.push(this);
+                            }
+
+                        }
+                    })
+                    return ls;
+                },
+                updater: function (item) {
+                    var seleted = JSON.parse(item);
+                    vehGroupList.push(seleted);
+                    $("#vehGroupSelected").append("<option value='" + seleted.gi + "'>" + seleted.gn + "</option>");
+
+                },
+                sorter: function (items) {
+                    var beginswith = [], caseSensitive = [], caseInsensitive = [], item;
+                    while (aItem = items.shift()) {
+                        var item = aItem;
+                        if (!item.gn.toLowerCase().indexOf(this.query.toLowerCase()))
+                            beginswith.push(JSON.stringify(item));
+                        else if (~item.gn.indexOf(this.query)) caseSensitive.push(JSON.stringify(item));
+                        else caseInsensitive.push(JSON.stringify(item));
+                    }
+
+                    return beginswith.concat(caseSensitive, caseInsensitive)
+
+                },
+                highlighter: function (obj) {
+                    var item = JSON.parse(obj);
+                    var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+                    return item.gn.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+                        return '<strong>' + match + '</strong>'
+                    })
+                },
+            });
+        }
+
+    </script>
+
+
+
+    <script>
+
+
+
+
+        function selectHome(e) {
+            //e.poi.location.lat
+            //e.poi.location.lng
+            if (true) {
+                if (e.poi.location != undefined & e.poi.location != "") {
+                    homeMark = {
+                        mark: new AMap.Marker({
+                            position: [e.poi.location.lng, e.poi.location.lat],
+                            draggable: true,
+                            cursor: 'move',
+                            raiseOnDrag: true,
+                            icon: new AMap.Icon({
+                                size: new AMap.Size(30, 35),  //图标大小
+                                image: "boyunImg/locationHome.png",
+                                imageOffset: new AMap.Pixel(0, 0)
+                            }),
+                            map: map
+                        }),
+                        circle: drawCircle(e.poi.location.lng, e.poi.location.lat, 1000, "#41cac0")
+                    }
+
+                    homeMark.mark.on('dragend', function (MapsEvent) {
+                        setTimeout(function () { homeMark.circle.setCenter(homeMark.mark.getPosition()); }, 1000);
+
+                        geocoderHome.getAddress(homeMark.mark.getPosition(), function (status, result) {
+                            if (status === 'complete' && result.info === 'OK') {
+                                var address = result.regeocode.formattedAddress; //返回地址描述 
+                                $('#txtHome').val(address);
+                            }
+                        });
+
+                    });
+
+                    map.setZoomAndCenter(14, [e.poi.location.lng, e.poi.location.lat]);
+                } else { layer.msg('地址不够具体，请重新输入！', { icon: 3 }); }
+            } else {
+                if (e.poi.location != undefined && e.poi.location != "") {
+                    homeMark.mark.setPosition([e.poi.location.lng, e.poi.location.lat]);
+                    homeMark.circle.setCenter([e.poi.location.lng, e.poi.location.lat]);
+                    map.setZoomAndCenter(14, [e.poi.location.lng, e.poi.location.lat]);
+                } else { layer.msg('地址不够具体，请重新输入！', { icon: 3 }); }
+            }
+
+        }
+        function drawCircle(lat, lon, radius, fillColor, strokeColor) {
+            return marker;
+        }
+    </script>
+</body>
+</html>

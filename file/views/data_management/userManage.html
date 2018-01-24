@@ -1,0 +1,655 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <!--Form Wizard-->
+    <link rel="stylesheet" type="text/css" href="css/jquery.steps.css" />
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/bootstrap-select.min.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+
+    <![endif]-->
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            overflow-y: hidden;
+            background: white;
+        }
+
+        .ztree span {
+            line-height: 18px;
+            margin: 2px;
+            font-size: 13px;
+        }
+
+        .TreeDiv {
+            z-index: 999;
+            width: 260px;
+            height: 160px;
+            position: absolute;
+            background-color: #a7a7a7;
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 3px;
+            box-shadow: rgb(102, 102, 102) 0px 1px 5px;
+            display: none;
+        }
+
+
+
+        #formRight {
+            height: 535px;
+        }
+
+        @media screen and (max-width:1050px) {
+
+            #friFra {
+            }
+
+            #formRight {
+                height: 400px;
+            }
+        }
+
+        .form-horizontal.tasi-form .form-group2 {
+            padding-bottom: 20px;
+            /*padding-top: 10px;*/
+        }
+
+        .form-control {
+            color: #47596f !important;
+        }
+
+        .userInfoTable {
+        }
+
+            .userInfoTable tr {
+                height: 36px;
+            }
+
+                .userInfoTable tr td {
+                    border: 1px solid #ccc;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+
+
+
+        #parentUser {
+            border: solid 1px #000;
+            /*很关键：将默认的select选择框样式清除*/
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            padding-right: 14px;
+        }
+
+        a:hover {
+            cursor: pointer;
+        }
+
+        #userHierarchyDiv .dropdown-menu {
+            left: -10px;
+        }
+
+        #boundGroup .dropdown-menu {
+            left: 60px;
+        }
+
+        .form-horizontal.tasi-form .form-group {
+            padding-bottom: 0px;
+        }
+
+        .col-md-3 {
+            width: 19%;
+        }
+
+        .col-md-9 {
+            width: 81%;
+        }
+
+        #addusergroup .dropdown-menu {
+            left: 330px;
+        }
+
+        .layui-layer-title {
+            background-color: #165082 !important;
+            color: #fff !important;
+        }
+
+        a {
+            color: #0664f7;
+        }
+
+        .btu {
+            background-color: rgb(46, 141, 237);
+            color: #fff;
+            padding: 5px;
+        }
+
+            .btu:hover {
+                background-color: rgb(19, 127, 236);
+            }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="teamrow" class="row">
+        <div class="panel" style="margin-bottom: 0px; /* height: 100px; *//* border-bottom: 1px solid #c3c1c1; */border: 1px solid #ccc; border-bottom: 1px solid #c3c1c1; height: 115px; margin: 3px;">
+            <div class="panel-heading" style="background-color: #F9F9F9; height: 33px; padding: 8px 15px 5px 15px; border-bottom: 1px solid rgb(234, 234, 234); padding-right: 1px;">
+                <span style="font-size: 15px; font-weight: bold; color: #555">账户信息</span>
+            </div>
+
+            <div class="col-lg-5" style="display: none;">
+                <span class="tools pull-right">
+                    <a id="addUser" class="fa fa-plus" data-toggle="modal" href="#editUser"></a>
+                    <a id="delUser" class="fa fa-minus"></a>
+                    <a id="upUser" class="fa fa-edit (alias)" data-toggle="modal" href="#editUser"></a>
+                    <a id="bindGroup" cl ass="edit" data-toggle="modal" href="#boundGroup"></a>
+                </span>
+            </div>
+
+            <div class="panel-body" style="padding: 2px;">
+                <table class="userInfoTable" style="float: left;">
+                    <tbody>
+                        <tr style="display: none;">
+                            <td colspan="3" class="links">
+                                <label id="user"></label>
+                                <a id="upPwd" class="edit" href="javascript:selectSales(3,salesURL[3]);" style="color: red;"><b class="edit_bg"></b>修改密码</a>
+                                <label></label>
+                                <!--   <a class="monitor" id="link-monitor" href="javascript:redirect();"><b class="monitor_bg"></b>监控</a>-->
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label>登录账户：</label><span id="login_name"></span></td>
+                            <td>
+                                <label>类型：</label><span id="grade"></span></td>
+                            <td>
+                                <label>设备数量：</label>全部:<span id="total">-</span>&nbsp 
+                                <span id="ctnr-showProductNum" class="ctnr">
+                                    <!--<a id="link-showProductNum" href="javascript://" title="更多">»</a>-->
+                                    <span class="inner">在线:<span id="num-online">-</span>
+                                        离线:<span id="num-offline">-</span>
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label>客户名称：</label><span id="contact"></span></td>
+                            <td>
+                                <label>客户代码：</label><span id="kcustomCode"></span></td>
+                            <!-- <td></td> -->
+                            <td>
+                                <label>电话：</label><span id="phone"></span>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="float: right; width: 191px; margin-top: 37px;">
+                    <button id="btnAddNewUser" class="btn btn-white" style="float: left; margin-right: 5px; background: #165082; color: #fff;">
+                        <i class="fa fa-plus"><span style="margin-left: 3px;">新增客户</span></i>
+
+                    </button>
+
+                    <button id="btnOutPut" type="button" data-loading-text="Loading..." class="btn btn-success" style="float: left; margin-left: 10px; background-color: #ffffff; border-color: #c5c5c5; color: #165082;">
+                        <i class="fa  fa-share-square"></i>导出 
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="Div1" class="row">
+        <div class="panel" style="margin-bottom: 0px; /* height: 100px; *//* border-bottom: 1px solid #c3c1c1; */border: 1px solid #ccc; border-bottom: 1px solid #c3c1c1; margin: 3px;">
+            <div class="panel-heading" style="background-color: #F9F9F9; height: 53px; padding: 8px 15px 5px 15px; border-bottom: 1px solid rgb(234, 234, 234); padding-right: 1px; display: none;">
+                <!-- <span style="font-size: 15px; font-weight: bold; float: left; color: #555">账户信息</span>-->
+
+
+            </div>
+            <div class="panel-body" style="padding: 2px;">
+                <div class="col-lg-12" style="padding: 10px;">
+                    <div id="userHierarchyDiv" style="border: 1px solid #ccc; width: 240px; overflow: auto; float: left;">
+
+                        <div style="margin-top: 5px; margin-left: 15px; margin-bottom: 5px; position: absolute; top: 12px;">
+                            <div class="iconic-input">
+                                <i class="fa  fa-search" style="color: #2a77b9"></i>
+                                <input id="userSearch" type="text" data-provide="typeaheadVeh" class="form-control input-sm" placeholder="输入用户名搜索" style="width: 200px; border: 1px solid #bdbdcc; color: #3c3737 !important; font-size: 10px; border-radius: 20px;">
+                            </div>
+                        </div>
+                        <div id="userView" class="ztree" style="margin-top: 40px; width: 100%; height: 90%;   border-bottom: 1px solid rgb(204, 204, 204);overflow-x: scroll; "></div>
+                    </div>
+                    <div id="userHierarchyDiv1" style="border: 1px solid #ccc; float: left; margin-left: 5px;">
+                        <table id="userTable"></table>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- tabindex="-1"-->
+    <div class="modal fade modal-dialog-center" id="editUser" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content-wrap">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="AddUserTile">编辑用户数据</h4>
+                    </div>
+                    <div id="userForm_body" class="modal-body" style="height: 600px;">
+
+                        <div class="form">
+                            <form role="form" class="form-horizontal tasi-form">
+                                <div class="col-md-12">
+                                    <div class="form-group has-success">
+                                        <label class="col-md-3 control-label" style="text-align: center">登录账户:</label>
+                                        <div class="col-md-9">
+                                            <input type="text" placeholder="" id="name" class="form-control" maxlength="15" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\-\@]/g,'')">
+                                            <!--<p class="help-block">Successfully done</p>-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-success">
+                                        <label class="col-md-3 control-label" style="text-align: center">密码:</label>
+                                        <div class="col-md-9">
+                                            <input type="text" placeholder="" id="password" class="form-control" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\.\-\?\,\/\\\;]/g,'')" maxlength="20" />
+                                            <input id="password_btu" type="button" class="btu" value="重置密码" onclick="resetPassword(this)" style="display: none; position: absolute; top: 1px; border: 0px; left: 17px;" />
+                                            <!--<p class="help-block">Aha you gave a wrong info</p>-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-success">
+                                        <label class="col-md-3 control-label" style="text-align: center">客户名称:</label>
+                                        <div class="col-md-9">
+                                            <input type="text" placeholder="" id="corpName" maxlength="15" class="form-control" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\.]/g,'')">
+                                            <!--<p class="help-block">Something went wrong</p>-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-success" id="addusergroup">
+                                        <label class="col-md-3 control-label" style="text-align: center">绑定车组:</label>
+                                        <div class="col-md-9" style="margin-top: 9px;">
+
+                                            <span id="add_addusergroup_str">新账号请</span>
+                                            <a href="javascript:void(0)" id="add_addusergroup" onclick="shouadd_addusergroup()" style="text-decoration: underline;">选择绑定车组</a>
+                                            <span id="add_addusergroup2">或</span>
+                                            <a href="javascript:void(0)" id="add_addusergroup3" onclick="addgroups()" style="text-decoration: underline;">创建一个车组</a>
+
+                                            <!--  
+                                            <input type="button" id="add_addusergroup" value="选择车组" style="background-color: #165082; color: #fff; border: 0px; padding: 8px;" onclick="shouadd_addusergroup()" />
+                                            <input type="button" value="新建车组" style="background-color: #165082; color: #fff; border: 0px; padding: 8px;" onclick="addgggggro()" />-->
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group has-success">
+                                        <label class="col-md-3 control-label" style="text-align: center">账户类型:</label>
+                                        <div class="col-md-9">
+                                            <select id="accountType" class="form-control m-bot15">
+                                                <!-- <option value="1">代理监控</option>
+                                                <option value="2">代理管理员</option>-->
+                                                <option value="3">我的客户</option>
+                                                <option value="4">监控客户</option>
+
+                                            </select>
+                                            <div id="userTypeTips" style="display: none" class="checkbox">
+                                                <label>
+                                                    <input id="isCreate" type="checkbox" checked="checked">
+                                                    生成与"公司名称"相同的车组。
+                                                </label>
+                                                <label>
+                                                    <input id="isInput" type="checkbox">
+                                                    导入首批设备。
+                                                </label>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group has-success">
+                                        <label class="col-md-3 control-label" style="text-align: center">上级账户:</label>
+                                        <div class="col-md-9">
+                                            <select id="parentUser" class="form-control m-bot15" style="background-color: #ccc; cursor: not-allowed;" disabled="disabled">
+                                            </select>
+                                            <!--<p class="help-block">Something went wrong</p>-->
+                                        </div>
+                                    </div>
+
+                                    <div id="dvUserLimit" style="display: none" class="form-group has-success">
+                                        <label class="col-md-3 control-label" style="text-align: center">加车上限：</label>
+                                        <div class="col-md-9">
+                                            <!--<input id="vehLimit" type="text" maxlength="6" autocomplete="off" placeholder="不能超过上级可分配的加车上限:50" onkeyup="value=value.replace(/[^\d]/g,'')" class="form-control">-->
+                                            <input id="vehLimit" type="text" maxlength="6" autocomplete="off" onkeyup="value=value.replace(/[^\d]/g,'')" class="form-control">
+                                            <!--<p class="help-block">不能超过上级可分配的加车上限:50;</p>-->
+                                        </div>
+
+                                    </div>
+
+                                    <div id="dvInputType" style="display: none" class="form-group has-success ">
+                                        <label class="col-md-3 control-label" style="text-align: center">设备类型：</label>
+                                        <div class="col-md-9">
+                                            <select id="terminalType" class="form-control m-bot15">
+                                            </select>
+                                            <!--<p class="help-block">Something went wrong</p>-->
+                                        </div>
+                                    </div>
+
+                                    <div id="dvInputTer" style="display: none" class="form-group  has-success">
+                                        <label class="col-md-3 control-label" style="text-align: center">导入设备号：</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control " id="terminalNos" required="" onkeyup="value=value.replace(/[^\0-9\.\\\n]/g,'')" placeholder="多台设备请用逗号隔开,例如:13572635313,13567890982,"></textarea>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group  has-success">
+                                        <label class="col-md-3 control-label" style="text-align: center">删除车组权限:</label>
+                                        <div class="col-md-9">
+                                            <select id="checkGroup" class="form-control m-bot15">
+                                                <option value="0">有删除权限</option>
+                                                <option value="1">无删除权限</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group  has-success">
+                                        <label class="col-md-3 control-label" style="text-align: center">联系电话:</label>
+                                        <div class="col-md-9">
+                                            <input id="userPhone" type="text" maxlength="15" style="float: left; width: 198px;" onkeyup="value=value.replace(/[^\d- ]/g,'')" placeholder="" class="form-control" />
+                                            <div id="isMsgCheck_div" style=" display:none; font-size: 14px; float: left; height: 30px; line-height: 30px; margin-left: 14px;">
+                                                <input type="checkbox" id="isMsgCheck" style="float: left; margin-top: 8px; margin-right: 6px;" /><label for="isMsgCheck" title="用户进行一些危险操作的时候需要短信验证码验证">加入风险操作短信验证</label>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div id="moletile" class="form-group  has-success" style="margin-bottom:5px; display:none; ">
+                                        <div style="width: 811px;  margin-left:44px; background-color: rgb(234, 249, 255); padding: 3px 13px; border: 1px solid rgb(177, 196, 234); color:#f00;">
+                                            <span style="color: #f00;">(注：设置手机短信验证后，用户进行风险操作时（新增删除修改用户、删除车组、删除车辆、无线回传、用户绑定车组），需要短信验证成功后，方可继续操作)</span>
+                                        </div>
+                                    </div>
+                                    <div id="customCodediv" class="form-group  has-success" style="display: none;">
+                                        <label class="col-md-3 control-label" style="text-align: center">客户代码:</label>
+                                        <div class="col-md-9">
+                                            <input id="customCode" type="text" placeholder="" class="form-control">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group" style="padding-top: 5px; border-top: 1px solid #ccc;">
+                                        <div class="col-lg-offset-6 col-lg-6" style="margin-left: 44%;">
+                                            <button id="confirm_User" class="btn btn-danger" type="button" style="height: 28px; line-height: 28px; margin: 0px 6px; padding: 0px 15px; border: 1px solid rgb(72, 152, 213); border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; background-color: rgb(46, 141, 237); color: rgb(255, 255, 255); display: inline-block;">
+                                                保存</button>
+                                            <button id="cancel_User" class="btn btn-default" type="button" style="height: 28px; line-height: 28px; margin: 0px 6px; padding: 0px 15px; border: 1px solid rgb(222, 222, 222); background-color: rgb(241, 241, 241); color: rgb(51, 51, 51); border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; display: inline-block;">
+                                                取消</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--绑定车组-->
+    <div class="modal fade modal-dialog-center" id="boundGroup" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg-8">
+            <div class="modal-content-wrap">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">绑定车组</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <div class="panel-body" style="padding: 2px;">
+                                        <div style="margin-bottom: 5px;">
+                                            选择：
+                                            <input type="text" id="groupTxt" placeholder="搜索车组" />
+                                            <span style="margin-left: 14%;">已选择：</span>
+                                        </div>
+                                        <div class="col-md-6" style="height: 400px; border: 1px solid #c6c6c6; padding: 0">
+                                            <div id="groupView2" class="ztree" style="width: 100%; height: 100%; overflow: auto;"></div>
+                                        </div>
+                                        <div class="col-md-6" style="height: 400px; border: 1px solid #c6c6c6; padding: 0 0 0 10px; border-left: none;">
+                                            <div id="groupView" class="ztree" style="width: 100%; height: 100%; overflow: auto;"></div>
+                                        </div>
+                                        <!--<iframe id="vehGroupTree" name="vehGroupTree" class="col-md-12" src="vehGroupTree.html" style="height: 400px;" frameborder="no" border="0"></iframe>-->
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="userboundGroups" class="form-group" style="margin-bottom: 0;">
+                                <div class="col-lg-offset-4 col-lg-8">
+                                    <button id="boundGroups" type="button" class="btn btn-info" style="height: 28px; line-height: 28px; margin: 0px 6px; padding: 0px 15px; border: 1px solid rgb(72, 152, 213); border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; background-color: rgb(46, 141, 237); color: rgb(255, 255, 255); display: inline-block;">
+                                        绑定车组</button>
+                                    <button id="closeBound" type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true" style="height: 28px; line-height: 28px; margin: 0px 6px; padding: 0px 15px; border: 1px solid rgb(222, 222, 222); background-color: rgb(241, 241, 241); color: rgb(51, 51, 51); border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; display: inline-block;">
+                                        取消</button>
+                                </div>
+                            </div>
+                            <div id="adduserboundGroups" class="form-group" style="margin-bottom: 0; display: none;">
+                                <div class="col-lg-offset-4 col-lg-8">
+                                    <button onclick="addboundGroups()" type="button" class="btn btn-info" style="height: 28px; line-height: 28px; margin: 0px 6px; padding: 0px 15px; border: 1px solid rgb(72, 152, 213); border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; background-color: rgb(46, 141, 237); color: rgb(255, 255, 255); display: inline-block;">
+                                        选择车组</button>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal" aria-hidden="true" style="height: 28px; line-height: 28px; margin: 0px 6px; padding: 0px 15px; border: 1px solid rgb(222, 222, 222); background-color: rgb(241, 241, 241); color: rgb(51, 51, 51); border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; display: inline-block;">
+                                        取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+
+    <script src="assets/timepicker/jquery.datetimepicker.js"></script>
+    <link href="assets/timepicker/jquery.datetimepicker.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="assets/zTree/css/metroStyle/metroStyle.css" type="text/css">
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+
+
+
+    <!--Form Validation-->
+    <script src="js/bootstrap-validator.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+    <script type="text/javascript" src="js/bootstrap-select.js"></script>
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/jquery.table2excel.js"></script>
+
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="js/jqPaginator.js"></script>
+    <!--common script for all pages-->
+    <script src="layer/layer.js"></script>
+    <!--  <script src="js/userManager.js"></script>-->
+    <script src="/js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/userManager.js" });
+            GetVersions(arr);
+        });
+    </script>
+    <style>
+        .search {
+            width: 200px;
+        }
+
+        /*.selected {
+            background-color: #f39b13;
+        }*/
+
+        /*.btn {
+            padding: 0px 0px;
+            margin-top: -5px;
+            padding: 2px;
+            padding-left: 4px;
+            padding-right: 4px;
+        }*/
+        .blueColor {
+            color: #0b6be4;
+        }
+
+            .blueColor div {
+                color: #555;
+            }
+
+        .displayCol {
+            display: none;
+        }
+
+        #vehGroup .dropdown-menu {
+            left: 12px;
+        }
+
+        .TreeDiv {
+            z-index: 999;
+            width: 465px;
+            height: 220px;
+            background-color: white;
+            overflow-y: auto;
+            position: absolute !important;
+            left: 17px !important;
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 3px;
+            box-shadow: rgb(102, 102, 102) 0px 1px 5px;
+            display: none;
+        }
+
+
+
+            .TreeDiv * {
+                color: #797979 !important;
+            }
+    </style>
+    <div class="modal fade modal-dialog-center" id="editGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg-8">
+            <div class="modal-content-wrap">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">新建车组</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class=" form">
+                            <form class="cmxform form-horizontal tasi-form" id="vehGroup" method="get" action="">
+                                <div class="form-group ">
+                                    <label for="cname" class="control-label col-md-3" style="text-align: center">上级车组：</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control " id="groups" type="text" placeholder="选择上级车组" />
+                                        <div id="TreeDiv3" class="TreeDiv">
+                                            <div id="groupTree3" class="ztree"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group has-error">
+                                    <label for="cemail" class="control-label col-md-3" style="text-align: center">车组名：</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control " id="groupName" type="text" maxlength="15">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="curl" class="control-label col-md-3" style="text-align: center">联系方式：</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control " id="vehGroupPhone" type="text" onkeyup="value=value.replace(/[^\0-9\,\ \-]/g,'')">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="ccomment" class="control-label col-md-3" style="text-align: center">备注：</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control " id="vehGroupRemark" required=""></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="notice_div" style="display: none;">
+                                    <label for="ccomment" class="control-label col-md-3" style="text-align: center">公告：</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control " id="notice" required=""></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-8">
+                                        <button id="confirm_vehGroup" class="btn btn-danger" type="button">保存</button>
+                                        <button id="cancel_vehGroup" class="btn btn-default" type="button">取消</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-5" style="display: none;">
+        <span class="tools pull-right">
+            <a id="addGroup" class="fa fa-plus" data-toggle="modal" href="#editGroup"></a>
+            <a id="delGroup" class="fa fa-minus"></a>
+            <a id="UpGroup" class="fa fa-edit (alias)" data-toggle="modal" href="#editGroup"></a>
+        </span>
+    </div>
+
+
+</body>
+</html>

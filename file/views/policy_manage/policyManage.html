@@ -1,0 +1,123 @@
+﻿<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-reset.css" rel="stylesheet">
+<!--external css-->
+<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href="css/style.css" rel="stylesheet">
+<link href="css/style-responsive.css" rel="stylesheet" />
+<style>
+    .ifr_box {
+        position: absolute;
+        top: 0px;
+        left: 208px;
+        height: 100%;
+        width: 84.85%;
+        overflow-y: hidden;
+    }
+
+    @media screen and (max-width: 1295px) {
+        .ifr_box {
+            width: 83%;
+        }
+    }
+</style>
+<!--All pages covered,But can not exceed 208px distance on the right-->
+<div style="height: 100%; width: 100%; position: absolute; left: 0; top: 0; overflow: hidden; background: white;">
+    <!--LEFT NAV-->
+    <div id="sidebar" class="nav-collapse ">
+        <div style="height: 150px; background-color: #165082; text-align: center; line-height: 150px;">
+            <img src="img/保单.png" style="position: relative; top: 35px;" />
+        </div>
+        <ul class="sidebar-menu" id="nav-accordion" style="margin-top: 0;">
+            <li class="sub-menu">
+                <a href="javascript:;" class="active">
+                    <b></b>
+                    <!--<img src="img/保单设置.png" />-->
+                    <i class="fa fa-camera"></i>
+                    <span>保单设置</span>
+
+                </a>
+            </li>
+            <li class="sub-menu" style="display:none;" id="daikuangli">
+                <a href="javascript:;">
+                    <b></b>
+                    <!--<img src="img/贷款设置.png" />-->
+                    <i class="fa fa-bank"></i>
+                    <span>贷款管理</span>
+                </a>
+            </li>
+            <!--<li class="sub-menu">
+                <a href="javascript:;">
+                    <b></b>
+                   <img src="img/库存nav.png" />
+                    <span>库存管理</span>
+                </a>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:;">
+                    <b></b>
+                    <img src="img/批量导入nav.png" />
+                    <span>批量导入</span>
+                </a>
+            </li>-->
+        </ul>
+    </div>
+    <!--END LEFT NAV-->
+    <!--RIGHT CONTENT-->
+    <div class="ifr_box">
+        <iframe id="j_right_iframe" style="width: 100%; border: none; height: 100%; overflow-y: hidden"></iframe>
+    </div>
+    <!--END RIGHT CONTENT-->
+</div>
+<script src="js/jquery.js?v=1.1"></script>
+<script src="js/versions.js"></script>
+<script>
+    var policySetingSrc = "policySetingLouLan.html?v=" + get_versions();
+    function loadUser(callback) {
+        myAjax({
+            type: 'GET',
+            url: ajax('http/user/WhoAmI.json'),
+            dataType: 'json',                           //指定服务器返回的数据类型
+            timeout: 10000,                              //请求超时时间
+            cache: false,                               //是否缓存上一次的请求数据
+            async: true,                                //是否异步
+            beforeSend: function () { },
+            success: function (data) {
+                console.log(data.obj.extra)
+                if (data.flag == 1) {
+                    if (data.obj.extra) {
+                        var act = data.obj.extra.toLowerCase().trim();
+                        if (act.indexOf("p_1") != -1) {
+                            policySetingSrc = "policySetingTianAn.html?v=" + get_versions();
+                        }
+                        else if (act.indexOf("p_2") != -1) {
+                            policySetingSrc = "policySetingLouLan.html?v=" + get_versions();
+                        }
+
+                        if (act.indexOf("l_2") != -1) {
+                            $("#daikuangli").show();
+                        }
+                    }
+                }
+                callback();
+            },
+            error: function (msg) { }
+        });
+    };
+    $(function () {
+        loadUser(function () {
+            $("#j_right_iframe").attr("src", policySetingSrc);
+            $("li").click(function () {
+                $(this).parent().find("li a").removeClass("active");
+                $(this).children("a").addClass("active");
+                switch ($(this).children("a").children("span").text()) {
+                    case "保单设置":
+                        $("#j_right_iframe").attr("src", policySetingSrc);
+                        break;
+                    case "贷款管理":
+                        $("#j_right_iframe").attr("src", "lonaSeting.html");
+                        break;
+                }
+            });
+        });
+    });
+</script>

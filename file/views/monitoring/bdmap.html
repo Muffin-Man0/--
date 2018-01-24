@@ -1,0 +1,3119 @@
+﻿<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="utf-8">
+    <title>gdmap</title>
+
+    <style type="text/css">
+        /************ 屏蔽高德地图log ************/
+        .amap-logo {
+            display: none;
+        }
+
+        .amap-copyright {
+            display: none;
+        }
+
+        /************ 屏蔽百度地图log ************/
+        /*.anchorBL {
+            display: none;
+        }*/
+        .anchorTL {
+            top: 30px;
+        }
+        /************************* Just Reset Browser Default CSS : BEGIN ***************************/
+        html {
+            background-color: #fff;
+        }
+
+        body, div, h1, h2, h3, h4, ul, li, form, input, dl, dt, dd, p {
+            margin: 0;
+            padding: 0;
+            font-family: Arial,sans-serif;
+            _font-size: 12px;
+        }
+
+        h3 {
+            +font-size:14px;
+            _font-size: 12px;
+        }
+
+        img {
+            border: none;
+        }
+
+        .c {
+            clear: both;
+        }
+
+        ul, ol, li {
+            list-style: none;
+        }
+
+        /*清除浮动*/
+        .clearfix:after {
+            content: ".";
+            visibility: hidden;
+            display: block;
+            height: 0;
+            overflow: hidden;
+            clear: both;
+        }
+
+        /* no ie mac \*/
+        * html .clearfix {
+            height: 1%;
+        }
+        /* end */
+        * + html .clearfix {
+            height: 1%;
+        }
+
+        body {
+            /*font: 12px/1.5em 微软雅黑,Arial,Verdana,Helvetica,sans-serif;*/
+            color: #333;
+        }
+
+        button, input, select, textarea {
+            color: #999;
+        }
+
+            input[type="button"] {
+                padding: 0 5px;
+                color: white;
+            }
+
+        .demo_box {
+            width: 760px;
+        }
+        /* map style */
+        #iCenter {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #F6F6F6;
+        }
+
+        #r_title {
+            line-height: 28px;
+            padding-left: 5px;
+            background-color: #D1EEEE;
+            font-weight: bold;
+        }
+
+        #result {
+            overflow: auto;
+            margin-bottom: 5px;
+            /*	width:661px;*/
+            height: 255px;
+        }
+            /*  结果项 */
+            #result .sub_result {
+                font-size: 12px;
+                cursor: pointer;
+                line-height: 20px;
+                /*padding:0px 0 4px 2px;*/
+                border-bottom: 1px solid #C1FFC1;
+            }
+
+                #result .sub_result .detail {
+                }
+
+                    #result .sub_result .detail h3 {
+                        color: #00A6AC;
+                    }
+
+        a {
+            color: #067EC0;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: none;
+            }
+
+        .note {
+            color: #999;
+        }
+
+        /*** layerout stylesheet ***/
+        /* 修改背景URL */
+        div.change {
+            background-image: url(http://pages.haozu.ajkcdn.com/20110909/img/map/marker-h.png);
+        }
+
+            div.change div {
+                background-image: url(http://pages.haozu.ajkcdn.com/20110909/img/map/marker-h-l.gif);
+            }
+
+        /*** copied from demo #39 添加自定义点覆盖物 ***/
+        /* 定义自定义点样式 */
+        .markerContentStyle {
+            position: relative;
+        }
+
+            .markerContentStyle span {
+                background-color: #FFFFFF;
+                color: #FF1493;
+                width: 120px;
+                height: 80px;
+                border: 2px solid #D8BFD8;
+                FONT-FAMILY: 华文行楷;
+                position: absolute;
+                top: -10px;
+                left: 25px;
+                white-space: nowrap;
+                -webkit-border-radius: 5px;
+                border-radius: 5px;
+            }
+
+        /*** copied from demo #43 添加自定义信息窗体 ***/
+        /* 定义自定义信息窗体样式 */
+        div.info {
+            position: relative;
+            z-index: 100;
+            border: 1px solid #BCBCBC;
+            box-shadow: 0 0 10px #B7B6B6;
+            border-radius: 8px;
+            background-color: rgba(255,255,255,0.9);
+            transition-duration: 0.25s;
+        }
+
+            div.info:hover {
+                box-shadow: 0px 0px 15px #0CF;
+            }
+
+        div.info-top {
+            position: relative;
+            background: none repeat scroll 0 0 #F9F9F9;
+            border-bottom: 1px solid #CCC;
+            border-radius: 5px 5px 0 0;
+        }
+
+            div.info-top div {
+                display: inline-block;
+                color: #333333;
+                font-size: 12px;
+                font-weight: bold;
+                line-height: 31px;
+                padding: 0 10px;
+            }
+
+            div.info-top img {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                transition-duration: 0.25s;
+            }
+
+                div.info-top img:hover {
+                    box-shadow: 0px 0px 5px #000;
+                }
+
+        div.info-middle {
+            font-size: 12px;
+            padding: 10px;
+            line-height: 21px;
+        }
+
+        div.info-bottom {
+            height: 0px;
+            width: 100%;
+            clear: both;
+            text-align: center;
+        }
+
+            div.info-bottom img {
+                position: relative;
+                z-index: 104;
+            }
+        /*** -------------------------***/
+
+
+        #panel {
+            position: absolute;
+            background-color: white;
+            max-height: 80%;
+            overflow-y: auto;
+            top: 50px;
+            right: 10px;
+            width: 280px;
+        }
+
+        .closeSearchList {
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            border: 0px;
+            cursor: pointer;
+            background-color: white;
+            color: #7DC1FB;
+        }
+
+            .closeSearchList:hover {
+                background-color: #7DC1FB;
+                color: white;
+            }
+
+        .menu {
+            /*width: 50px;
+            height: 40px;*/
+            min-width: 80px;
+            height: auto;
+            z-index: 1000;
+            position: absolute;
+            color: #067EC0;
+            display: none;
+            font-size: 10px;
+            background-color: white;
+            border: 1px solid #e8e8e8;
+            cursor: pointer;
+            box-shadow: 0 3px 14px rgba(0,0,0,.5);
+        }
+
+            .menu li {
+                list-style-type: none;
+                margin: 4px 0px;
+                border-bottom: 1px solid #ececec;
+            }
+
+                .menu li a {
+                    color: #000000;
+                }
+
+
+
+        .liend {
+            border-bottom: 0px solid #ececec;
+        }
+
+        .secondMenu {
+            float: right;
+            background-color: white;
+            margin-right: -115px;
+            display: none;
+            width: 120px;
+            margin-top: -5px;
+            border: 1px solid #e8e2e2;
+        }
+
+        .li_pt {
+            padding: 2px 5px;
+        }
+
+            .li_pt:hover {
+                background-color: rgb(178, 210, 255);
+            }
+
+        .tile {
+            cursor: help;
+            color: #1961f5;
+        }
+
+            .tile:hover {
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body style="margin: 0px; overflow: hidden;">
+    <div id="helpinfoMile_div" style="background-color: #FFF9CC; z-index: 99999; top: 64px; right: 24px; width: 310px; border: 1px dashed #F4CB48; position: absolute; display: none;">
+        <div style="padding: 15px;">
+            <p style="margin: 0 0 10px;">
+                <i style="font-size: 14px; font-weight: bold; font-style: normal">里程显示为估算值：</i>
+            </p>
+  <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                该设备不支持里程数据上传，显示里程为<span style="color: #f00;">估算值</span>，仅供参考使用！当发生以下情况，可能会导致里程<span style="color: #f00;">有误差</span>：
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                1.当设备处于<span style="color: #f00;">不定位</span>状态时（例如：停车场或处于GPS信号弱的地方）；
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                2.当设备处于<span style="color: #f00;">基站定位</span>时；
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                3.其他可能导致<span style="color: #f00;">定位异常</span>情况；
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                如发现<span style="color: #f00;">里程出现误差</span>时，可在监控中心-车辆列表-选择需要修正的车辆，点击设置-里程重置按钮输入修正值消除里程误差（修正后的<span style="color: #f00;">里程=原始里程+输入的修正里程</span>）
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0; color: #f00;">
+                注：该设置对轨迹回放中显示的里程无效
+            </p>
+        </div>
+    </div>
+    <div id="container"></div>
+
+    <div id="panel"></div>
+    <div id="gzdmenuControl" class="menu" onmouseout="gzdmoreControlOut(event,this)">
+        <ul>
+            <li class="li_pt liend" id="li_gzdg" data-id="" data-t="1" onclick="followclick(this)"><a>高</a></li>
+            <li class="li_pt liend" id="li_gzdz" data-id="" data-t="2" onclick="followclick(this)"><a>中</a></li>
+            <li class="li_pt liend" id="li_gzdd" data-id="" data-t="3" onclick="followclick(this)"><a>低</a></li>
+            <li class="li_pt liend" id="li_gzdq" data-id="" data-t="4" onclick="followclick(this)"><a>清除关注</a></li>
+        </ul>
+    </div>
+    <div id="moreControl" class="menu" onmouseout="moreControlOut(event,this)">
+        <ul>
+            <li class="li_pt" onmouseover="moreSecondControlOver(event,this)" onmouseout="moreSecondControlOut(event,this)">
+                <a id="A5" type="0">多边形  ></a>
+                <ul class="secondMenu">
+                    <li class="li_pt liend" onclick="displayArea(this)">
+                        <a id="li_showArea">查看 </a>
+                    </li>
+                    <li class="li_pt" onclick="setArea(this)">
+                        <a id="li_setArea" type="0">设置 </a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="li_pt" onmouseover="moreSecondControlOver(event,this)" onmouseout="moreSecondControlOut(event,this)">
+                <a id="A1">圆形  ></a>
+                <ul class="secondMenu">
+                    <li class="li_pt" onclick="showCircle(this)">
+                        <a id="li_showCircle">查看</a>
+                    </li>
+                    <li class="li_pt" onclick="setCircle(this,200)">
+                        <a id="li_editCircle">200米半径</a>
+                    </li>
+                    <li class="li_pt" onclick="setFreeCircle(this,200)">
+                        <a id="li_editFreeCircle">自定义半径</a>
+                    </li>
+                    <li class="li_pt liend" onclick="removeCircle(this)">
+                        <a id="li_removeCircle">删除</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="li_pt" onmouseover="moreSecondControlOver(event,this)" onmouseout="moreSecondControlOut(event,this)">
+                <a id="A2">停留点  ></a>
+                <ul class="secondMenu">
+                    <li class="li_pt liend" onclick="showParkingCircle(this)">
+                        <a id="li_showParkingCircle">查看</a>
+                    </li>
+                    <li class="li_pt" onclick="setParkingCircle(this)">
+                        <a id="li_parkingCircle">设置</a>
+                    </li>
+                    <li class="li_pt" onclick="removeParkingCircle(this)">
+                        <a id="li_removeParkingCircle">删除</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="li_pt">
+                <a id="li_setCitiArea" onclick="setCitiArea(this)">绑定省市区</a>
+            </li>
+            <li class="li_pt liend"><a id="li_setPoi" onclick="setPoi(this)">添加位置点</a></li>
+        </ul>
+    </div>
+    <div id="trackPlaybackDiv" class="menu" onmouseout="trackPlaybackOut(event,this)">
+        <ul style="text-align: center;">
+            <li class="li_pt" onclick="trajectory(this)">
+                <a>高德地图</a>
+            </li>
+            <li class="li_pt" onclick="trajectory(this)">
+                <a>百度地图</a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="closeAnyOne" onmouseout="closeAnyOneOut(event,this)" style="width: auto; height: auto; z-index: 1000; position: absolute; display: none; cursor: pointer;">
+        <button type="button">X</button>
+    </div>
+
+    <div id="menuControl" class="menu" onmouseout="menuControlOut(event,this)"></div>
+
+    <div id="infoDiv" style='text-align: left; cursor: pointer; color: #272727; display: none; width: 255px;'>
+        <table style="height: 160px; font-size: 11px; width: 265px;">
+            <tr>
+                <td style="border-bottom: 1px solid #cecece;">
+                    <span id='infoPlateNum' style="font-weight: bold;">12323213123</span>
+                    <span id='infoType' style="font-size: 10px;">12323213123  <span id='infoPower'>12323213123</span></span>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label style="font-weight: bold;">速 度:</label><span style="margin-left: 5px;" id='infoVelocity'>0</span>
+                </td>
+            </tr>
+            <tr id="infoMileTr" style="display: none;">
+                <td>
+                    <label style="font-weight: bold; float: left;">里 程:</label><span style="margin-left: 5px; float: left;" id='infoMile'>1585km</span>
+                    <a id="infoMile_tile" style="display: none;" class="tile">
+                        <img style="width: 18px; float: left; margin-left: 10px; margin-top: -2px;" src="img/help.png"></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label style="font-weight: bold;">信号时间:</label><span style="margin-left: 5px;" id='infoGpsTime'>2016-11-09 15:03:47</span>
+                </td>
+            </tr>
+            <tr id="infoGpsTime2div" style="display: none;">
+                <td>
+                    <label style="font-weight: bold;">定位时间:</label><span style="margin-left: 5px;" id='infoGpsTime2'>2016-11-09 15:03:47</span>
+                </td>
+            </tr>
+            <tr id="trInfoStatus">
+                <td>
+                    <label style="font-weight: bold;">状 态:</label><span style="margin-left: 5px;" id="infoStatus"></span>
+                </td>
+            </tr>
+            <tr style="display: none">
+                <td>
+                    <label style="font-weight: bold;">经纬度:</label><span style="margin-left: 5px;" id="gps_str"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label style="font-weight: bold;">定 位:</label><span style="margin-left: 5px;" id="infoLocType"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label style="font-weight: bold;" id='infoState'>停 车</label><span style="margin-left: 5px;" id='stateKeepTime'>59分</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label style="float: left; font-weight: bold;">报 警:</label>
+                    <div id='alarm_div1' style='float: left; overflow: hidden; width: 210px; white-space: nowrap; margin-left: 5px;'>
+                        <span id='alarm_sp1'>111111222222333333444444555555666666</span>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+
+                    <div id="contentDiv"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="rangingTitle" style="position: absolute; display: none; top: 200px; z-index: 1000; background: #ffffff; padding: 3px; font-size: 12px; border: 1px solid #9ea6b9;">
+        单击确定地点，双击结束！
+    </div>
+    <!--<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8ebe8b1bf92a362d7e8bc8a75c01be8f&plugin=AMap.Geocoder"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />-->
+    <script type="text/javascript" src="js/jquery.js?v=1.1"></script>
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=USuGv25IMVIO5MM7K0LWf83KUiAeOYv5"></script>
+    <!--加载鼠标测距工具-->
+    <script type="text/javascript" src="http://api.map.baidu.com/library/DistanceTool/1.2/src/DistanceTool_min.js"></script>
+    <!--加载实时路况-->
+    <link href="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/AreaRestriction/1.2/src/AreaRestriction_min.js"></script>
+    <!--加载鼠标绘制工具-->
+    <script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+    <script type="text/javascript">
+        var map;
+        var convertor;//转换坐标方法
+        var trafficLayer;//路况
+        var myDis;//测距
+        var mapType;//卫星图
+        var normalLayer;
+        var satelliteLayer;
+        var roadNetLayer;
+        var placeSearch;
+        var cluster;
+        var showMarkCount = 10;
+        var lastWindowVeh = -1;
+
+
+
+
+
+        $(document).ready(function () {
+
+            $("#infoMile_tile").hover(function (e) {
+
+                $("#helpinfoMile_div").css("top", e.clientY + 2);
+                $("#helpinfoMile_div").css("left", e.clientX + 2);
+
+                $("#helpinfoMile_div").show();
+            }, function () {
+                $("#helpinfoMile_div").hide();
+            });
+
+
+
+            $(window.document).click(function () {
+                parent.$("#mapframe").focus()
+            })
+            var H = $(window.document).height();
+
+            map = new BMap.Map("container", { minZoom: 1, maxZoom: 20 }, { enableMapClick: true });    // 创建Map实例,设置地图允许的最小/大级别,默认开启底图可点功能
+            //map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+            map.addControl(new BMap.NavigationControl());//左上角，添加默认缩放平移控件
+            var top_left_control = new BMap.ScaleControl();// 左上角，添加比例尺
+
+            // map.addControl(new BMap.ScaleControl());
+            map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+            map.centerAndZoom("北京", 4);
+
+            setTimeout(function () {  // 这个方法是说在延迟两秒后执行大括号里的方法
+                map.addControl(top_left_control);
+            }, 1000)
+
+            convertor = new BMap.Convertor();
+
+            trafficLayer = new BMapLib.TrafficControl({
+                showPanel: false //是否显示路况提示面板
+            });
+            map.addControl(trafficLayer);
+            trafficLayer.setAnchor(BMAP_ANCHOR_TOP_RIGHT);
+            $("#tcBtn").css("display", "none");//隐藏路况按钮
+            setTimeout(function () {
+                $(".BMap_stdMpCtrl").css("top", "50px");
+            }, 1000)
+
+            //实例化测距工具 myDis.open(),myDis.close()
+            myDis = new BMapLib.DistanceTool(map);
+
+            //2D图，卫星图
+            mapType = new BMap.MapTypeControl({ mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP] });
+            map.addControl(mapType);
+
+
+            ////卫星
+            //satelliteLayer = new AMap.TileLayer.Satellite({
+            //    zIndex: 10
+            //});
+            //satelliteLayer.setMap(map)
+            //satelliteLayer.hide();
+
+            //roadNetLayer = new AMap.TileLayer.Satellite({
+            //    zIndex: 10
+            //});
+            //roadNetLayer.setMap(map)
+            //roadNetLayer.hide();
+
+            monitorresize();
+            $("#container").height(H);
+        });
+
+        //隐藏车辆指令菜单
+        $(document).click(function (e) {
+            //var txt = $(document).find('title').text();
+            //top.topMenu(txt);
+            //top.hideMenu();
+            $("#gzdmenuControl").hide();
+            $("#menuControl").hide();
+            $("#moreControl").hide();
+            $("#trackPlaybackDiv").hide();
+        });
+
+
+        function centerZoom(x, y) {
+            var point = GPS.bd_encrypt(y, x);
+            map.centerAndZoom(new BMap.Point(point.lon, point.lat), 15);
+
+        }
+
+        function getCmdStr(vehID, terType) {
+            var cmdStr = "查看资料,";//今日车况,
+            var usr = jQuery.parseJSON(localStorage.getItem("loginUser"));
+            //if (usr.accountType != 1) {
+            //    cmdStr += "修改资料,";
+            //}
+            if (usr.accountType == 1 || usr.accountType == '1' || usr.accountType == 4 || usr.accountType == '4') {
+
+            } else {
+                if (usr.accountType != 1) {
+                    // cmdStr += "修改资料,";
+                }
+            }
+            var str = "";
+            var result = "";
+            //K9、K10A、M6、M11、GPRS - 部标、mini、Bcar、Otrack、TQ指令增加恢复油电功能，后台车辆添加设备类型a8s
+            switch (terType.toLocaleUpperCase()) {
+                case "A5E":
+                    str = "我要查车,超速设置,调度下发";
+                    result = cmdStr + str;
+                    break;
+                case "A5B":
+                case "A5C":
+                case "A5D":
+                case "A5C-3":
+                case "A5C-5":
+                case "A5C-8":
+                case "A5C-8W":
+                case "A5H":
+                    str = "调度下发,无线回传设置";
+                    result = cmdStr + str;
+                    break;
+                case "K9":
+                case "K10A":
+                case "M6":
+                case "M11":
+                case "GPRS-部标":
+                case "MINI":
+                case "MINI-W":
+                case "FS-A8S":
+                    str = "我要查车,断开油电,恢复油电,超速设置,调度下发";
+                    result = cmdStr + str;
+                    break;
+                case "ACAR":
+                    str = "调度下发,无线回传设置,Acar设置";
+                    result = cmdStr + str;
+                    break;
+                case "BCAR":
+                case "OTRACK":
+                    str = "我要查车,断开油电,恢复油电,超速设置,调度下发";
+                    result = cmdStr + str;
+                    break;
+                case "K10":
+                case "K11":
+                    str = "我要查车,断开油电,恢复油电,超速设置,调度下发";
+                    result = cmdStr + str;
+                    break;
+                    //case "A5E-3":
+                    //    str = "调度下发,无线回传设置";
+                    //    result = cmdStr + str;
+                    //    break;
+                case "GT02D":
+                case "KM-01":
+                case "KM-02":
+                    str = "断开油电,恢复油电,超速设置,调度下发,查询终端参数,软件版本查询,设置回传时间,重启指令,APN参数设置,时区设置,服务器参数设置";
+                    result = cmdStr + str;
+                    break;
+                case "A5E-3":
+                    str = "超速设置,调度下发,查询终端参数,软件版本查询,设置回传时间,重启指令,APN参数设置,时区设置,服务器参数设置";
+                    result = cmdStr + str;
+                    break;
+                case "TQ":
+                case "安安出行":
+                    str = "我要查车,超速设置,调度下发";
+                    result = cmdStr + str;
+                    break;
+                case "A5M":
+                    str = "A5M设置";
+                    result = cmdStr + str;
+
+
+                    break;
+                default:
+                    result = cmdStr;
+                    break;
+            }
+            //if (result == "") {
+            //    result = cmdStr;
+            //}
+
+            var user = $.parseJSON(localStorage.getItem('loginUser'));
+            switch (terType.toLocaleUpperCase()) {
+                case "A5E-3":
+                case "KM-01":
+                case "KM-02":
+                case "KM-02":
+                case "GT02D":
+                    result = result + ",里程重置";
+                    break;
+            }
+            if (user.cd149 != null && user.cd149) {
+                result = result + ",里程保养设置";
+            }
+            var list = result.split(',');
+            var li = "";
+            $.each(list, function () {
+                li += '<li class="li_pt" id="vehId_' + vehID + '" type=' + terType + ' onclick="parent.commandDown(this)"><a >' + this + '</a></li>';
+            })
+            result = '<ul>' + li + '</ul>';
+            return result;
+        }
+
+        var vehChoseId = 0;
+        function setChoseVeh(id) {
+            vehChoseId = id;
+        }
+
+        function clearSearchPnl() {
+            //关键字查询
+            placeSearch.search("", function (status, result) {
+                $('#panel').empty();
+            });
+        }
+
+        $(window).resize(function () {
+            monitorresize();
+        });
+
+
+        function searchPlace(add) {
+            //关键字查询
+            placeSearch.search(add, function (status, result) {
+                //result = Object {info: "TIP_CITIES"
+                var button = "<button  class='closeSearchList' onclick='clearSearchPnl()'>X</button>";
+                if (result.info == "OK") {
+                    $('.amap_lib_placeSearch_list').append(button);
+                } else {
+                    parent.showError("抱歉，未搜索到有效的结果。");
+                    $('#panel').empty();
+                }
+            });
+        }
+
+        function startRuler() {
+            myDis.open();
+        }
+
+        ////启用高德默认样式测距
+        //function startRuler() {
+        //    if (mouseTool != null) {
+        //        mouseTool.close(true);
+        //        mouseTool = null;
+        //        //改变鼠标样式为默认
+        //        $(".amap-maps").css("cursor", "url(http://webapi.amap.com/theme/v1.3/openhand.cur),default");
+        //    }
+        //    ruler1.flag = true;
+        //    ruler1.rule.turnOn();
+
+        //    //  $("#rangingTitle").css("top", (e.pixel.y + 5) + "px").css("left", (e.pixel.x + 5) + "px").show();
+        //}
+
+        //画电子围栏
+        //var mouseTool;
+        //function regionalCheckVehicle() {
+        //    parent.layer.msg('开始区域查车');
+        //    //改变鼠标样式为十字形
+        //    $(".amap-maps").css("cursor", "crosshair");
+
+        //    if (mouseTool != null) {
+        //        mouseTool.close(true);
+        //        mouseTool = null;
+        //    } else {
+        //        ruler1.rule.turnOff();
+        //        ruler1.flag = false;
+        //        $("#rangingTitle").hide();
+
+        //    }
+        //    map.setDefaultCursor("default");
+        //    //设置折线的属性
+        //    var rectOptions = {
+        //        strokeStyle: "dashed",
+        //        strokeColor: "#FF33FF",
+        //        fillColor: "#FF99FF",
+        //        fillOpacity: 0.5,
+        //        strokeOpacity: 1,
+        //        strokeWeight: 2
+        //    };
+        //    map.plugin(["AMap.MouseTool"], function () {
+        //        mouseTool = new AMap.MouseTool(map);
+        //        mouseTool.rectangle(rectOptions);     //画出矩形框
+        //        AMap.event.addListener(mouseTool, "draw", function (e) {
+        //            drawObj = e.obj;  //obj属性就是绘制完成的覆盖物对象。
+        //            var points = e.obj.getPath();
+
+        //            var latlon1 = GPS.deltaOut(points[0].lat, points[0].lng);
+        //            var latlon2 = GPS.deltaOut(points[2].lat, points[2].lng);
+        //            var obj = { lat1: latlon1.lat, lon1: latlon1.lon, lat2: latlon2.lat, lon2: latlon2.lon }
+
+        //            parent.showModal("区域查车", "searchVehicleInArea.html?lat1=" + obj.lat1 + "&lon1=" + obj.lon1 + "&lat2=" + obj.lat2 + "&lon2=" + obj.lon2);
+
+        //            mouseTool.close(true);
+
+        //            //改变鼠标样式为默认
+        //            $(".amap-maps").css("cursor", "url(http://webapi.amap.com/theme/v1.3/openhand.cur),default");
+        //        });
+        //    });
+
+        //}
+
+        function regionalCheckVehicle() {
+            parent.layer.msg('此功能只在高德地图下使用');
+        }
+
+        function showLuKuang() {
+            if (isLuKuangVisible) {
+                trafficLayer.hide();
+                isLuKuangVisible = false;
+            } else {
+                trafficLayer.show();
+                isLuKuangVisible = true;
+            }
+            $("#tcWrap").hide();
+        }
+
+        var isLuKuangVisible = false;
+        var isNormal = true;
+
+        //百度卫星图层
+        function setLayers() {
+            if (isNormal) {
+                map.setMapType(BMAP_HYBRID_MAP);
+                isNormal = false;
+            } else {
+                map.setMapType(BMAP_NORMAL_MAP);
+                isNormal = true;
+            }
+        }
+
+        ////高德卫星图层
+        //function setLayers() {
+        //    if (isNormal == false) {
+        //        normalLayer.hide();
+        //        satelliteLayer.show();
+        //        roadNetLayer.show();
+        //        isNormal = true;
+        //    } else {
+        //        normalLayer.show();
+        //        satelliteLayer.hide();
+        //        roadNetLayer.hide();
+        //        isNormal = false;;
+        //    }
+        //    //map = new AMap.Map('container');
+        //    map.on('complete', function (e) {
+        //        $('.amap-copyright').remove();
+        //    });
+        //}
+
+        function monitorresize() {
+            var main = $(window.document).find("#container");
+            var thisheight = $(window.document).height();
+            var thiswidth = $(window.document).width();
+
+            main.height(thisheight);
+            main.width(thiswidth);
+        }
+
+
+        var vehMarks = {};
+        var current;
+        var alarmMarks = [];
+        var isKucun;
+        var alarmTimer;//报警信息滚动定时器
+
+        var circleArrary = [];
+        //function drawCircle(lat, lon, radius, fillColor, strokeColor) {
+        //    var circle = new AMap.Circle({
+        //        center: new AMap.LngLat(lon, lat),// 圆心位置
+        //        radius: radius, //半径
+        //        strokeColor: strokeColor, //线颜色
+        //        strokeOpacity: 1, //线透明度
+        //        strokeWeight: 3, //线粗细度
+        //        fillColor: fillColor, //填充颜色
+        //        fillOpacity: 0.35//填充透明度
+        //    });
+        //    circle.setMap(map);
+
+
+
+        //    return circle;
+        //}
+
+        function drawCircle(lat, lon, radius, fillColor, strokeColor) {
+            var point = GPS.bd_encrypt(lat, lon);
+
+            var circle = new BMap.Circle(
+                new BMap.Point(point.lon, point.lat), radius, {
+                    strokeColor: strokeColor, strokeWeight: 3, fillColor: fillColor, strokeOpacity: 0.35
+                }); //创建圆
+            map.addOverlay(circle);
+            return circle;
+        }
+
+
+        var vehListCache = [];
+        var kucunCache = false;
+
+        var refreshVehMark = function (vehList) {
+            vehListCache = vehList;
+            var isSetCenter = false;
+
+            //for (var i = 0; i < circleArrary.length; i++) {
+            //    map.remove(circleArrary[i]);
+            //}
+
+            for (var i = 0; i < vehList.length; i++) {
+                if (vehList[i].x != null & vehList[i].y != null & vehList[i].x != 0 & vehList[i].y != 0 & vehList[i].x != "" & vehList[i].y != "") {
+
+
+                    if (vehMarks[vehList[i].vehicleId] != undefined) {
+
+
+                        if (vehList[i].isgroup != 0) {
+                            // vehMarks[vehList[i].vehicleId].mark.setPosition([point.lon, point.lat]);
+
+                            var imgUrl = "boyunImg/offline.png";
+                            if (vehList[i].isgroup == 0) {
+                                if (vehList[i].z == 0) {
+                                    imgUrl = "boyunImg/terOffline.png";
+                                } else {
+                                    imgUrl = "boyunImg/terOnline.png";
+                                }
+                            }
+                            else if (vehList[i].isgroup == 1) {
+                                if (vehList[i].z == 1) {
+                                    imgUrl = "boyunImg/travel.png";
+                                } else if (vehList[i].z == 2) {
+                                    imgUrl = "boyunImg/parking.png";
+                                }
+
+                                if (vehList[i].z == 0) {
+                                    imgUrl = "boyunImg/offline.png";
+                                }
+                            }
+
+                            if (vehList[i].alarm != "") {
+                                if (vehList[i].isgroup == 1) {
+                                    imgUrl = "boyunImg/alarm.png";
+                                } else { imgUrl = "boyunImg/terAlarm.png"; }
+                            }
+
+                            var vahLabel;
+                            var data = vehMarks[vehList[i].vehicleId].gps;
+                            var point = GPS.bd_encrypt(data.y, data.x);
+
+                            if (data.angle > 15 & data.angle <= 90) {
+                                vahLabel = new BMap.Label(data.plate, { position: new BMap.Point(point.lon, point.lat), offset: new BMap.Size(50, 20) });  // 创建文本标注对象
+                            } else if (data.angle > 90 & data.angle <= 180) {
+                                vahLabel = new BMap.Label(data.plate, { position: new BMap.Point(point.lon, point.lat), offset: new BMap.Size(10, 10) });  // 创建文本标注对象
+                            } else {
+                                vahLabel = new BMap.Label(data.plate, { position: new BMap.Point(point.lon, point.lat), offset: new BMap.Size(20, 20) });  // 创建文本标注对象
+                            }
+
+
+                            var marker = vehMarks[vehList[i].vehicleId].mark;
+                            //map.removeOverlay(vehMarks[vehList[i].vehicleId].mark);
+                            var icon = new BMap.Icon(imgUrl, new BMap.Size(30, 35), { offset: new BMap.Size(35, 35) });
+
+
+                            marker.setIcon(icon);
+                            //marker.setLabel(vahLabel);
+                            marker.setRotation(vehList[i].angle);
+                            marker.setPosition(new BMap.Point(point.lon, point.lat));
+                            //map.addOverlay(marker);
+
+                            //if (vehMarks[vehList[i].vehicleId].gps.wifi != "") {
+                            //    var circle = drawCircle(vehMarks[i].gps.y, vehMarks[i].gps.x, 100, "#1E90FF", "#4682B4")
+                            //    circleArrary.push(circle);
+                            //}
+
+
+
+                        }
+
+
+                        //drawTrackLine(vehMarks[vehList[i].vehicleId].gps.y, vehMarks[vehList[i].vehicleId].gps.x, vehMarks[vehList[i].vehicleId].gps.vehicleId);
+
+                    }
+                    else if (vehMarks[vehList[i].vehicleId] == undefined) {
+                        var newMark;
+                        if (vehList[i].isgroup != 0) {
+
+
+                            var imgUrl = "boyunImg/offline.png";
+                            if (vehList[i].isgroup == 0) {
+                                if (vehList[i].z == 0) {
+                                    imgUrl = "boyunImg/terOffline.png";
+                                } else {
+                                    imgUrl = "boyunImg/terOnline.png";
+                                }
+                            }
+                            else if (vehList[i].isgroup == 1) {
+                                if (vehList[i].z == 1) {
+                                    imgUrl = "boyunImg/travel.png";
+                                } else if (vehList[i].z == 2) {
+                                    imgUrl = "boyunImg/parking.png";
+                                }
+
+                                if (vehList[i].z == 0) {
+                                    imgUrl = "boyunImg/offline.png";
+                                }
+                            }
+
+                            if (vehList[i].alarm != "") {
+                                if (vehList[i].isgroup == 1) {
+                                    imgUrl = "boyunImg/alarm.png";
+                                } else { imgUrl = "boyunImg/terAlarm.png"; }
+                            }
+
+
+                            var icon = new BMap.Icon(imgUrl, new BMap.Size(30, 35), { offset: new BMap.Size(35, 35) });
+
+
+                            newMark = {
+                                mark: newMarker(vehList[i], vehList[i].plate),
+                                gps: vehList[i],
+                                label: setMarkLabel(vehList[i], vehList[i].plate)
+                            };
+                            newMark.mark.setIcon(icon);
+                            vehMarks[vehList[i].vehicleId] = newMark;
+                        } else {
+                            newMark = {
+                                mark: newMarker(vehList[i], vehList[i].terminal),
+                                gps: vehList[i],
+                                label: setMarkLabel(vehList[i], vehList[i].terminal)
+                            }
+
+                            vehMarks[vehList[i].vehicleId] = newMark;
+                        }
+
+                        if (newMark.gps.wifi != "") {
+                            var circle = drawCircle(newMark.gps.y, newMark.gps.x, 100, "#1E90FF", "#4682B4")
+                            circleArrary.push(circle);
+                        }
+                        if (vehChoseId == newMark.gps.vehicleId) {
+                            current = newMark;
+                            vehChoseId = 0;
+                            isSetCenter = true;
+                        }
+                    }
+                }
+            }
+
+            //最后选中项
+            if (current != null) {
+                if (lastWindowVeh = current.gps.vehicleId) {
+                    //openWindow(current.gps);
+                    openWindow(current);
+                }
+                var lnglat = { lng: current.gps.x, lat: current.gps.y };
+                getAddress(lnglat, current.gps.pos, current.gps.plate, current.gps.vehicleId);
+                if (isSetCenter == true) {
+                    map.setCenter(14, current.mark.getPosition());
+                }
+                refreshExan();
+            }
+
+        }
+
+        var refreshExan = function () {
+
+            //if(Circles[veh.vehicleId]
+
+            $.each(Circles, function (key, element) {
+                if (key != current.gps.vehicleId + "_ID") {
+                    if (element != undefined) {
+                        if (element != undefined) {
+                            //   map.remove(element);
+                            map.removeOverlay(element);
+                        }
+                        element = undefined;
+                    }
+                }
+            });
+
+            $.each(parkingCircles, function (key, element) {
+                if (key != current.gps.vehicleId + "_1" & key != current.gps.vehicleId + "_2") {
+                    if (element != undefined) {
+                        if (element.mark != undefined) {
+                            // map.remove(element.mark);
+                            map.removeOverlay(element.mark);
+
+                        }
+                        if (element.circle != undefined) {
+                            // map.remove(element.circle);
+                            map.removeOverlay(element.circle);
+                        }
+                        if (element.line != undefined) {
+                            // map.remove(element.line);
+                            map.removeOverlay(element.line);
+                        }
+                        element = undefined;
+                    }
+                }
+            });
+
+            //if (parkingCircles[current.gps.vehicleId + "_1"] != undefined) {
+            //    var point = [current.mark.getPosition(), parkingCircles[current.gps.vehicleId + "_1"].mark.getPosition()];
+            //    parkingCircles[current.gps.vehicleId + "_1"].line.setPath(point);
+            //}
+
+            //if (parkingCircles[current.gps.vehicleId + "_2"] != undefined) {
+            //    var point = [current.mark.getPosition(), parkingCircles[current.gps.vehicleId + "_2"].mark.getPosition()];
+            //    parkingCircles[current.gps.vehicleId + "_2"].line.setPath(point);
+            //}
+
+
+        }
+
+
+
+        var addVehMark = function (addList) {
+            for (var i = 0; i < addList.length; i++) {
+                //if (addList[i].plate == "李冬842844") {
+                //    alert(1);
+                //}
+                vehListCache.push(addList[i]);
+                //console.log(vehListCache.length);
+                if (addList[i].x != null & addList[i].y != null & addList[i].y != 0 & addList[i].x != 0) {
+                    if (vehMarks.length < showMarkCount) {
+                        if (addList[i].isgroup != 0) {
+                            newMark = { mark: newMarker(addList[i], addList[i].plate), gps: addList[i], label: setMarkLabel(addList[i], addList[i].plate) };
+                            vehMarks.push(newMark);
+
+                        } else {
+                            newMark = { mark: newMarker(addList[i], addList[i].terminal), gps: addList[i], label: setMarkLabel(addList[i], addList[i].terminal) }
+
+                            vehMarks.push(newMark);
+                        }
+
+                        if (vehChoseId == newMark.gps.vehicleId) {
+                            current = newMark;
+                            vehChoseId = 0;
+                            isSetCenter = true;
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+
+        var labelStyle = 1;
+        var focusAlarm;
+        function showAddAlarmMark(alarm, type) {
+
+            if (focusAlarm == undefined) {
+                //focusAlarm = { mark: newMarker(alarm, alarm.plate + " " + alarm.time + " [" + alarm.alarmType + "]"), gps: alarm, label: setMarkLabel(alarm, alarm.plate) };
+                focusAlarm = { mark: newMarker(alarm, alarm.plate), gps: alarm };
+
+            } else {
+                var imgUrl = "boyunImg/offline.png";
+                if (alarm.isgroup == 0) {
+                    if (alarm.z == 0) {
+                        imgUrl = "boyunImg/terOffline.png";
+                    } else {
+                        imgUrl = "boyunImg/terOnline.png";
+                    }
+                }
+                else if (alarm.isgroup == 1) {
+                    if (alarm.z == 1) {
+                        imgUrl = "boyunImg/travel.png";
+                    } else if (alarm.z == 2) {
+                        imgUrl = "boyunImg/parking.png";
+                    }
+
+                    if (alarm.z == 0) {
+                        imgUrl = "boyunImg/offline.png";
+                    }
+                }
+
+                if (alarm.alarm != "") {
+                    if (alarm.isgroup == 1) {
+                        imgUrl = "boyunImg/alarm.png";
+                    } else { imgUrl = "boyunImg/terAlarm.png"; }
+                }
+                focusAlarm.gps = alarm;
+                focusAlarm.mark.setIcon(imgUrl);
+                focusAlarm.mark.setRotation(alarm.angle);
+                focusAlarm.mark.setTitle(alarm.plate)
+                var point = GPS.bd_encrypt(alarm.x, alarm.y);
+                focusAlarm.mark.setPosition(new BMap.Point(point.lon, point.lat));
+                map.centerAndZoom(new BMap.Point(point.lon, point.lat), 13);
+
+                //var vahLabel;
+                //if (alarm.angle > 15 & alarm.angle <= 90) {
+                //    vahLabel = new BMap.Label(alarm.plate, { position: new BMap.Point(alarm.x, alarm.y), offset: new BMap.Size(50, 20) });  // 创建文本标注对象
+                //} else if (alarm.angle > 90 & alarm.angle <= 180) {
+                //    vahLabel = new BMap.Label(alarm.plate, { position: new BMap.Point(alarm.x, alarm.y), offset: new BMap.Size(10, 10) });  // 创建文本标注对象
+                //} else {
+                //    vahLabel = new BMap.Label(alarm.plate, { position: new BMap.Point(alarm.x, alarm.y), offset: new BMap.Size(10, 10) });  // 创建文本标注对象
+                //}
+                //focusAlarm.mark.setLabel(vahLabel);
+            }
+
+            var lnglat = { lng: focusAlarm.gps.x, lat: focusAlarm.gps.y };
+
+            if (type == "check") {
+                getAddress(lnglat, focusAlarm.gps.posm, focusAlarm.gps.plate, focusAlarm.gps.vehicleId);
+                //map.setCenter(focusAlarm.mark.getPosition());
+                current = focusAlarm;
+                parent.setAddress("");
+            }
+            if (lastWindowVeh = focusAlarm.gps.vehicleId) {
+                //openWindow(focusAlarm.gps);
+                openWindow(focusAlarm);
+            }
+            focusMark(focusAlarm);
+        }
+        function showSelectVehMark(id) {
+
+            if (current != undefined) {
+                if (id != current.gps.vehicleId) {
+
+                    $.each(Circles, function (key, element) {
+                        if (key != current.gps.vehicleId + "_ID") {
+                            if (element != undefined) {
+                                if (element != undefined) {
+                                    //map.remove(element);
+                                    map.removeOverlay(element);
+
+                                }
+                                element = undefined;
+                            }
+                        }
+                    });
+
+                    $.each(parkingCircles, function (key, element) {
+                        if (element != undefined) {
+                            if (element.mark != undefined) {
+                                //  map.remove(element.mark);
+                                map.removeOverlay(element.mark);
+
+                            }
+                            if (element.circle != undefined) {
+                                // map.remove(element.circle);
+
+                                map.removeOverlay(element.circle);
+                            }
+                            if (element.line != undefined) {
+                                //  map.remove(element.line);
+                                map.removeOverlay(element.line);
+                            }
+                            element = undefined;
+                        }
+
+                    });
+                }
+
+                endTrack(current.gps.vehicleId);
+            }
+            if (focusAlarm != undefined) {
+                if (focusAlarm.mark != undefined) {
+                    //map.remove(focusAlarm.mark);
+                    //map.remove(focusAlarm.label);
+                    map.removeOverlay(focusAlarm.mark);
+                    map.removeOverlay(focusAlarm.label);
+                    endTrack(focusAlarm.gps.vehicleId);
+                }
+            }
+            focusAlarm = null;
+            var isFind = 0;
+            parent.$("#alarmFrame")[0].contentWindow.clearFocusAlarm();
+            parent.$("#divAddress").hide();
+
+            if (vehMarks[id] != undefined) {
+
+
+
+                current = vehMarks[id];
+                var lnglat = { lng: current.mark.getPosition().lng, lat: current.mark.getPosition().lat };
+
+                getAddress(lnglat, current.gps.pos, current.gps.plate, current.gps.vehicleId);
+                focusMark(current);
+
+            }
+            else {
+
+                if (parent.vehList.getItem(id) != undefined) {
+                    var data = parent.vehList.getItem(id);
+
+                    if (parent.vehList.getItem(id).x != undefined) {
+                        if (parent.vehList.getItem(id).x != "" & parent.vehList.getItem(id).x != 0) {
+                            var newMark = {
+                                mark: newMarker(parent.vehList.getItem(id), parent.vehList.getItem(id).plate),
+                                gps: parent.vehList.getItem(id),
+                                label: setMarkLabel(parent.vehList.getItem(id), parent.vehList.getItem(id).plate)
+                            };
+                            current = newMark;
+                            vehMarks[id] = newMark;
+                            focusMark(current);
+
+                            //var newMark = new BMap.Marker(new BMap.Point(data.x, data.y)); // 创建点
+                            //newMark.setRotation(data.angle);
+                            //map.addOverlay(newMark);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        //百度
+        function focusMark(mark, isAlarm) {
+            current = mark;
+            openWindow(mark);
+            map.centerAndZoom(new BMap.Point(mark.gps.x, mark.gps.y), 15);
+        }
+
+
+        function showSelectAlarmMark(vehPlate) {
+            var isFind = 0;
+            for (var j = 0; j < alarmMarks.length; j++) {
+                if (vehPlate == alarmMarks[j].mark.getTitle()) {
+
+                    current = alarmMarks[j];
+                    var lnglat = { lng: current.mark.getPosition().lng, lat: current.mark.getPosition().lat };
+                    getAddress(lnglat, pos, current.gps.plate, current.gps.vehicleId);
+                    focusMark(current);
+                    //regeocoder([current.mark.getPosition().lng, current.mark.getPosition().lat]);
+
+
+
+                    isFind = 1;
+                    break;
+                }
+            }
+
+            if (isFind == 0) {
+                if (alarmMarks.length == 0) {
+                    parent.showError("[" + vehPlate.split(" ")[0] + "]没有启用报警显示功能", "请点击下方报警栏上的“<a style='color:red;'>地图显示</a>”按钮！");
+                } else { parent.showError("[" + vehPlate + "]地图定位失败", "没有找到有效的经纬度！"); }
+
+            }
+        }
+
+
+
+
+
+        function newMarker(info, title) {
+
+
+            var imgUrl = "boyunImg/offline.png";
+            if (info.isgroup == 0) {
+                if (info.z == 0) {
+                    imgUrl = "boyunImg/terOffline.png";
+                } else {
+                    imgUrl = "boyunImg/terOnline.png";
+                }
+            }
+            else if (info.isgroup == 1) {
+                if (info.z == 1) {
+                    imgUrl = "boyunImg/travel.png";
+                } else if (info.z == 2) {
+                    imgUrl = "boyunImg/parking.png";
+                }
+
+                if (info.z == 0) {
+                    imgUrl = "boyunImg/offline.png";
+                }
+            }
+
+            if (info.alarm != "") {
+                if (info.isgroup == 1) {
+                    imgUrl = "boyunImg/alarm.png";
+                } else { imgUrl = "boyunImg/terAlarm.png"; }
+            }
+
+            //var point = GPS.bd_encrypt(parseFloat(info.lat), parseFloat(info.lon));
+            //point = GPS.bd_encrypt(point.lat, point.lon);
+
+
+            var point = GPS.bd_encrypt(info.y, info.x);
+            //info.x = point.lon;
+            //info.y = point.lat;
+
+            var marker = new BMap.Marker(new BMap.Point(point.lon, point.lat));
+            var icon = new BMap.Icon(imgUrl, new BMap.Size(30, 35), { offset: new BMap.Size(35, 35) });
+            marker.setIcon(icon);
+            var label = new BMap.Label(title, { position: new BMap.Point(point.lon, point.lat), offset: new BMap.Size(20, 20) });
+            label.setStyle({
+                borderColor: "blue",
+                fontSize: "12px",
+                height: "20px",
+                lineHeight: "20px",
+                fontFamily: "微软雅黑"
+            });
+            if (info.isgroup == 1) {
+                marker.setRotation(info.angle);
+            }
+            marker.setLabel(label);
+            map.addOverlay(marker);
+            marker.addEventListener("click", function () {
+                if (vehMarks[info.vehicleId] != undefined) {
+                    current = vehMarks[info.vehicleId];
+                    //openWindow(current.gps);
+                    openWindow(current)
+                }
+            });
+
+            return marker;
+        }
+
+
+        function setMarkLabel(info, title) {
+            var zoom = map.getZoom();
+
+            //var markerLable = new AMap.Marker({
+            //    map: map,
+            //    position: [info.x, info.y],
+            //    zIndex: 1,//默认100
+            //    icon: new AMap.Icon({
+            //        size: new AMap.Size(0, 0),  //图标大小
+            //    })
+            //});
+            //markerLable.setMap(map);
+
+            var labelInfo = "";
+            switch (labelStyle) {
+                case 0:
+                    labelInfo = "";
+                    break;
+                case 1:
+                    labelInfo = info.plate;
+                    //if (info.isgroup == 1) {
+                    //    labelInfo = info.plate;
+                    //} else { labelInfo = info.terminal; }
+
+                    break;
+                case 2:
+                    labelInfo = info.plate + "</br>" + info.speed + "km/h";
+                    break;
+                case 3:
+                    labelInfo = info.plate + "</br>" + info.speed + "km/h</br>" + info.time;
+                    break;
+                case 4:
+                    labelInfo = info.plate + "</br>";
+                    break;
+                case 5:
+                    labelInfo = info.plate + "</br>" + info.speed + "km/h";
+                    break;
+                case 6:
+                    labelInfo = info.plate + "</br>" + info.speed + "km/h</br>" + info.time;
+                    break;
+
+
+            }
+
+            //if (info.angle > 15 & info.angle <= 90) {
+            //    markerLable.setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
+            //        offset: new AMap.Pixel(50, 20),//修改label相对于maker的位置
+            //        content: labelInfo,
+            //    });
+            //} else if (info.angle > 90 & info.angle <= 180) {
+            //    markerLable.setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
+            //        offset: new AMap.Pixel(10, 10),//修改label相对于maker的位置
+            //        content: labelInfo,
+            //    });
+            //} else {
+            //    markerLable.setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
+            //        offset: new AMap.Pixel(20, 20),//修改label相对于maker的位置
+            //        content: labelInfo,
+            //    });
+            //}
+
+            var opts = {
+                position: [info.x, info.y],    // 指定文本标注所在的地理位置
+                offset: new BMap.Size(20, 20)    //设置文本偏移量
+            }
+            var label = new BMap.Label(labelInfo, opts);  // 创建文本标注对象
+            label.setStyle({
+                color: "red",
+                fontSize: "12px",
+                height: "20px",
+                lineHeight: "20px",
+                fontFamily: "微软雅黑"
+            });
+            //map.addOverlay(label);
+            return null;
+            //return markerLable;
+
+        }
+
+        var geocoder;
+        function getAddress(lnglatXY, pos, plate, vehId) {
+
+            if (parent.binAddress(vehId)) {
+                // return false;
+            }
+
+
+            var obj = { "lat": lnglatXY.lat, "lon": lnglatXY.lng, "tag": "1" };
+            var info = { param: JSON.stringify({ posList: [obj] }) }
+            $.getJSON("http://120.76.69.92:8080/geo/GetGeo.json?jsoncallback=?", info, function (result) {
+                var addstr = "";
+                if (result.flag == 1) {
+                    if (result.obj != null) {
+                        var obj = result.obj[0];
+                        var str = "";
+                        if (obj.regeocode != undefined) {
+                            if (obj.regeocode.roads != null && obj.regeocode.roads.length > 0) {
+                                str += obj.regeocode.roads[0].direction + "方向距离" + obj.regeocode.roads[0].name + "约" + obj.regeocode.roads[0].distance + "米 ";
+                            }
+                        }
+                        if (str != "") {
+                            str = "(" + str.trim(' ') + ")";
+                        }
+                        var state = ""
+                        switch (pos) {
+                            case 0: state = "卫星不定位"; break;
+                            case 1: state = "卫星定位"; break;
+                            case 2: state = "WIFI定位"; break;
+                            case 3: state = "基站定位"; break;//多基站
+                            case 4: state = "基站定位"; break;//单基站
+                        }
+                        addstr = obj.regeocode.formatted_address + str;
+                    }
+                }
+                parent.setAddress(plate + "：" + addstr , vehId);
+
+            })
+
+        }
+
+
+        function refreshMarkLabel() {
+            map.clearOverlays();
+        }
+
+        var infoWindow;
+
+
+        function closeInfoWindow() {
+            map.clearInfoWindow();
+        }
+
+
+        var isShowLocationDetails = false;
+        function showLocationDetails() {
+            if (isShowLocationDetails == true) {
+                isShowLocationDetails = false;
+            } else { isShowLocationDetails = true; }
+
+            //openWindow(current.gps);
+            openWindow(current);
+        }
+
+
+        //function clearMarkArray(clearVehListId) {
+        //    for (var i = 0; i < clearVehListId.length; i++) {
+        //        if (vehMarks[clearVehListId[i]] != undefined) {
+        //            map.remove(vehMarks[clearVehListId[i]].mark);
+        //            map.remove(vehMarks[clearVehListId[i]].label);
+        //            delete vehMarks[clearVehListId[i]];
+        //            if (current != undefined) {
+        //                if (current.gps.vehicleId == clearVehListId[i]) {
+        //                    current = null;
+        //                    parent.setAddress("");
+        //                    infoWindow.close();
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
+        function clearMarkArray(clearVehListId) {
+            for (var i = 0; i < clearVehListId.length; i++) {
+                if (vehMarks[clearVehListId[i]] != undefined) {
+                    //map.remove(vehMarks[clearVehListId[i]].mark);
+                    //map.remove(vehMarks[clearVehListId[i]].label);
+                    map.removeOverlay(vehMarks[clearVehListId[i]].mark);
+                    map.removeOverlay(vehMarks[clearVehListId[i]].label);
+                    if (vehMarks[clearVehListId[i]].circle != null) {
+                        map.removeOverlay(vehMarks[clearVehListId[i]].circle);
+                    }
+                    delete vehMarks[clearVehListId[i]];
+                    if (current != undefined) {
+                        if (current.gps.vehicleId == clearVehListId[i]) {
+                            current = null;
+                            parent.setAddress("");
+                            infoWindow.close();
+                        }
+                    }
+                }
+            }
+        }
+
+
+        function clearMap(type) {
+            var removeMark = [];
+            if (type == 0) {
+                //map.clearMap();
+                map.clearOverlays();
+                vehMarks = {};
+            } else {
+                for (var i = 0; i < alarmMarks.length; i++) {
+                    removeMark.push(alarmMarks[i].mark);
+                    removeMark.push(alarmMarks[i].label);
+                }
+                alarmMarks = [];
+                if (removeMark.length > 0) {
+                    //map.remove(removeMark);
+                    map.removeOverlay(removeMark);
+                }
+            }
+
+            if (infoWindow != null) {
+                infoWindow.close();
+            }
+            current = null;
+            parent.setAddress("");
+            focusAlarm = null;
+        }
+        var associated_obj_list = []; //保存关联设备数据
+
+        //查看关联设备的位置
+        function show_associated_gps(vid, strimg) {
+            parent.show_associated_gps(vid, strimg, 2);
+        }
+        //查看是否有关联设备
+        function get_associated_gps(vid) {
+
+            associated_obj_list = [];
+            myAjax({
+                url: ajax('http/CarVehicle/GetRealTimeByVehListState.json'),
+                type: 'post',
+                dataType: 'json',
+                timeout: 30000,                              //超时时间
+                data: { "vehicleId": vid },
+                beforeSend: function () {
+                },
+                success: function (d) {
+                    if (d.flag == 1 && d.obj != null && d.obj.length > 0) {
+                        associated_obj_list = d.obj;
+                        $("#associated_" + vid).show();
+                    } else {
+                        console.log(d.msg);
+                    }
+                }
+            });
+        }
+        function openWindow(vehInfo) {
+
+
+            var gps = vehInfo.gps;
+
+
+            var icon_im = vehMarks[gps.vehicleId].mark.Yc.getElementsByTagName("img")[0].getAttribute('src');
+
+
+            var state = "车辆状态";
+            switch (gps.z) {
+                case 0: state = "离 线: "; break;
+                case 1: state = "行 驶: "; break;
+                case 2: state = "停 车: "; break;
+                case 3: state = "从未上线:"; break;
+            }
+            var info = "";
+            if (gps.wifi != undefined) {
+                if (gps.wifi.indexOf('<br/>') > -1) {
+
+                } else {
+                    var wifilist = gps.wifi.split('|');
+                    var str = "";
+                    $.each(wifilist, function (index) {
+                        if ((index + 1) % 2 == 0) {
+                            if (index + 1 == wifilist.length) {
+                                str += this.split(',')[0];
+                            } else {
+                                str += this.split(',')[0] + ";<br/>";
+                            }
+                        } else {
+                            if (index + 1 == wifilist.length) {
+                                str += this.split(',')[0];
+                            } else {
+                                str += this.split(',')[0] + ";";
+                            }
+                        }
+                    })
+                    gps.wifi = str;
+                }
+            }
+            var alarm = gps.alarm == undefined ? '' : gps.alarm;
+            var pos = gps.pos == undefined ? '' : gps.pos;
+            var lbs = gps.lbs == undefined ? '' : gps.lbs;
+            var wifi = gps.wifi == undefined ? '' : gps.wifi;
+            var meun = getCmdStr(gps.vehicleId, gps.terType);
+            var amphist = 160;
+            $("#menuControl").empty();
+            $("#menuControl").append(meun);
+
+
+            $("#infoVelocity").text(gps.speed + "km/h");
+            if (gps.mileage != null && gps.mileage != "-1") {
+                $("#infoMile").text(Math.round((gps.mileage / 1000)) + "km");
+                $("#infoMileTr").show();
+            } else {
+
+                $("#infoMileTr").hide();
+            }
+            $("#infoGpsTime").text(gps.time);
+            if (gps.PT != null && gps.PT != undefined && gps.PT != "") {
+                $("#infoGpsTime2div").show();
+                $("#infoGpsTime2").text(gps.PT);
+
+            } else {
+                $("#infoGpsTime2div").hide();
+            }
+
+            $("#infoState").text(state);
+            if (gps.status != "" & gps.status != undefined) {
+                $("#trInfoStatus").show();
+                $("#infoStatus").text(gps.status);
+
+            } else { $("#trInfoStatus").hide(); }
+            $("#gps_str").html("x:" + gps.yx + ",y:" + gps.yy);
+
+            var state = "";
+            switch (gps.pos) {
+                case 0: state = "卫星不定位"; break;
+                case 1: state = "卫  星"; break;
+                case 2: state = "WIFI"; break;
+                case 3: state = "基  站"; break;//多基站
+                case 4: state = "基  站"; break;//单基站
+            }
+            $("#infoLocType").text(state);
+
+            $("#stateKeepTime").text(gps.stateKeepTime);
+            $("#alarm_sp1").text(alarm);
+            $("#infoPlateNum").text(gps.plate);
+
+
+            var dianbaifenhao = "%";
+            var terTypeStr = getTypeAllocationStr(gps.terType);
+            var weibo_terminalNoStr = "<span id='associated_" + gps.vehicleId + "' style='  float: right;   color :#fff;border:1px solid #067EC0; background-color: #067EC0; padding:2px; '  onclick=\"show_associated_gps(" + gps.vehicleId + ",'" + icon_im + "')\" title='查看该车关联设备位置'>关联设备</span>";
+
+            if (gps.car == null || Number(gps.car) != 1) {
+                weibo_terminalNoStr = "";
+            }
+
+            var AttentionDegreeHtml = "<span  id=\"follow_span_" + gps.vehicleId + "\"  style='padding:2px; color:#fff; margin-left:5px; background-color: {$color$};'>{$str$}</span>";
+
+            switch (gps.CL) {
+                case 1:
+                    AttentionDegreeHtml = AttentionDegreeHtml.replace("{$str$}", "高");
+                    AttentionDegreeHtml = AttentionDegreeHtml.replace("{$color$}", "#f16767");
+                    //   AttentionDegreeHtml = AttentionDegreeHtml.replace("{$color$}", "#eb3939");
+                    break;
+                case 2:
+                    AttentionDegreeHtml = AttentionDegreeHtml.replace("{$str$}", "中");
+                    AttentionDegreeHtml = AttentionDegreeHtml.replace("{$color$}", "#f1b254");
+                    //   AttentionDegreeHtml = AttentionDegreeHtml.replace("{$color$}", "#92d6fd");
+                    break;
+                case 3:
+                    AttentionDegreeHtml = AttentionDegreeHtml.replace("{$str$}", "低");
+                    AttentionDegreeHtml = AttentionDegreeHtml.replace("{$color$}", "#33e09a");
+                    //   AttentionDegreeHtml = AttentionDegreeHtml.replace("{$color$}", "#37fdad");
+                    break;
+            }
+
+            weibo_terminalNoStr = AttentionDegreeHtml + weibo_terminalNoStr;
+
+            switch (gps.terType) {
+                case "KM-01":
+                case "KM-02":
+                case "GT02D":
+                case "A5E-3":
+                    //  dianbaifenhao = "";
+                    break;
+            }
+            if ((",KM-01,KM-02,GT02D,A5E-3,").indexOf("," + gps.terType.toUpperCase() + ",") != -1) {
+                $("#infoMile_tile").show();
+            } else {
+                $("#infoMile_tile").hide();
+            }
+
+
+            if (gps.power != "") {
+                if (parseInt(gps.power) > 30) {
+                    $("#infoType").html(" [" + terTypeStr + " / <span  style='color:#00ad0d' title='剩余电量：" + gps.power + "" + dianbaifenhao + "'>电量:" + gps.power + "" + dianbaifenhao + "</span>]" + weibo_terminalNoStr);
+                } else {
+                    $("#infoType").html(" [" + terTypeStr + " / <span  style='color:#d8463a'  title='剩余电量：" + gps.power + "" + dianbaifenhao + "'>电量:" + gps.power + "" + dianbaifenhao + "</span>]" + weibo_terminalNoStr);
+                }
+            } else {
+                $("#infoType").html("[" + terTypeStr + "]" + weibo_terminalNoStr);
+            }
+            // get_associated_gps(gps.vehicleId);  //关联设备
+
+            var infoDiv_w = 300;
+            var width = 310;
+
+            if (isKucun) {
+
+                info = info + "<div id='test' style='border:1.5px solid #E06A36; width:99%;clear: both;'></div>";
+                //if (trackVehId == gps.vehicleId)
+                //{
+                //    info = info + "<a id='infoPlay' style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px'  onclick='endTrack(" + gps.vehicleId + ")'>取消跟踪</a>";
+                //} else {
+                //    info = info + "<a id='infoPlay' style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px'  onclick='startTrack(" + gps.vehicleId + ")'>跟踪</a>";
+                //}
+                info = info + "<a id='infoTrajectory' style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px' vehId='" + gps.vehicleId + "' plat='" + gps.plate + "' type='" + gps.terType + "'  onclick='trackPlayback( this,event)'>轨迹</a>";
+                info = info + "<a  style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px'  onclick='ShowPov(" + gps.vehicleId + ")'>街景</a>";
+                info = info + "<a  style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px' onclick='menuControl(event)'>设置</a>";
+                info = info + "<a  style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px'  onclick='moreControl(" + gps.vehicleId + "," + gps.x + "," + gps.y + ",event)'   >位置管理</a>"
+
+                if (gps.lbs != undefined & gps.lbs != "") {
+                    var gg = gps.lbs.split(';')[3];
+                    if (gg != undefined) {
+                        infoDiv_w = 340;
+                        width = 350;
+                        info = info + "<a  style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px'  onclick='ShowLbs(" + gps.vehicleId + ");'>基站位置</a>";
+                    }
+                }
+                info = info + "<a  style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px'  onclick='gzdmoreControl(" + gps.vehicleId + ",event)'>关注度设置</a>"
+                info = info + "</br></div>";
+            }
+            else {
+                //var dianbaifenhao = "%";
+                //var terTypeStr = getTypeAllocationStr(gps.terType);
+
+                //switch (gps.terType) {
+                //    case "KM-01":
+                //    case "KM-02":
+                //    case "GT02D":
+                //    case "A5E-3":
+                //        //  dianbaifenhao = "";
+                //        break;
+                //}
+
+                //if (gps.power != "") {
+                //    if (parseInt(gps.power) > 30) {
+                //        $("#infoType").html(" [" + terTypeStr + " / <span  style='color:#00ad0d' title='剩余电量：" + gps.power + "" + dianbaifenhao + "'>电量：" + gps.power + "" + dianbaifenhao + "</span>]");
+                //    } else {
+                //        $("#infoType").html(" [" + terTypeStr + " / <span  style='color:#d8463a'  title='剩余电量：" + gps.power + "" + dianbaifenhao + "'>电量：" + gps.power + "" + dianbaifenhao + "</span>]");
+                //    }
+                //} else {
+                //    $("#infoType").html("[" + terTypeStr + "]");
+                //}
+
+                info = info + "<div id='test' style='border:1.5px solid #E06A36; width:99%;clear: both;'></div>";
+                //if (trackVehId == gps.vehicleId) {
+                //    info = info + "<a id='infoPlay' style='     font-weight: bold; top:-50px; margin-right:10px;'  width='10px' height='15px'  onclick='endTrack(" + gps.vehicleId + ")'>取消跟踪</a>";
+                //} else {
+                //    info = info + "<a id='infoPlay' style='font-weight: bold; top:-50px; margin-right:10px;'  width='10px' height='15px'  onclick='startTrack(" + gps.vehicleId + ")'>跟踪</a>";
+                //}  onclick='trajectory(this)'
+                info = info + "<a id='infoTrajectory' style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px' vehId='" + gps.vehicleId + "' plat='" + gps.plate + "' type='" + gps.terType + "'   onclick='trackPlayback( this,event)'  >轨迹</a>";
+                info = info + "<a  style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px'  onclick='ShowPov(" + gps.vehicleId + ")'>街景</a>";
+                info = info + "<a  style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px' onclick='menuControl(event)'>设置</a>";
+                info = info + "<a  style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px'  onclick='moreControl(" + gps.vehicleId + "," + gps.x + "," + gps.y + ",event)'>位置管理</a>"
+
+                if (lbs != undefined & gps.lbs != "") {
+                    var gg = gps.lbs.split(';')[3];
+                    if (gg != undefined) {
+                        infoDiv_w = 350;
+                        width = 360;
+                        info = info + "<a  style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px'   onclick='ShowLbs(" + gps.vehicleId + ");'>基站位置</a>";
+                    }
+                }
+                info = info + "<a  style=' top:-50px; margin-right:10px;font-weight: bold;'  width='10px' height='15px'  onclick='gzdmoreControl(" + gps.vehicleId + ",event)'>关注度设置</a>"
+                info = info + "</br></div>";
+            };
+
+            $("#infoDiv").find("table").width(infoDiv_w);
+            $("#infoDiv").show();
+            $("#contentDiv").empty();
+            $("#contentDiv").append(info);
+
+            amphist = $("#infoGpsTime2div").parent().parent().height();
+
+            //（GPS>wifi>基站>不定位 按优先级标红）
+            //$("选择器名称").css({"属性名“:"属性值","属性名“:"属性值","属性名“:"属性值"});
+            switch (gps.pos) {
+                case 0:
+                    //不定位不标红
+                    break;
+                case 1:
+                    $("#pos_div").css({ "color": "red" });
+                    break;
+                case 2:
+                    $("#wifi_lb").css({ "color": "red" });
+                    $("#wifi_div").css({ "color": "red" });
+                    break;
+                case 3:
+                case 4:
+                    $("#lbs_lb").css({ "color": "red" });
+                    $("#lbs_div").css({ "color": "red" });
+                    break;
+            }
+            var point = GPS.bd_encrypt(vehInfo.gps.y, vehInfo.gps.x);
+            var marker = vehInfo.mark;
+            var opts = {
+                width: width,     // 信息窗口宽度
+                height: amphist,     // 信息窗口高度
+            }
+            if (infoWindow == null) {
+                infoWindow = new BMap.InfoWindow(document.getElementById('infoDiv'), opts);  // 创建信息窗口
+                marker.addEventListener("click", function () {
+                    marker.openInfoWindow(infoWindow, new BMap.Point(point.lon, point.lat)); //开启信息窗口对象
+                });
+            } else {
+                if (document.getElementById('infoDiv') == undefined) {
+                    infoWindow.redraw();
+                } else {
+                    infoWindow.setHeight(amphist);
+                    infoWindow.setWidth(width);
+                    infoWindow.setContent(document.getElementById('infoDiv'));
+                }
+            }
+            marker.openInfoWindow(infoWindow, new BMap.Point(point.lon, point.lat));
+            marker.setRotation(gps.angle);
+            marker.setPosition(new BMap.Point(point.lon, point.lat));
+
+
+            if ($("#alarm_sp1")[0].offsetWidth > $("#alarm_div1")[0].offsetWidth) {
+                clearInterval(alarmTimer);
+                alarmTimer = setInterval(alarmTimerFun, 50);
+            }
+        }
+
+        function alarmTimerFun() {
+            try {
+                $("#alarm_div1")[0].scrollLeft++;
+                if (Math.ceil($("#alarm_div1")[0].offsetWidth + $("#alarm_div1")[0].scrollLeft + 1) >= $("#alarm_sp1")[0].offsetWidth) {
+                    $("#alarm_div1")[0].scrollLeft = 0;
+                }
+            }
+            catch (e) {
+                clearInterval(alarmTimer);
+            }
+        }
+
+        var trackVehId = 0;
+        var trackPoint = new Array();
+        var trackLine;
+        function startTrack(id) {
+            trackVehId = id;
+            if (vehMarks[id] != undefined) {
+                current = vehMarks[id];
+            } else { current = focusAlarm; }
+
+            trackPoint.push([current.gps.x, current.gps.y]);
+            //openWindow(current.gps);
+            openWindow(current);
+        }
+
+        function endTrack(id) {
+            clearTrackLine();
+            if (current != null) {
+                //openWindow(current.gps);
+                openWindow(current);
+            }
+
+        }
+
+        var polyline;//折线
+        function drawTrackLine(lat, lon, id) {
+            trackPoint.push([lon, lat]);
+            polyline = new BMap.Polyline([
+                new BMap.Point(116.399, 39.910),
+                new BMap.Point(116.405, 39.920),
+                new BMap.Point(116.425, 39.900)
+            ], { strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.5 });
+            map.addOverlay(polyline);          //增加折线
+
+        }
+
+        function clearTrackLine() {
+            if (trackLine != undefined) {
+                map.removeOverlay(trackLine);
+            }
+            trackVehId = 0;
+            trackPoint = new Array();
+            trackLine = undefined;
+        }
+
+        ////高德跟踪车辆
+        //function drawTrackLine(lat, lon, id) {
+        //    var polyline = new BMap.Polyline([
+        //        new BMap.Point(116.399, 39.910),
+        //        new BMap.Point(116.405, 39.920),
+        //        new BMap.Point(116.425, 39.900)
+        //    ], {
+        //        strokeColor: "blue",
+        //        strokeColor: "#3366FF",
+        //        strokeWeight: 5,
+        //        strokeOpacity: 1,
+        //        strokeStyle: "solid",
+        //    });
+        //    //if (id == trackVehId) {
+        //    //    if (trackLine != undefined) {
+        //    //        map.remove(trackLine);
+        //    //    }
+        //    //    trackPoint.push([lon, lat]);
+        //    //    trackLine = new AMap.Polyline({
+        //    //        path: trackPoint,          //设置线覆盖物路径
+        //    //        strokeColor: "#3366FF", //线颜色
+        //    //        strokeOpacity: 1,       //线透明度
+        //    //        strokeWeight: 5,        //线宽
+        //    //        strokeStyle: "solid",   //线样式
+        //    //        strokeDasharray: [10, 5] //补充线样式
+        //    //    });
+        //    //    trackLine.setMap(map);
+        //    //}
+        //}
+        ////高德取消跟踪
+        //function clearTrackLine() {
+        //    if (trackLine != undefined) {
+        //        map.remove(trackLine);
+        //    }
+        //    trackVehId = 0;
+        //    trackPoint = new Array();
+        //    trackLine = undefined;
+        //}
+
+        function setArea(obj) {
+            var vehid = $(obj).children().attr("vehid");
+            if (parent.vehList.getItem(vehid) != undefined) {
+                parent.showModal("围栏设置", "areaSetting.html?lat=" + parent.vehList.getItem(vehid).y + "&lng=" + parent.vehList.getItem(vehid).x);
+            } else { parent.showModal("围栏设置", "areaSetting.html?lat=" + focusAlarm.gps.y + "&lng=" + focusAlarm.gps.x); }
+        }
+
+        function setParkingCircle(obj) {
+            var vehid = $(obj).children().attr("vehid");
+
+            if (parent.vehList.getItem(vehid) != undefined) {
+                parent.showModal("经常停留点设置", "parkingCircleSetting.html?vehid=" + vehid);
+            } else { parent.showModal("经常停留点设置", "parkingCircleSetting.html?vehid=" + focusAlarm.gps.vehicleId); }
+        }
+
+        function removeParkingCircle(obj) {
+            layer.msg('是否删除经常停留点？', {
+                time: 0, //不自动关闭
+                btn: ['确定', '取消'],
+                icon: 1,
+                yes: function (index) {
+                    var vehid = $(obj).children().attr("vehid");
+                    var groupid = 0;
+                    if (parent.vehList.getItem(vehid) != undefined) {
+                        groupid = parent.vehList.getItem(vehid).groupId;
+                    } else { groupid = focusAlarm.gps.groupId }
+
+                    myAjax({
+                        type: 'GET',
+                        url: ajax("http/SafetyZone/ReplaceVehicleStayPoint.json?groupId=" + groupid + "&vehicleId=" + vehid + "&staypoint="),
+                        dataType: 'json',                           //指定服务器返回的数据类型
+                        timeout: 20000,                              //请求超时时间
+                        cache: false,                               //是否缓存上一次的请求数据
+                        async: true,                                //是否异步
+                        success: function (data) {
+                            if (data.flag == 1) {
+                                layer.msg('删除经常停留点成功!', { icon: 1 });
+                                if (parkingCircles[vehid + "_1"] != undefined) {
+                                    //map.remove(parkingCircles[vehid + "_1"].mark);
+                                    //map.remove(parkingCircles[vehid + "_1"].circle);
+                                    map.removeOverlay(parkingCircles[vehid + "_1"].mark);
+                                    map.removeOverlay(parkingCircles[vehid + "_1"].circle);
+                                }
+                                if (parkingCircles[vehid + "_2"] != undefined) {
+                                    //map.remove(parkingCircles[vehid + "_2"].mark);
+                                    //map.remove(parkingCircles[vehid + "_2"].circle);
+                                    map.removeOverlay(parkingCircles[vehid + "_1"].mark);
+                                    map.removeOverlay(parkingCircles[vehid + "_1"].circle);
+                                }
+
+                            } else { layer.msg('删除经常停留点失败:' + data.msg, { icon: 3 }); }
+
+
+                        },
+                        error: function (msg) {
+                            layer.msg('删除经常停留点失败:' + msg.statusText, { icon: 2 });
+                        }
+                    });
+                }
+            });
+        }
+
+
+
+        var parkingCircles = {};
+        function showParkingCircle(obj) {
+            var vehid = $(obj).children().attr("vehid");
+            var groupid = 0;
+            if (parent.vehList.getItem(vehid) != undefined) {
+                groupid = parent.vehList.getItem(vehid).groupId;
+            } else { groupid = focusAlarm.gps.groupId }
+
+            myAjax({
+                type: 'GET',
+                url: ajax("http/SafetyZone/GetVehicleStayPoint.json?groupId=" + groupid + "&vehicleId=" + vehid),
+                dataType: 'json',                           //指定服务器返回的数据类型
+                timeout: 20000,                              //请求超时时间
+                cache: false,                               //是否缓存上一次的请求数据
+                async: true,                                //是否异步 
+                success: function (data) {
+                    if (data.flag == 1) {
+
+                        var maxlat = 0;
+                        var maxlng = 0;
+                        var minlat = 11000;
+                        var minlng = 11000;
+
+                        if (data.obj != undefined) {
+                            //"1,31.20902,121.452,1000;2,22.639989,114.037908,1000"
+                            $.each(parkingCircles, function (key, element) {
+                                if (element != undefined) {
+                                    if (element.mark != undefined) {
+                                        //  map.remove(element.mark);
+
+                                        map.removeOverlay(element.mark);
+                                    }
+                                    if (element.circle != undefined) {
+                                        // map.remove(element.circle);
+                                        map.removeOverlay(element.circle);
+                                    }
+
+                                    element = undefined;
+                                }
+                            });
+                            var points = data.obj.split(';');
+                            for (var i = 0; i < points.length; i++) {
+                                var dataItems = points[i].split(',');
+                                if (dataItems.length = 4) {
+                                    switch (dataItems[0]) {
+                                        case "1":
+                                            var poinsLine = [];
+                                            poinsLine.push([parseFloat(dataItems[2]), parseFloat(dataItems[1])]);
+                                            if (parent.vehList.getItem(vehid) != undefined) {
+                                                poinsLine.push([parent.vehList.getItem(vehid).x, parent.vehList.getItem(vehid).y]);
+                                            } else { poinsLine.push([focusAlarm.gps.x, focusAlarm.gps.y]); }
+
+
+                                            var point = GPS.delta(parseFloat(dataItems[1]), parseFloat(dataItems[2]));
+
+                                            var pointbd_encrypt = GPS.bd_encrypt(point.lat, point.lon);
+
+                                            parkingCircles[vehid + "_1"] = {
+                                                //mark: new BMap.Marker({
+                                                //    position: [point.lon, point.lat],
+                                                //    draggable: false,
+                                                //    cursor: 'move',
+                                                //    raiseOnDrag: true,
+                                                //    icon: new BMap.Icon({
+                                                //        size: new BMap.Size(30, 35),  //图标大小
+                                                //        image: "boyunImg/locationHome.png",
+                                                //        imageOffset: new BMap.Pixel(0, 0)
+                                                //    }),
+                                                //    map: map
+                                                //}),
+                                                imgUrl: "boyunImg/locationHome.png",
+
+                                                mark: new BMap.Marker(new BMap.Point(pointbd_encrypt.lon, pointbd_encrypt.lat)),
+                                                circle: drawCircle(point.lat, point.lon, dataItems[3], "#41cac0"),
+                                                //line: new AMap.Polyline({
+                                                //    path: poinsLine,          //设置线覆盖物路径
+                                                //    strokeColor: "#41cac0", //线颜色
+                                                //    strokeOpacity: 1,       //线透明度
+                                                //    strokeWeight: 2,        //线宽
+                                                //    strokeStyle: "dashed",   //线样式
+                                                //    strokeDasharray: [10, 5], //补充线样式
+                                                //    map: map
+                                                //})
+                                            }
+
+                                            var opts = {
+                                                position: parkingCircles[vehid + "_1"].mark.point,
+                                                offset: new BMap.Size(10, 10)    //设置文本偏移量
+                                            }
+
+                                            if (parent.vehList.getItem(vehid) != undefined) {
+                                                //  parkingCircles[vehid + "_1"].mark.setLabel({ offset: new BMap.Pixel(20, 20), content: "'" + parent.vehList.getItem(vehid).plate + "'经常停车点：家" });
+                                                var label = new BMap.Label("'" + parent.vehList.getItem(vehid).plate + "'经常停车点：家", opts);  // 创建文本标注对象
+                                                map.addOverlay(label);
+
+                                            } else {
+
+                                                // parkingCircles[vehid + "_1"].mark.setLabel({ offset: new BMap.Pixel(20, 20), content: "'" + focusAlarm.gps.plate + "'经常停车点：家" });
+                                                var label = new BMap.Label("'" + focusAlarm.gps.plate + "'经常停车点：家", opts);  // 创建文本标注对象
+                                                map.addOverlay(label);
+                                            }
+                                            if (parseFloat(dataItems[1]) > maxlat) {
+                                                maxlat = parseFloat(dataItems[1]);
+                                            }
+                                            if (parseFloat(dataItems[2]) > maxlng) {
+                                                maxlng = parseFloat(dataItems[2]);
+                                            }
+
+                                            if (parseFloat(dataItems[1]) < minlat) {
+                                                minlat = parseFloat(dataItems[1]);
+                                            }
+                                            if (parseFloat(dataItems[2]) < minlng) {
+                                                minlng = parseFloat(dataItems[2]);
+                                            }
+
+
+                                            break;
+
+                                        case "2":
+                                            var poinsLine = [];
+                                            poinsLine.push([parseFloat(dataItems[2]), parseFloat(dataItems[1])]);
+                                            if (parent.vehList.getItem(vehid) != undefined) {
+                                                poinsLine.push([parent.vehList.getItem(vehid).x, parent.vehList.getItem(vehid).y]);
+                                            } else { poinsLine.push([focusAlarm.gps.x, focusAlarm.gps.y]); }
+
+
+                                            var point = GPS.delta(parseFloat(dataItems[1]), parseFloat(dataItems[2]));
+                                            var pointbd_encrypt = GPS.bd_encrypt(point.lat, point.lon);
+                                            parkingCircles[vehid + "_2"] = {
+                                                //mark: new BMap.Marker({
+                                                //    position: [point.lon, point.lat],
+                                                //    draggable: false,
+                                                //    cursor: 'move',
+                                                //    raiseOnDrag: true,
+                                                //    icon: new BMap.Icon({
+                                                //        size: new BMap.Size(30, 35),  //图标大小
+                                                //        image: "boyunImg/locationCompany.png",
+                                                //        imageOffset: new BMap.Pixel(0, 0)
+                                                //    }),
+                                                //    map: map
+                                                //}),
+
+                                                imgUrl: "boyunImg/locationCompany.png",
+                                                mark: new BMap.Marker(new BMap.Point(pointbd_encrypt.lon, pointbd_encrypt.lat)),
+                                                circle: drawCircle(point.lat, point.lon, dataItems[3], "#41cac0")
+                                            }
+                                            var opts = {
+                                                position: parkingCircles[vehid + "_2"].mark.point,
+                                                offset: new BMap.Size(10, 10)    //设置文本偏移量
+                                            }
+                                            if (parent.vehList.getItem(vehid) != undefined) {
+                                                //  parkingCircles[vehid + "_2"].mark.setLabel({ offset: new BMap.Pixel(20, 20), content: "'" + parent.vehList.getItem(vehid).plate + "'经常停车点：公司" });
+                                                var label = new BMap.Label("'" + parent.vehList.getItem(vehid).plate + "'经常停车点：公司", opts);  // 创建文本标注对象
+                                                map.addOverlay(label);
+                                            } else {
+                                                // parkingCircles[vehid + "_2"].mark.setLabel({ offset: new BMap.Pixel(20, 20), content: "'" + focusAlarm.gps.plate + "'经常停车点：公司" });
+                                                var label = new BMap.Label("'" + focusAlarm.gps.plate + "'经常停车点：公司", opts);  // 创建文本标注对象
+                                                map.addOverlay(label);
+                                            }
+
+
+                                            if (parseFloat(dataItems[1]) > maxlat) {
+                                                maxlat = parseFloat(dataItems[1]);
+                                            }
+                                            if (parseFloat(dataItems[2]) > maxlng) {
+                                                maxlng = parseFloat(dataItems[2]);
+                                            }
+                                            if (parseFloat(dataItems[1]) < minlat) {
+                                                minlat = parseFloat(dataItems[1]);
+                                            }
+                                            if (parseFloat(dataItems[2]) < minlng) {
+                                                minlng = parseFloat(dataItems[2]);
+                                            }
+
+                                            break;
+                                    }
+                                }
+                            }
+                            if (parent.vehList.getItem(vehid) == undefined) {
+                                if (focusAlarm.gps.y > maxlat) {
+                                    maxlat = focusAlarm.gps.y
+                                }
+                                if (focusAlarm.gps.x > maxlng) {
+                                    maxlng = focusAlarm.gps.x;
+                                }
+                                if (focusAlarm.gps.y < minlat) {
+                                    minlat = focusAlarm.gps.y;
+                                }
+                                if (focusAlarm.gps.x < minlng) {
+                                    minlng = focusAlarm.gps.x;
+                                }
+                            } else {
+                                if (parent.vehList.getItem(vehid).y > maxlat) {
+                                    maxlat = parent.vehList.getItem(vehid).y;
+                                }
+                                if (parent.vehList.getItem(vehid).x > maxlng) {
+                                    maxlng = parent.vehList.getItem(vehid).x;
+                                }
+                                if (parent.vehList.getItem(vehid).y < minlat) {
+                                    minlat = parent.vehList.getItem(vehid).y;
+                                }
+                                if (parent.vehList.getItem(vehid).x < minlng) {
+                                    minlng = parent.vehList.getItem(vehid).x;
+                                }
+                            }
+
+                            // var bounds = new BMap.Bounds(new BMap.Point(minlng - 0.01, minlat - 0.01), new BMap.Point(maxlng + 0.01, maxlat + 0.01));
+
+                            $.each(parkingCircles, function (i) {
+
+
+                                var icon = new BMap.Icon(this.imgUrl, new BMap.Size(30, 35), { offset: new BMap.Size(35, 35) });
+                                this.mark.setIcon(icon);
+                                map.addOverlay(this.mark);             // 将标注添加到地图中
+                                map.centerAndZoom(this.mark.point, 6);
+                                // map.addOverlay(this.mark);
+                            });
+                            $("#moreControl").hide();
+                            // map.centerAndZoom(new BMap.Point(point.lon, point.lat), 15);
+                            // map.setBounds(bounds, bounds);
+
+                            // BMapLib.AreaRestriction.setBounds(map, bounds);
+
+                        } else { layer.msg('未设置经常停留点', { icon: 3 }); }
+                    } else { layer.msg('查看经常停留点失败', { icon: 3 }); }
+
+
+                },
+                error: function (msg) {
+                    layer.msg('查看经常停留点失败:' + msg.statusText, { icon: 2 });
+                }
+            });
+        }
+
+
+
+        function displayArea(obj) {
+            var vehid = $(obj).children().attr("vehid");
+            parent.showModal("查看围栏", "showArea.html?vehid=" + vehid);
+        }
+
+        function setPoi(obj) {
+            //添加位置点之前要先关闭街景功能
+            var lonlat = $(obj).attr("lonlat").split(',');
+            parent.showModal("位置点设置", "pointSetting.html?lat=" + lonlat[1] + "&lng=" + lonlat[0]);
+        }
+
+        function setCitiArea(obj) {
+            var vehid = $(obj).attr("vehid");
+            top.ly = top.layer.open({
+                type: 2,
+                area: ['360px', '180px'],
+                title: '绑定省市区域<span id="vehid" style="display:none;">' + vehid + '</span>',
+                shade: 0.6, //遮罩透明度,
+                anim: 6,//0-6的动画形式，-1不开启
+                content: 'bindCity.html?vehid=' + vehid
+            });
+            var scbtu = top.$(".layui-layer-setwin").find("a").eq(0);
+            scbtu.html("×");
+            scbtu.css("color", "#fff");
+            scbtu.css("font-size", "25px");
+            scbtu.css("margin-top", "-11px");
+            scbtu.css("font-weight", "bold");
+            scbtu.css("background", "url()");
+        }
+
+        function ShowLbs(id) {
+            var typely = 0;
+
+
+
+            if (parent.vehList.getItem(id) != undefined) {
+                var lbs = parent.vehList.getItem(id).lbs.split(';')[3];
+                if (lbs == undefined) {
+                    lbs = focusAlarm.gps.lbs.split(';')[3];
+                    typely = focusAlarm.gps.lbs.split(';')[1];
+                } else {
+                    parent.vehList.getItem(id).lbs.split(';')[1];
+                }
+            } else {
+                lbs = focusAlarm.gps.lbs.split(';')[3];
+                typely = focusAlarm.gps.lbs.split(';')[1];
+            }
+
+            if (lbs != undefined) {
+                var array = lbs.split('|');
+                var str = "";
+
+                for (var i = 0; i < array.length; i++) {
+                    if (i == 0) {
+                        str = array[i];
+                    } else { str += ";" + array[i]; }
+                }
+                parent.showModal("LBS定位详情", "gsm.html?lbs=" + typely + "@" + (array.length + 1) + "@" + str);
+            }
+        }
+
+        var Circles = [];
+        function setCircle(obj, radii) {
+            var veh = parent.vehList.getItem($(obj).children().attr("vehid"));
+            if (veh == undefined) {
+                veh = focusAlarm.gps;
+
+            }
+            if (veh != undefined) {
+                //var point = GPS.deltaOut(parseFloat(veh.y), parseFloat(veh.x));
+                myAjax({
+                    type: 'GET',
+                    url: ajax("http/SafetyZone/SetVehicleCircle.json?groupId=" + veh.groupId + "&vehicleId=" + veh.vehicleId + "&radii=" + radii + "&lat=" + veh.yy + "&lon=" + veh.yx),
+                    dataType: 'json',                           //指定服务器返回的数据类型
+                    timeout: 20000,                              //请求超时时间
+                    cache: false,                               //是否缓存上一次的请求数据
+                    async: true,                                //是否异步
+                    success: function (data) {
+                        if (data.flag == 1) {
+                            layer.msg('圆形围栏设置成功！', { icon: 1 })
+
+
+                        } else { layer.msg('操作失败:' + data.msg, { icon: 2 }) }
+                    },
+                    error: function (msg) {
+                        layer.msg('圆形围栏设置失败:' + msg.statusText, { icon: 2 })
+                    }
+                });
+            } else { layer.msg('圆形围栏设置失败:' + msg.statusText, { icon: 2 }) }
+        }
+        function setFreeCircle(obj) {
+            layer.msg("请切换高德地图设置", { icon: 1 });
+            //layer.prompt({ title: '设置范围为200到5000米' }, function (radii, index) {
+            //    var ex = /^\d+$/;
+            //    if (ex.test(radii)) {
+            //        if (parseInt(radii) < 5001) {
+            //            var veh = parent.vehList.getItem($(obj).children().attr("vehid"));
+            //            if (veh == undefined) {
+            //                veh = focusAlarm.gps;
+
+            //            }
+            //            if (veh != undefined) {
+            //                myAjax({
+            //                    type: 'GET',
+            //                    url: ajax("http/SafetyZone/SetVehicleCircle.json?groupId=" + veh.groupId + "&vehicleId=" + veh.vehicleId + "&radii=" + radii + "&lat=" + veh.y + "&lon=" + veh.x),
+            //                    dataType: 'json',                           //指定服务器返回的数据类型
+            //                    timeout: 20000,                              //请求超时时间
+            //                    cache: false,                               //是否缓存上一次的请求数据
+            //                    async: true,                                //是否异步
+            //                    success: function (data) {
+            //                        if (data.flag == 1) {
+            //                            layer.msg('圆形围栏设置成功！', { icon: 1 })
+            //                            layer.close(index);
+
+            //                        } else { layer.msg('操作失败:' + data.msg, { icon: 2 }) }
+            //                    },
+            //                    error: function (msg) {
+            //                        layer.msg('圆形围栏设置失败:' + msg.statusText, { icon: 2 })
+            //                    }
+            //                });
+            //            } else { layer.msg('圆形围栏设置失败:' + msg.statusText, { icon: 2 }) }
+            //        } else { layer.msg('设置范围为200到2000米:' + msg.statusText, { icon: 2 }) }
+            //    } else { layer.msg('设置范围为200到2000米:' + msg.statusText, { icon: 2 }) }
+
+            //});
+
+        }
+
+
+        //查看圆形围栏
+        function showCircle(obj) {
+            var veh = parent.vehList.getItem($(obj).children().attr("vehid"));
+            if (veh == undefined) {
+                veh = focusAlarm.gps;
+
+            }
+            $('#moreControl').hide();
+            $("#gzdmenuControl").hide();
+            if (veh != undefined) {
+                if (Circles[veh.vehicleId + "_ID"] != undefined) {
+                    //map.remove(Circles[veh.vehicleId]);
+
+                    map.removeOverlay(Circles[veh.vehicleId + "_ID"]);
+                    Circles[veh.vehicleId + "_ID"] = undefined;
+                }
+                myAjax({
+                    type: 'GET',
+                    url: ajax("http/SafetyZone/GetVehicleCircle.json?groupId=" + veh.groupId + "&vehicleId=" + veh.vehicleId),
+                    dataType: 'json',                           //指定服务器返回的数据类型
+                    timeout: 20000,                              //请求超时时间
+                    cache: false,                               //是否缓存上一次的请求数据
+                    async: true,                                //是否异步
+                    success: function (data) {
+                        if (data.flag == 1) {
+                            if (data.obj != undefined) {
+                                $.each(Circles, function (key, element) {
+                                    if (current != undefined) {
+
+
+                                        if (key != current.gps.vehicleId + "_ID") {
+                                            if (element != undefined) {
+                                                if (element != undefined) {
+                                                    // map.remove(element);
+                                                    map.removeOverlay(element);
+
+                                                }
+                                                element = undefined;
+                                            }
+                                        }
+                                    } else {
+                                        if (key != focusAlarm.gps.vehicleId + "_ID") {
+                                            if (element != undefined) {
+                                                if (element != undefined) {
+                                                    //  map.remove(element);
+                                                    map.removeOverlay(element);
+                                                }
+                                                element = undefined;
+                                            }
+                                        }
+                                    }
+                                });
+                                var point = GPS.gcj_encrypt(parseFloat(data.obj.lat), parseFloat(data.obj.lon));
+                                //{radii: 200, lon: 120.3934220533171, lat: 36.11082318809015}
+                                Circles[veh.vehicleId + "_ID"] = drawCircle(point.lat, point.lon, data.obj.radii, "#000000");
+
+                                vehMarks[veh.vehicleId].circle = Circles[veh.vehicleId + "_ID"];
+
+
+                                //map.setZoomAndCenter(17, [point.lon, point.lat]);
+                                map.centerAndZoom(new BMap.Point(point.lon, point.lat), 15);
+                                //Circles[veh.vehicleId].onMouseMove('click', function (MapsEvent) {
+                                //    mouseControl(MapsEvent);
+                                //});
+                            } else { layer.msg('未设置圆形围栏:', { icon: 3 }) }
+                        } else { layer.msg('查询圆形围栏失败:' + data.msg, { icon: 3 }) }
+
+                    },
+                    error: function (msg) {
+                        layer.msg('圆形围栏查询失败:' + msg.statusText, { icon: 2 })
+                    }
+                });
+            } else { layer.msg('查询围栏失败:' + msg.statusText, { icon: 2 }) }
+        }
+
+        //删除围栏
+        function removeCircle(obj) {
+            layer.msg('是否删除围栏？', {
+                time: 0, //不自动关闭
+                btn: ['确定', '取消'],
+                icon: 1,
+                yes: function () {
+                    var veh = parent.vehList.getItem($(obj).children().attr("vehid"));
+                    if (veh == undefined) {
+                        veh = focusAlarm.gps;
+
+                    }
+                    if (veh != undefined) {
+                        myAjax({
+                            type: 'GET',
+                            url: ajax("http/SafetyZone/SetVehicleCircle.json?groupId=" + veh.groupId + "&vehicleId=" + veh.vehicleId + "&radii=0&lat=" + veh.yy + "&lon=" + veh.yx),
+                            dataType: 'json',                           //指定服务器返回的数据类型
+                            timeout: 20000,                              //请求超时时间
+                            cache: false,                               //是否缓存上一次的请求数据
+                            async: true,                                //是否异步
+                            success: function (data) {
+                                if (data.flag == 1) {
+                                    layer.msg('删除围栏成功！', { icon: 1 })
+                                    if (Circles[veh.vehicleId + "_ID"] != undefined) {
+                                        //map.remove(Circles[veh.vehicleId]);
+                                        map.removeOverlay(Circles[veh.vehicleId + "_ID"]);
+                                        Circles[veh.vehicleId + "_ID"] = undefined;
+                                    }
+                                } else { layer.msg('删除围栏栏失败:' + data.msg, { icon: 2 }) }
+                            },
+                            error: function (msg) {
+                                layer.msg('删除围栏栏失败:' + msg.statusText, { icon: 2 })
+                            }
+                        });
+                    } else { layer.msg('删除围栏失败:' + msg.statusText, { icon: 2 }) }
+                }
+            });
+        }
+
+
+        function ShowPov(id) {
+            //bool,lat,lng,veh
+            if (parent.vehList.getItem(id) != undefined) {
+                parent.showOrCloseRightPnl(true, parent.vehList.getItem(id).y, parent.vehList.getItem(id).x, parent.vehList.getItem(id).plate);
+            } else {
+                parent.showOrCloseRightPnl(true, focusAlarm.gps.y, focusAlarm.gps.x, focusAlarm.gps.plate);
+            }
+
+        }
+
+        var pointList = [];
+        var pointLableList = [];
+        //百度画点
+        function showPoint(pointSource) {
+            closePoint();
+            pointList = []; pointLableList = [];
+            for (var i = 0; i < pointSource.length; i++) {
+                var point = GPS.bd_encrypt(parseFloat(pointSource[i].oriLat), parseFloat(pointSource[i].oriLon));
+                //  point = GPS.bd_encrypt(point.lat, point.lon);
+
+                var pointMarker = new BMap.Marker(new BMap.Point(point.lon, point.lat)); // 创建点
+                var opts = {
+                    // 指定文本标注所在的地理位置
+                    position: new BMap.Point(point.lon, point.lat),
+                    offset: new BMap.Size(10, 10)    //设置文本偏移量
+                }
+                var label = new BMap.Label(pointSource[i].name, opts);  // 创建文本标注对象
+                label.setStyle({ color: "black", "border-color": "black" });
+                map.addOverlay(label);
+                map.addOverlay(pointMarker);
+                pointList.push(pointMarker);
+                pointLableList.push(label);
+            }
+        }
+
+        //百度清除点
+        function closePoint() {
+            //清除Lable
+            for (var i = 0; i < pointLableList.length; i++) {
+                map.removeOverlay(pointLableList[i]);
+                pointLableList.splice(i, 1);;
+                i--;
+            }
+            //清除点
+            for (var i = 0; i < pointList.length; i++) {
+                map.removeOverlay(pointList[i]);
+                pointList.splice(i, 1);
+                i--;
+            }
+        }
+
+        function setPointCenter(E, F) {
+            map.centerAndZoom(new BMap.Point(E, F), 14);
+        }
+
+        //function showPoint(pointSource) {
+        //    // pointList = pointSource;
+        //    pointList = [];
+        //    for (var i = 0; i < pointSource.length; i++) {
+        //        var point = GPS.delta(parseFloat(pointSource[i].oriLat), parseFloat(pointSource[i].oriLon));
+        //        var pointMarker = new AMap.Marker({
+        //            titel: '',
+        //            icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+        //            position: [pointSource[i].oriLon, pointSource[i].oriLat],
+        //            //   position: [point.lon, point.lat],
+        //        });
+        //        pointMarker.setMap(map);
+        //        pointList.push(pointMarker);
+        //        pointMarker.setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
+        //            offset: new AMap.Pixel(0, 35),//修改label相对于maker的位置
+        //            content: pointSource[i].name,
+        //        });
+        //    }
+        //}
+        //function closePoint() {
+        //    for (var i = 0; i < pointList.length; i++) {
+        //        pointList[i].setMap(null);
+        //    }
+        //    pointList = [];
+        //}
+
+        //百度多边形
+        var polygonList = [];
+        var showArealabel = null;
+        function showArea(areaSource) {
+
+        
+            closeArea();
+
+
+            //pathName_list = [];
+            //pathName_list_i = 0;
+            for (var i = 0; i < areaSource.length; i++) {
+
+                //  pathName_list.push(areaSource[i].pathName);
+
+                var points = [];
+                for (var j = 0; j < areaSource[i].pointList.length; j++) {
+                   // var point = areaSource[i].pointList[j];
+                    var point = GPS.delta(parseFloat(areaSource[i].pointList[j].oriLat), parseFloat(areaSource[i].pointList[j].oriLon));
+                    point = GPS.bd_encrypt(point.lat, point.lon);
+                    points.push(new BMap.Point(point.lon, point.lat));
+                }
+                // convertor.translate(points, 1, 5, function (data) {
+
+
+                //    if (data.status === 0) {
+
+                var polygon = new BMap.Polygon(points, {
+                    strokeColor: "#FF33FF", //线颜色
+                    strokeOpacity: 0.2, //线透明度
+                    strokeWeight: 3,    //线宽
+                    fillColor: "#1791fc", //填充色
+                    fillOpacity: 0.35, //填充透明度
+                    //  title: areaSource[i].pathName
+                });
+                polygon.pathName = areaSource[i].pathName
+                map.addOverlay(polygon);
+                polygonList.push(polygon);
+
+
+
+                // map.setViewport(polygon.getPath());    //调整视野
+                polygon.addEventListener('mouseover', function (e) {
+                    var pathName = e.target.pathName;
+
+
+                    map.removeOverlay(showArealabel);
+
+
+                    showArealabel = new BMap.Label(pathName, { position: e.point });
+                    map.addOverlay(showArealabel);
+                })
+                polygon.addEventListener('mouseout', function (e) {
+                    map.removeOverlay(showArealabel)
+                });
+
+                //var label = new BMap.Label(pathName_list[pathName_list_i], { position: map.getCenter() });
+                //pathName_list_i++;
+                //     }
+                //  });
+
+            }
+        }
+
+        function closeArea() {
+            //清除多边形
+            for (var i = 0; i < polygonList.length; i++) {
+                map.removeOverlay(polygonList[i]);
+                polygonList.splice(i, 1);
+                i--;
+            }
+        }
+
+        ////高德多边形
+        //var areaList = [];
+        //function showArea(areaSource) {
+        //    closeArea();
+        //    areaList = areaSource;
+        //    for (var i = 0; i < areaList.length; i++) {
+        //        var points = [];
+        //        for (var j = 0; j < areaList[i].pointList.length; j++) {
+        //            var point = GPS.delta(parseFloat(areaList[i].pointList[j].oriLat), parseFloat(areaList[i].pointList[j].oriLon));
+        //            points.push([point.lon, point.lat]);
+        //            //points.push([areaList[i].pointList[j].oriLon, areaList[i].pointList[j].oriLat]);
+        //        }
+
+        //        var polygon = new AMap.Polygon({
+        //            path: points,//设置多边形边界路径
+        //            strokeColor: "#FF33FF", //线颜色
+        //            strokeOpacity: 0.2, //线透明度
+        //            strokeWeight: 3,    //线宽
+        //            fillColor: "#1791fc", //填充色
+        //            fillOpacity: 0.35, //填充透明度
+        //            title: areaSource[i].pathName
+        //        });
+        //        polygon.setMap(map);
+        //    }
+        //}
+
+        //function closeArea() {
+        //    var polygons = map.getAllOverlays("polygon");
+        //    map.remove(polygons);
+        //}
+
+        function trajectory(obj) {
+            var bd = "";
+
+            if ($(obj).html().indexOf("百度") != -1) {
+                bd = "b";
+            }
+            var vehId = $("#trackPlaybackDiv").attr("vehId");
+            var p = $("#trackPlaybackDiv").attr("plat");
+            var t = $("#trackPlaybackDiv").attr("terType");
+            var time = $("#infoGpsTime").html();
+            window.open(bd + "trackPlayback.html?vehId=" + vehId + '&plate=' + escape(p) + '&type=' + escape(t) + "&time=" + time);
+            //top.$("#mainframe2").attr("src", "trackPlayback.html?&vehId=" + $(obj).attr('vehId') + '&plate=' + escape($(obj).attr('plat')) + '&type=' + escape($(obj).attr('type')));
+            //top.$("#mainframe").hide();
+            //top.$("#mainframe2").show();
+            //$(top.$(".navbar-nav li")[1]).attr("isck") == "yes";
+            //$(top.$(".navbar-nav li")[1]).css("background-color", "#CCC");
+            //$(top.$(".navbar-nav li")[0]).css("background-color", "#FFF");
+        }
+
+        function moreSecondControlOver(e, self) {
+
+            if (self !== undefined) {
+                $(self).find('ul').show()
+            }
+        }
+        function moreSecondControlOut(e, self) {
+
+            if (self !== undefined) {
+                $(self).find('ul').hide()
+            }
+        }
+
+        function closeAnyOneOut(e, father) {
+            $("#closeAnyOne").hide();
+        }
+
+        function menuControlOut(e, father) {
+            var event = e || window.event;
+            var parent = event.toElement || event.relatedTarget;
+            while (parent && parent !== father) {
+                parent = parent.parentNode;
+            }
+            if (parent !== father) {
+                //  $("#menuControl").hide();
+            }
+        }
+        function trackPlaybackOut(e, father) {
+            var event = e || window.event;
+            var parent = event.toElement || event.relatedTarget;
+            while (parent && parent !== father) {
+                parent = parent.parentNode;
+            }
+            if (parent !== father) {
+                //  $("#trackPlaybackDiv").hide();
+            }
+        }
+        function gzdmoreControlOut(e, father) {
+            var event = e || window.event;
+            var parent = event.toElement || event.relatedTarget;
+            while (parent && parent !== father) {
+                parent = parent.parentNode;
+            }
+            if (parent !== father) {
+                //  $("#moreControl").hide();
+            }
+        }
+        function moreControlOut(e, father) {
+            var event = e || window.event;
+            var parent = event.toElement || event.relatedTarget;
+            while (parent && parent !== father) {
+                parent = parent.parentNode;
+            }
+            if (parent !== father) {
+                //  $("#moreControl").hide();
+            }
+        }
+        function trackPlayback(obj, event) {
+            $("#trackPlaybackDiv").attr("vehId", $(obj).attr("vehId"));
+            $("#trackPlaybackDiv").attr("plat", $(obj).attr("plat"));
+            $("#trackPlaybackDiv").attr("terType", $(obj).attr("type"));
+            var current = event.target || event.srcElement;
+            var top = $(current).offset().top;
+            var left = $(current).offset().left;
+            $("#trackPlaybackDiv").hide();
+            $("#trackPlaybackDiv").css("top", (top + 15) + "px").css("left", (left - 10) + "px").show();
+            event.stopPropagation();
+            event.preventDefault();
+        }
+        function followclick(e) {
+            var id = $(e).attr("data-id");
+            var t = $(e).attr("data-t");
+
+
+
+            parent.follow(id, t);
+            $("#gzdmenuControl").hide();
+        }
+        function gzdmoreControl(vehId, event) {
+            $("#li_gzdg").attr("data-id", vehId);
+            $("#li_gzdz").attr("data-id", vehId);
+            $("#li_gzdd").attr("data-id", vehId);
+            $("#li_gzdq").attr("data-id", vehId);
+            var current = event.target || event.srcElement;
+            var top = $(current).offset().top;
+            var left = $(current).offset().left;
+            $("#moreControl").hide();
+            $("#menuControl").hide();
+            $("#gzdmenuControl").hide();
+            $("#gzdmenuControl").css("top", (top + 15) + "px").css("left", (left - 10) + "px").show();
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
+        var VehID;
+
+        function moreControl(vehId, x, y, event) {
+            VehID = vehId;
+            $("#li_setArea").attr('vehid', VehID);
+            $("#li_showArea").attr('vehid', VehID);
+            $("#li_setCitiArea").attr('vehid', VehID);
+            $("#li_editCircle").attr('vehid', VehID);
+            $("#li_editFreeCircle").attr('vehid', VehID);
+
+            $("#li_showCircle").attr('vehid', VehID);
+            $("#li_removeCircle").attr('vehid', VehID);
+            $("#li_parkingCircle").attr('vehid', VehID);
+            $("#li_removeParkingCircle").attr('vehid', VehID);
+            $("#li_showParkingCircle").attr('vehid', VehID);
+
+
+
+
+
+            $("#li_setPoi").attr('lonlat', x + ',' + y);
+            var current = event.target || event.srcElement;
+            var top = $(current).offset().top;
+            var left = $(current).offset().left;
+            $("#menuControl").hide();
+            $("#gzdmenuControl").hide();
+            $("#moreControl").css("top", (top + 15) + "px").css("left", (left - 10) + "px").show();
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
+        function menuControl(event) {
+            var current = event.target || event.srcElement;
+            var top = $(current).offset().top;
+            var left = $(current).offset().left;
+            $("#moreControl").hide();
+            $("#gzdmenuControl").hide();
+            $("#menuControl").css("top", (top + 15) + "px").css("left", (left - 10) + "px").show();
+        }
+
+        function mouseControl(event) {
+
+            $("#closeAnyOne").css("top", (event.pixel.y) + "px").css("left", (event.pixel.x) + "px").show();
+        }
+
+
+
+        //****************************************跟踪车辆*******************************
+        //跟踪按钮点击之后
+        var TrackMonitorVehicleID = ""; //跟踪车辆id，默认为""
+        var TrackMonitorLng = ""; //跟踪车辆的上一次经纬度 经纬度用来绘制轨迹线
+        var TrackMonitorLat = ""; //跟踪车辆的上一次纬度
+        function onTrackMonitorClick(vehicleID) {
+            if (vehicleID == "") {
+                //取消跟踪,清除轨迹线
+                $("#infoPlay").text("跟踪");
+                //        $("#infoPlay").attr("src","../Images/play/播放.png");
+                TrackMonitorVehicleID = "";
+                TrackMonitorLng = "";
+                TrackMonitorLat = "";
+                clearTrackLine();
+                return;
+            }
+            if (TrackMonitorVehicleID == "") {
+                $("#infoPlay").text("取消跟踪");
+                //        $("#infoPlay").attr("src","../Images/play/暂停.png");
+                TrackMonitorVehicleID = vehicleID;
+
+                for (var i = 0; i < vehicleCollectionSubscribe.length; i++) {
+                    if (vehicleID == vehicleCollectionSubscribe[i].ID) {
+                        TrackMonitorLng = vehicleCollectionSubscribe[i].Longitude;
+                        TrackMonitorLat = vehicleCollectionSubscribe[i].Latitude;
+                        break;
+                    }
+                }
+
+            }
+            else {
+                //取消跟踪,清除轨迹线
+                $("#infoPlay").text("跟踪");
+                //        $("#infoPlay").attr("src","../Images/play/播放.png");
+                TrackMonitorVehicleID = "";
+                TrackMonitorLng = "";
+                TrackMonitorLat = "";
+                clearTrackLine();
+            }
+        }
+
+        //跟踪点击后
+        function TrackMonitorVehicle(tr, name) {
+            var plateNo = "";
+            if (tr == "") {
+                plateNo = name;
+            }
+            else {
+                plateNo = tr.parentNode.textContent === undefined ? tr.parentNode.innerText : tr.parentNode.textContent;
+            }
+            var Node = vehicleTree.getNodeByParam("plateNo", plateNo, null);
+            if (!Node.checked) {
+                vehicleTree.checkNode(Node, true, true, true);
+            }
+            if (TrackMonitorVehicleID != Node.id.substr(2)) {
+                TrackMonitorVehicleID = Node.id.substr(2);//重新跟踪刷新经纬度
+                TrackMonitorLng = ""; //跟踪车辆的上一次经纬度 经纬度用来绘制轨迹线
+                TrackMonitorLat = "";
+
+            }
+            MessageBox("跟踪" + plateNo, "提示");
+        }
+
+        //绘制轨迹线
+        function mapPolyline(color, lineArr) {
+            var polyline = new AMap.Polyline({
+                path: lineArr, //设置线覆盖物路径
+                strokeColor: color, //线颜色
+                strokeOpacity: 1,  //线透明度
+                strokeWeight: 5, //线宽
+                strokeStyle: "solid", //线样式
+                strokeDasharray: [10, 5]//补充线样式
+
+            });
+            polyline.setMap(map);
+            return polyline;
+        }
+
+
+
+        //清空轨迹线
+        //function clearTrackLine() {
+        //    if (trackLine.H.path.length > 0) {
+        //        for (var i = 0; i < trackLine.H.path.length; i++) {
+        //            trackLine[i].setMap(null);
+        //        }
+        //    }
+        //}
+
+        //跟踪纠偏完成后,始终定位该点并绘制轨迹线
+        var trackLine = new Array();//轨迹线
+        function trackMonitorCallBack(id, lnglat) {
+            var lineArr = new Array();
+            var lng = lnglat.split(',')[1];
+            var lat = lnglat.split(',')[0];
+            if (TrackMonitorLng == "") {
+                TrackMonitorLng = lng;
+                TrackMonitorLat = lat;
+            }
+            else if (TrackMonitorLng != "") {
+                lineArr.push(new AMap.LngLat(TrackMonitorLng, TrackMonitorLat)); //上次经纬度
+                lineArr.push(new AMap.LngLat(lng, lat)); //当前经纬度
+                trackLine.push(mapPolyline("#3366FF", lineArr));
+                TrackMonitorLng = lng;
+                TrackMonitorLat = lat; //绘制完成后跟踪的经纬度变成当前经纬度
+            }
+            mapPanTo(lng, lat);
+        }
+
+        //绘制轨迹线
+        function mapPolyline(color, lineArr) {
+            var polyline = new AMap.Polyline({
+                path: lineArr, //设置线覆盖物路径
+                strokeColor: color, //线颜色
+                strokeOpacity: 1,  //线透明度
+                strokeWeight: 5, //线宽
+                strokeStyle: "solid", //线样式
+                strokeDasharray: [10, 5]//补充线样式
+
+            });
+            polyline.setMap(map);
+            return polyline;
+        }
+
+
+        var TPOP_map = null;
+        var TPOP_circle = null;
+        var TPOP_infoWindow = null;
+        function showTPOPmap(lan, lon, str, r, name) {
+            if (TPOP_map != null) {
+                map.removeOverlay(TPOP_map);
+            }
+            if (TPOP_circle != null) {
+                map.removeOverlay(TPOP_circle);
+            }
+
+            var point = GPS.bd_encrypt(lan, lon);
+            lon = point.lon;
+            lan = point.lat;
+
+
+            TPOP_map = new BMap.Marker(new BMap.Point(lon, lan)); // 创建点
+            map.addOverlay(TPOP_map);
+
+            map.centerAndZoom(new BMap.Point(lon, lan), 18);
+
+            var stile = "<div  ><p>名称：" + name + "</p><p>地址：" + str + "</p></div>";
+
+
+
+            $("#TPOP_map_div").find("div").eq(0).html(stile);
+            var opts = {
+                width: $("#TPOP_map_div").find("div").eq(0).width(),     // 信息窗口宽度
+                height: $("#TPOP_map_div").find("div").eq(0).height(),     // 信息窗口高度
+            }
+            TPOP_infoWindow = new BMap.InfoWindow($("#TPOP_map_div").html(), opts);  // 创建信息窗口对象
+            map.openInfoWindow(TPOP_infoWindow, new BMap.Point(lon, lan)); //开启信息窗口
+            TPOP_map.addEventListener("click", function () {
+                map.openInfoWindow(TPOP_infoWindow, new BMap.Point(lon, lan)); //开启信息窗口
+            });
+
+            TPOP_circle = new BMap.Circle(
+                new BMap.Point(lon, lan), r, {
+                    strokeColor: "#666", strokeWeight: 3, fillColor: "#666", strokeOpacity: 0.35
+                }); //创建圆
+            map.addOverlay(TPOP_circle);
+
+        }
+        function colmap() {
+            if (TPOP_map != null) {
+                TPOP_infoWindow.close();
+                map.removeOverlay(TPOP_map);
+            }
+            if (TPOP_circle != null) {
+                map.removeOverlay(TPOP_circle);
+            }
+
+        }
+
+
+    </script>
+
+    <div id="TPOP_map_div">
+        <div style="font-size: 14px; width: 200px; line-height: 20px;">
+        </div>
+    </div>
+</body>
+</html>

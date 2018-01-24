@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="/js/jquery.js?v=1.1"></script>
+    <script src="/layer/layer.js"></script>
+    <style>
+        .txt_div {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 500px; margin: 0px auto;">
+        <div>
+            <div>
+                <input type="radio" class="radio_c" name="xzadded" id="CloseAuthPosition" value="CloseAuthPosition" data-id="8" />
+                <label for="CloseAuthPosition">关闭手机号授权定位</label>
+            </div>
+            <div>
+                <input type="radio" class="radio_c" name="xzadded" id="InquireEducation" value="InquireEducation" data-id="2" />
+                <label for="InquireEducation">学历查询</label>
+            </div>
+            <div>
+                <input type="radio" class="radio_c" name="xzadded" id="CheckThreeElements" value="CheckThreeElements" data-id="1" />
+                <label for="CheckThreeElements">手机三要素</label>
+            </div>
+            <div>
+
+                <input type="radio" class="radio_c" name="xzadded" id="OpenAuthPosition" value="OpenAuthPosition" data-id="5" />
+                <label for="OpenAuthPosition">手机号开通授权定位</label>
+            </div>
+            <div>
+
+                <input type="radio" class="radio_c" name="xzadded" id="InquireInNetTime" value="InquireInNetTime" data-id="3" />
+                <label for="InquireInNetTime">查询手机号在网时长</label>
+
+            </div>
+            <div>
+                <input type="radio" class="radio_c" name="xzadded" id="InquireInNetState" value="InquireInNetState" data-id="4" />
+                <label for="InquireInNetState">查询手机号在网状态</label>
+            </div>
+            <div>
+                <input type="radio" class="radio_c" name="xzadded" id="InquirePositionDetail" value="InquirePositionDetail" data-id="7" />
+                <label for="InquirePositionDetail">查询手机号实时定位数据</label>
+            </div>
+            <div>
+                <input type="radio" class="radio_c" name="xzadded" id="AuthPositionState" value="AuthPositionState" data-id="6" />
+                <label for="AuthPositionState">查询手机号授权定位状态</label>
+            </div>
+        </div>
+
+        <div>
+            <div class="txt_div">
+                身份证姓名
+        <input type="text" id="idName" value="" />
+            </div>
+            <div class="txt_div">
+                身份证号
+        <input type="text" id="idNumber" value="" />
+            </div>
+            <div class="txt_div">
+                手机号码 
+        <input type="text" id="mobile" value="" />
+            </div>
+            <input type="button" value="确定" onclick="determine()" />
+        </div>
+
+        <div>
+            <p>返回结果：</p>
+            <div id="ResultDiv">
+            </div>
+        </div>
+    </div>
+    <div style="display: none;">
+        <table id="motxttable">
+            <tr>
+                <td>{$key$}</td>
+                <td>{$val$}</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        $(function () {
+            $(".radio_c").change(function () {
+                var type = $(this).val()
+                var str = "";
+                switch (type) {
+                    case "OpenAuthPosition"://手机号开通授权定位
+                    case "InquireInNetTime"://查询手机号在网时长
+                    case "InquireInNetState"://查询手机号在网状态
+                    case "InquirePositionDetail"://查询手机号实时定位数据
+                    case "AuthPositionState"://查询手机号授权定位状态
+                    case "CloseAuthPosition": //关闭手机号授权定位
+                        str = "mobile";
+                        break;
+                    case "InquireEducation"://学历查询
+                        str = "idName,idNumber";
+                        break;
+                    case "CheckThreeElements"://手机三要素
+                        str = "mobile,idName,idNumber";
+                        break;
+                }
+                s_h_txt(str);
+            });
+
+        })
+        function s_h_txt(str) {
+            str = "," + str + ",";
+            $(".txt_div").hide();
+            if (str.indexOf(",idName,") != -1) {
+                $("#idName").parent().show();
+            }
+            if (str.indexOf(",idNumber,") != -1) {
+                $("#idNumber").parent().show();
+            }
+            if (str.indexOf(",mobile,") != -1) {
+                $("#mobile").parent().show();
+            }
+        }
+        function getxzadded() {
+            var url = "/credit/PersonalInformation/";
+            var type = "";
+            var id = "";
+            var data = $("input[name='xzadded']");
+            $.each(data, function (i) {
+                if (data.eq(i).prop("checked")) {
+                    type = data.eq(i).val();
+                    id = data.eq(i).attr("data-id");
+
+                }
+            });
+            url = url + type + ".json?";
+
+            url = "/credit/PersonalInformation/InquireData.json?type=" + id;
+            var data = {};
+            data.type = type;
+
+            data.idName = $("#idName").val();
+            data.idNumber = $("#idNumber").val();
+            data.mobile = $("#mobile").val();
+            data.url = url;
+
+            return data;
+        }
+        function determine() {
+            var data = getxzadded();
+            var url = data.url;
+            var c = false;
+            for (var key in data) {
+                if (key != "url") {
+                    if (c) {
+                        url = url + key + "=" + data[key]
+                        c = false;
+                    } else {
+                        url = url + "&" + key + "=" + data[key]
+                    }
+                }
+            }
+
+            myAjax({
+                type: 'get',
+                url: ajax(url),
+                dataType: 'json',                           //指定服务器返回的数据类型
+                timeout: 30000,                              //超时时间
+                cache: false,                               //是否缓存上一次的请求数据
+                async: true,                                //是否异步
+                //  data: data,
+                beforeSend: function () {
+                    $("#ResultDiv").html("查询中.....");
+                },
+                success: function (d) {
+                    if (d.flag == 1) {
+                        layer.msg(d.msg, { icon: 1 });
+                        gethtml(data.type, d.obj)
+                    } else {
+                        layer.msg(d.msg, { icon: 2 });
+                    }
+                },
+                error: function (msg) {
+                    layer.msg('请求发生错误' + msg.statusText, { icon: 2 });
+                }
+            });
+        }
+        function gethtml(t, obj) {
+          
+            var html = "";
+            switch (t) {
+                case "OpenAuthPosition"://手机号开通授权定位
+                case "CloseAuthPosition": //关闭手机号授权定位
+                case "AuthPositionState"://查询手机号授权定位状态
+                    html = obj.resmsg
+                    break;
+                case "InquireEducation"://学历查询
+                case "CheckThreeElements"://手机三要素
+                case "InquireInNetTime"://查询手机号在网时长
+                case "InquireInNetState"://查询手机号在网状态
+                case "InquirePositionDetail"://查询手机号实时定位数据
+                    var motxt = $("#motxttable").html();
+                    html = "<table>";
+                    var data = obj.data;
+                    if (data == null) {
+                        data = obj;
+                    }
+                    for (var k in data) {
+                        var key = getkeyname(k);
+                        if (key != "") {
+                            html += motxt.replace("{$key$}", key).replace("{$val$}", data[k])
+                        }
+                    }
+                    html += "</table>";
+                    break;
+
+            }
+            $("#ResultDiv").html(html);
+
+        }
+        function getkeyname(k) {
+            var str = "";
+
+            switch (k) {
+
+                //case "responsetext":
+                //    str = "接口调用返回结果提示";
+                //    break;
+                //case "result":
+                //    str = "数据返回结果状态码";
+                //    break;
+                //case "resulttext":
+                //    str = "数据返回结果提示信息";
+                //    break;
+                //case "resid":
+                //    str = "调用第三方接口成功与否标识";
+                //    break;
+                //case "resmsg":
+                //    str = "调用第三方接口成功或者失败的详细信息";
+                //    break;
+                case "idnamemobilecheck":
+                    str = "验证的结果";
+                    break
+                case "age":
+                    str = "年龄";
+                    break;
+                case "birthday":
+                    str = "出生日期";
+                    break;
+                case "college":
+                    str = "毕业院校";
+                    break;
+                case "degree":
+                    str = "学历";
+                    break;
+                case "gender":
+                    str = "性别";
+                    break;
+                case "graduatetime":
+                    str = "毕业时间";
+                    break;
+                case "idname":
+                    str = "身份证姓名";
+                    break;
+                case "idnumber":
+                    str = "身份证号";
+                    break;
+                case "photo":
+                    str = "照片(base64编码)";
+                    break;
+
+                case "schoolname":
+                    str = "学校名称";
+                    break;
+                case "specialty":
+                    str = "专业类别";
+                    break;
+                case "specialtyname":
+                    str = "专业名称";
+                    break;
+                case "starttime":
+                    str = "入学时间";
+                    break;
+                case "studylevel":
+                    str = "学历等级";
+                    break;
+                case "studyresult":
+                    str = "是否毕业";
+                    break;
+                case "studystyle":
+                    str = "学习形式";
+                    break;
+                case "studytype":
+                    str = "学习性质";
+                    break;
+
+                case "mobile":
+                    str = "手机号";
+                    break;
+
+                case "ctime":
+                    str = "查询接口的时间";
+                    break;
+                case "statusmsg":
+                    str = "说明";
+                    break;
+                case "intime":
+                    str = "在网时段";
+                    break;
+                case "areacode":
+                    str = "手机号码归属地区";
+                    break
+                case "city":
+                    str = "所在的城市";
+                    break
+                case "district":
+                    str = "所在的区域";
+                    break
+                case "lat":
+                    str = "纬度值";
+                    break
+                case "lng":
+                    str = "经度值";
+                    break
+                case "location":
+                    str = "地理位置信息";
+                    break;
+                case "province":
+                    str = "所在的省";
+                    break;
+                case "street":
+                    str = "地理位置所在的街道";
+                    break;
+                case "roamcity":
+                    str = "手机号码所在的漫游地区";
+                    break;
+
+
+            }
+            return str;
+
+        }
+    </script>
+</body>
+</html>

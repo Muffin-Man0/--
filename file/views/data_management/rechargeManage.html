@@ -1,0 +1,714 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="height: 100%; overflow: hidden;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>Dynamic Table</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--right slidebar-->
+    <link href="css/slidebars.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/bootstrap-select.min.css" rel="stylesheet" />
+
+    <link href="assets/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .timeqixian {
+            clear: both;
+            overflow: hidden;
+            height: 37px;
+        }
+
+            .timeqixian a {
+                width: 30px;
+                height: 30px;
+                display: block;
+                float: left;
+                background-color: #E8E8E8;
+                text-align: center;
+                line-height: 30px;
+                border-right: 1px solid #E2E2E2;
+            }
+
+            .timeqixian .atci {
+                background-color: #43BFE3;
+                color: #fff;
+            }
+
+        .quedingxf {
+            width: 200px;
+            float: right;
+            text-align: center;
+        }
+
+            .quedingxf .xx {
+                font-size: 18px;
+                font-weight: 900;
+            }
+
+        #vehicleRenewalDiv {
+            padding: 20px;
+        }
+
+        .form-control {
+            color: #23527c !important;
+        }
+
+        .atime {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            .atime:hover {
+                color: #165082;
+                text-decoration: underline;
+            }
+
+        .txttype_div ul {
+            margin-left: 100px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            color: #fff;
+            cursor: default;
+            background-color: #165082;
+            border: 1px solid #ddd;
+            border-bottom-color: transparent;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        a {
+            height: 50px;
+            width: 100px;
+            font-size: 16px;
+            line-height: 30px;
+        }
+
+        .nav-tabs > li > a {
+            margin-right: 2px;
+            /*line-height: 1.42857143;*/
+            border: 1px solid transparent;
+            border-radius: 4px 4px 0 0;
+            text-align: center;
+        }
+
+        .userInfoTable {
+        }
+
+            .userInfoTable tr {
+                height: 36px;
+            }
+
+                .userInfoTable tr td {
+                    /*border: 1px solid #ccc;*/
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            color: #322f2f;
+            cursor: default;
+            background-color: #ffffff;
+            /* border-bottom: 2px solid #ddd; */
+            /* border-bottom-color: transparent; */
+            font-weight: bold;
+            /* border-bottom: 4px solid #f39b13; */
+            border: 0px;
+            border-bottom: 5px solid #f39b13;
+        }
+
+        .nav-tabs > li > a {
+            margin-right: 2px;
+            line-height: 1.42857143;
+            border: 1px solid transparent;
+            /* border-radius: 4px 4px 0 0; */
+        }
+
+        .xfcssdiv {
+            float: right;
+            margin-right: 50px;
+            margin-top: 6px;
+        }
+
+            .xfcssdiv a {
+                color: #0026ff;
+                text-decoration: underline;
+            }
+
+                .xfcssdiv a:hover {
+                    color: #f00;
+                }
+
+        .layui-layer-title {
+            color: #fff!important;
+            background-color: #165082 !important;
+        }
+
+        .layui-layer-btn0 {
+            text-align: center;
+        }
+
+        .layui-layer-btn1 {
+            text-align: center;
+        }
+
+        .chons i {
+            font-style: normal;
+            font-weight: 900;
+            color: #006600;
+        }
+
+        i {
+            font-style: normal;
+        }
+
+        .m-bot15 {
+            margin-bottom: 5px;
+        }
+
+        .search {
+            width: 200px;
+        }
+
+        .btn-info, .btn-info:hover, .btn-info:active:hover, .btn-info.active:hover, .open > .dropdown-toggle.btn-info:hover, .btn-info:active:focus, .btn-info.active:focus, .open .dropdown-toggle.btn-info, .open > .dropdown-toggle.btn-info:focus, .btn-info:active.focus, .btn-info.active.focus, .open > .dropdown-toggle.btn-info.focus {
+            background-color: #b0b5b9;
+            border-color: #b0b5b9;
+        }
+
+        .btn:hover, .btn:focus, .btn.focus {
+            color: #fff;
+            text-decoration: none;
+            background-color: #165082;
+        }
+
+        .btn-white {
+            background-clip: padding-box;
+            background-color: #f7f7f7;
+            border-color: rgba(150, 160, 180, 0.3);
+            border: 1px solid #ccc;
+        }
+
+        .close {
+            float: right;
+            font-size: 21px;
+            font-weight: bold;
+            line-height: 1;
+            color: #ffffff;
+            text-shadow: 0 1px 0 #fff;
+            filter: alpha(opacity=20);
+            /* opacity: .8; */
+            opacity: 1;
+        }
+            /* opacity: .8; */
+            .close:hover, .close:focus {
+                color: #fff;
+                text-decoration: none;
+                cursor: pointer;
+                filter: alpha(opacity=50);
+                /*opacity: .5;*/
+                opacity: 1;
+            }
+
+        i {
+            font-style: normal;
+        }
+    </style>
+</head>
+
+<body style="height: 100%; overflow: hidden;">
+
+    <div id="teamrow" class="row">
+        <div class="panel" style="margin-bottom: 0px; /* height: 100px; *//* border-bottom: 1px solid #c3c1c1; */border: 1px solid #ccc; border-bottom: 1px solid #c3c1c1; height: 83px; margin: 3px;">
+            <div class="panel-heading" style="background-color: #F9F9F9; height: 33px; padding: 8px 15px 5px 15px; border-bottom: 1px solid rgb(234, 234, 234); padding-right: 1px;">
+                <span id="typetilespan1" style="font-size: 15px; font-weight: bold; color: #555">车辆续费</span>
+            </div>
+
+            <div class="col-lg-5" style="display: none;">
+                <span class="tools pull-right">
+                    <a id="addUser" class="fa fa-plus" data-toggle="modal" href="#editUser"></a>
+                    <a id="delUser" class="fa fa-minus"></a>
+                    <a id="upUser" class="fa fa-edit (alias)" data-toggle="modal" href="#editUser"></a>
+                    <a id="bindGroup" class="edit" data-toggle="modal" href="#boundGroup"></a>
+                </span>
+
+            </div>
+
+            <div class="panel-body" style="padding: 2px;">
+                <table class="userInfoTable" style="margin-top: 6px; margin-left: 5px; float: left;">
+                    <tbody>
+                        <!--        <tr>
+                            <td colspan="3" class="links">
+                                <label id="user">bjhc</label>
+                                <a id="upPwd" class="edit" href="javascript:selectSales(3,salesURL[3]);" style="color: red;"><b class="edit_bg"></b>修改密码</a>
+                                <label></label>
+                         
+                            </td>
+                        </tr>-->
+
+                        <tr>
+                            <td>
+                                <label>登录账户：</label><span id="login_name">bjhc</span></td>
+                            <td>
+                                <label>类型：</label><span id="grade">经销商</span></td>
+                            <td colspan="3">
+                                <label id="typetilespan2">加车币：</label><span id="moneycot"></span></td>
+                            <td id="typetilespan2zz" style="display: none;">
+                                <span style="color: #f00; float: left; margin-top: -5px;"><span style="float: left;">统一售价：1</span>
+                                    <img src="/img/coin.png" style="float: left; width: 18px; margin-left: 2px; margin-right: 3px;" />= 1元</span>
+                            </td>
+
+                            <td id="typetilespan3">
+                                <label>设备数量：</label>全部:<span id="total">0台</span>&nbsp; 
+                                <span id="ctnr-showProductNum" class="ctnr">
+                                    <!--<a id="link-showProductNum" href="javascript://" title="更多">»</a>-->
+                                    <span class="inner">在线:<span id="num-online">0台</span>
+                                        离线:<span id="num-offline">0台</span>
+                                    </span>
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+                </table>
+                <div class="xfcssdiv" style="display: none;">
+                    <a href="/muban/车辆续费文档.docx" target="_blank">续费操作说明书</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="Div1" class="row" style="height: 100%;">
+        <div class="panel" style="height: 100%; margin-bottom: 0px; /* height: 100px; *//* border-bottom: 1px solid #c3c1c1; */border: 1px solid #ccc; border-bottom: 1px solid #c3c1c1; margin: 3px;">
+
+
+            <ul id="myTab" class="nav nav-tabs" style="margin: 5px; margin-bottom: 0px; margin-top: 0px; background: white; margin-left: 0px; margin-right: 0px; padding-left: 5px;">
+                <li class="active" style="display: none"><a href="#chongzhi" data-toggle="tab" style="line-height: 30px;">车辆续费</a></li>
+                <li style="display: none"><a href="#chongzhijilu" data-toggle="tab" style="line-height: 30px;">续费记录</a></li>
+                <li style="display: none"><a href="#huabo" data-toggle="tab" style="line-height: 30px;">车币划拨 </a></li>
+                <li style="display: none"><a href="#huabojilu" data-toggle="tab" style="line-height: 30px; width: 150px;">车币划拨记录</a></li>
+                <li style="display: none"><a href="#huabojilu" data-toggle="tab" style="line-height: 30px; width: 120px;">钻石划拨</a></li>
+                <li style="display: none"><a href="#huabojilu" data-toggle="tab" style="line-height: 30px; width: 160px;">钻石使用记录</a></li>
+            </ul>
+
+
+
+            <div id="myTabContent" class="tab-content" style="height: 100%;">
+                <div class="tab-pane fade in active" id="huabo" style="height: 100%;">
+                    <iframe id="huabof" src="" frameborder="no" border="0"></iframe>
+                </div>
+                <!--    <div class="tab-pane fade" id="huabojilu" style="height: 100%;">
+                    <iframe id="huabojiluf" frameborder="no" border="0"></iframe>
+                </div>
+                <div class="tab-pane fade" id="chongzhi" style="height: 100%;">
+                    <iframe id="chongzhif" frameborder="no" border="0"></iframe>
+                </div>
+                <div class="tab-pane fade" id="chongzhijilu" style="height: 100%;">
+                    <iframe id="chongzhijiluf" frameborder="no" border="0"></iframe>
+                </div>-->
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- js placed at the end of the document so the pages load faster -->
+
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="js/respond.min.js"></script>
+
+    <!--right slidebar-->
+    <script src="js/slidebars.min.js"></script>
+
+    <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
+    <!--<script src="js/advanced-form-components.js"></script>-->
+
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+    <script type="text/javascript" src="js/bootstrap-select.js"></script>
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+
+    <script src="assets/timepicker/jquery.datetimepicker.js"></script>
+    <link href="assets/timepicker/jquery.datetimepicker.css" rel="stylesheet" />
+
+
+    <!--  <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8ebe8b1bf92a362d7e8bc8a75c01be8f&plugin=AMap.Geocoder"></script>
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />-->
+    <!--  <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>-->
+
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+
+
+    <script type="text/javascript" src="js/jquery.table2excel.js"></script>
+    <script type="text/javascript" src="js/jquery.nicescroll.js"></script>
+    <script type="text/javascript" src="js/vehicleRenewalRecord.js"></script>
+    <script src="js/versions.js"></script>
+
+    <script type="text/javascript">
+
+
+        //        <li class="active">
+        //    <a href="#huabo" data-toggle="tab" style="line-height: 30px;">车币划拨
+        //    </a>
+        //</li>
+        //<li><a href="#huabojilu" data-toggle="tab" style="line-height: 30px;">划拨记录</a></li>
+        //<li><a href="#chongzhi" data-toggle="tab" style="line-height: 30px;">车辆充值</a></li>
+        //<li><a href="#chongzhijilu" data-toggle="tab" style="line-height: 30px;">充值记录</a></li>
+
+
+        //        <div class="tab-pane fade in active" id="huabo" style="height: 100%;">
+        //    <iframe id="huabo" src="transfer.html" frameborder="no" border="0"></iframe>
+        //</div>
+        //<div class="tab-pane fade" id="huabojilu" style="height: 100%;">
+        //    <iframe id="huabojilu" src="transferRecord.html" frameborder="no" border="0"></iframe>
+        //</div>
+        //<div class="tab-pane fade" id="chongzhi" style="height: 100%;">
+        //    <iframe id="chongzhi" src="vehicleRenewal.html" frameborder="no" border="0"></iframe>
+        //</div>
+        //<div class="tab-pane fade" id="chongzhijilu" style="height: 100%;">
+        //    <iframe id="chongzhijilu" src="vehicleRenewalRecord.html" frameborder="no" border="0"></iframe>
+        //</div>\
+        function Trim(str) {
+            return str.replace(/(^\s*)|(\s*$)/g, "");
+        }
+        function jumpVehicleRenew() {
+            var data = $("li");
+            data.eq(0).removeClass("active");
+            data.eq(2).addClass("active");
+            $("#huabof").attr("src", "vehicleRenewal.html?jumpVehicleRenew=1&v=" + get_versions());
+        }
+
+
+
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return (r[2]); return null;
+        }
+        var loginUser = $.parseJSON(localStorage.getItem('loginUser'));
+        var type = null;
+        function chushihuatype() {
+
+
+            type = GetQueryString("type");
+            switch (type) {
+                case "zzb":
+                    $(".xfcssdiv").hide();
+
+                    $("#typetilespan1").html('我的钻石 ');
+                    $("#typetilespan2").html('拥有钻石<img src="/img/coinp.png" style="   width: 34px; " />：  ');
+                    $("#moneycot").css("color", "#f00");
+
+
+                    $("#typetilespan2zz").show();
+
+                    $("#typetilespan3").hide();
+
+                    var data = $("#myTab").find("li");
+                    $.each(data, function (i) {
+
+                        if (i < 4) {
+                            data.eq(i).hide();
+                            data.eq(i + 1).addClass("active");
+
+                            $("#huabof").attr("src", "addedcointransfer.html?v=" + get_versions());
+                        } else {
+                            data.eq(i).show();
+
+                        }
+                    });
+
+
+
+                    break;
+            }
+
+            if (type == null) {
+                $(".xfcssdiv").show();
+                var data = $("#myTab").find("li");
+                $.each(data, function (i) {
+                    if (i >= 4) {
+                        data.eq(i).hide();
+                    } else {
+                        data.eq(i).show();
+
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            $("#huabof").attr("src", "vehicleRenewal.html?v=" + get_versions());
+            chushihuatype();
+            aa()
+            $('li').click(function () {
+                var str = Trim($(this).text());
+                switch (str) {
+                    case "车币划拨":
+                        //if ($("#huabof").attr("src") != "") {
+                        //    $("#huabof").attr("src", "transfer.html");
+                        //}
+                        $("#huabof").attr("src", "transfer.html?v=" + get_versions());
+                        break;
+                    case "车币划拨记录":
+                        //if ($("#huabojiluf").attr("src") != "") {
+                        //    $("#huabojiluf").attr("src", "transferRecord.html");
+                        //}
+                        $("#huabof").attr("src", "transferRecord.html?v=" + get_versions());
+                        break;
+                    case "车辆续费":
+                        //if ($("#chongzhif").attr("src") != "") {
+                        //    $("#chongzhif").attr("src", "vehicleRenewal.html");
+                        //}
+                        $("#huabof").attr("src", "vehicleRenewal.html?v=" + get_versions());
+                        break;
+                    case "续费记录":
+                        //if ($("#chongzhijiluf").attr("src") != "") {
+                        //    $("#chongzhijiluf").attr("src", "vehicleRenewalRecord.html");
+                        //}
+                        $("#huabof").attr("src", "vehicleRenewalRecord.html?v=" + get_versions());
+                        break;
+                    case "钻石划拨":
+                        //if ($("#chongzhijiluf").attr("src") != "") {
+                        //    $("#chongzhijiluf").attr("src", "vehicleRenewalRecord.html");
+                        //}
+                        $("#huabof").attr("src", "addedcointransfer.html?v=" + get_versions());
+                        break;
+                    case "钻石使用记录":
+                        //if ($("#chongzhijiluf").attr("src") != "") {
+                        //    $("#chongzhijiluf").attr("src", "vehicleRenewalRecord.html");
+                        //}
+                        $("#huabof").attr("src", "addedcointransferRecord.html?v=" + get_versions());
+                        break;
+                }
+
+            });
+
+
+
+
+
+            $('#login_name').text(loginUser.corpName);
+
+            if (type == null) {
+                getVehStatusCount();
+
+                parent.parent.layer.open({
+                    type: 1
+                 , title: false //不显示标题栏
+                 , closeBtn: false
+                 , area: '450px;'
+                 , shade: 0.8
+                 , id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                 , resize: false
+                 , btn: ['我知道了']
+                 , btnAlign: 'c'
+                 , moveType: 1 //拖拽模式，0或者1
+                    //, content: '<div style="padding: 50px;font-size: 14px; line-height: 22px; background-color: #154269; color: #fff; font-weight: 300;">温馨提示：<br>&nbsp;&nbsp;&nbsp;&nbsp;1. 加车币一旦 <a style="color:#FFC107;">划拨</a> / <a style="color:#FFC107;">续费</a> 后将不可撤回，请谨慎操作！<br>&nbsp;&nbsp;&nbsp;&nbsp;2. 1个币=1月， 一次性续费1年只需5个币。</div>'
+                 , content: "<div class='panel panel-default'>"
+                     + "<div class='panel-heading'>" + "<h3 class='panel-title' style='    font-size: 19px;color: #2e8ded;font-weight: bold;'>温馨提示： </h3>" + " </div>"
+                                                         + "<div class='panel-body' style='        font-size: 15px;color: #1c1c1c;'>"
+
+                                                              + "  &nbsp;&nbsp;&nbsp1. 加车币 <a style='color:#F44336;'>划拨</a>  后将不可撤回，请谨慎操作！ "
+                                                              + "<br>  &nbsp;&nbsp;&nbsp2. 车辆 <a style='color:#F44336;'>续费</a> 后将不可撤回，请谨慎操作！ "
+                                                              + "<br>  &nbsp;&nbsp;&nbsp3. 服务到期前 <a style='color:#F44336;'>删除车辆</a> ，加车币将不予退回！ "
+                                                               + "<br>  &nbsp;&nbsp;&nbsp4. 1个币=1月， 一次性续费1年优惠后只需5个币！ "
+
+
+                                                         + "</div>"
+                                                     + "</div>"
+                 , success: function (layero) {
+                     //var btn = layero.find('.layui-layer-btn');
+                     //btn.find('.layui-layer-btn0').attr({
+                     //    href: 'http://www.layui.com/'
+                     //  , target: '_blank'
+                     //});
+                 }
+                });
+
+            }
+
+
+
+            if (GetQueryString("jumpVehicleRenew") == "1") {
+                jumpVehicleRenew();
+            }
+
+
+
+        });
+
+        function seachLink() {
+            return false
+
+            $('li').eq(0).click()
+            $('li').removeClass('active')
+            $('li').eq(0).addClass('active')
+        }
+        function aa() {
+            var url = "/http/RechargeUser/QueryMyState.json";
+            if (type == "zzb") {
+                url = "/http/increment/GetIncrementMoney.json";
+            }
+            myAjax({
+                url: ajax(url),
+                type: 'post',
+                data: {},
+                dataType: 'json',
+                beforeSend: function () {
+                },
+                success: function (d) {
+                    if (d.flag == 1) {
+                        //$("#vehCountcot").html(d.obj.vehCount);
+                        var money = 0;
+
+                        if (type == "zzb") {
+                            money = d.obj.incrementMoney;
+                            parent.$("#incrementMoney").html(money);
+
+                        } else {
+                            money = d.obj.money;
+                        }
+                        $("#moneycot").html(money);
+                    } else {
+                        layer.msg('' + d.msg, { icon: 2 });
+                    }
+
+                }, error: function (msg) {
+                    console.log("程序出错:" + msg.responseText);
+                }
+            });
+        }
+
+        var layerIndex = 0;
+        var chufa = true;
+        function determinexf(e) {
+            $("#determinexf").button('loading');
+            if (!chufa) {
+                return;
+            }
+            chufa = false;
+            var gvids = $(e).attr("data-str");
+            var addMonth = $(e).attr("data-n");
+            var data = {};
+            data["gvids"] = gvids;
+            data["addMonth"] = addMonth;
+            var url = "/http/RechargeUser/VehicleRecharge.json";
+            var type = $(e).attr("data-type");
+            if (type != null && type == "1") {
+                url = "/http/RechargeUser/BatchRecharge.json?";
+                data = {};
+                data["terminalNo"] = gvids;
+                data["addMonth"] = addMonth;
+            }
+            myAjax({
+                url: ajax(url),
+                type: 'post',
+                data: data,
+                dataType: 'json',
+                beforeSend: function () {
+                },
+                success: function (d) {
+                    $("#determinexf").button('reset');
+                    chufa = true;
+                    var icon = 1;
+                    if (d.flag != 1) {
+                        icon = 2;
+                    } else {
+
+                    }
+                    //  layer.msg('' + d.msg, { icon: icon });
+                    if (icon == 1) {
+                        if ($("#huabof").attr("src").indexOf("vehicleRenewal.html") != -1) {
+                            var iframe = window.document.getElementById("huabof");
+                            iframe.contentWindow.shuaxinbin();
+                        }
+                        layer.close(layerIndex);
+                        aa();
+                    }
+                    layer.alert(d.msg);
+                }, error: function (msg) {
+                    console.log(" 程序出错:" + msg.responseText);
+                }
+            });
+
+        }
+
+        function getVehStatusCount() {
+            var url = 'http/Monitor/AddUpVehicleStatusCount.json';
+            myAjax({
+                url: ajax(url),  //请求的URL
+                type: 'Get',
+                dataType: 'json',
+                timeout: 10000,
+                success: function (data) {
+                    if (data.flag == 1) {//登陆成功 
+                        //var txt = "总共:" + data.obj.allVehicleCount + "/在线:" + data.obj.allOnlineCount + "/离线:" + data.obj.allOffLineCount;
+                        $('#total').text(data.obj.allVehicleCount + "台");
+                        $('#num-online').text(data.obj.allOnlineCount + "台");
+                        $('#num-offline').text(data.obj.allOffLineCount + "台");
+
+                    } else {
+                        layer.msg(data.msg, { icon: 2 });
+                    }
+                },
+                error: function (msg) {
+                    // console.log("readyState：" + msg.readyState + ",responseText：" + msg.responseText + ",status：" + msg.status + ",statusText：" + msg.statusText);
+                }
+
+            })
+        }
+
+
+
+
+
+    </script>
+</body>
+</html>

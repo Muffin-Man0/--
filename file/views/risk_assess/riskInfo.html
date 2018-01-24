@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>Modal</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="assets/gritter/css/jquery.gritter.css" />
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/menustyle.css" />
+    <style>
+        ::-webkit-scrollbar-track {
+            background-color: #b46868;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .layui-layer-title {
+            color: #fff!important;
+            background-color: #165082 !important;
+        }
+
+        ul.sidebar-menu li a i {
+            width: 0px;
+        }
+
+        .header-box {
+            border: 1px solid #eaeefb;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 15px;
+            position: relative;
+        }
+
+            .header-box .header-rg {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+
+        .isdis {
+            background-color: #eef1f6!important;
+            border-color: #d1dbe5!important;
+            color: #bbb!important;
+            cursor: not-allowed;
+        }
+
+        .form-x {
+            width: 360px;
+            margin: auto;
+        }
+
+        .card-t {
+            width: 90px;
+            margin: 4px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            text-align: center;
+        }
+
+            .card-t .header-g {
+                background-color: #f39b13;
+                color: white;
+                padding: 5px;
+                height: 33px;
+                /* font-size: 40px; */
+            }
+
+                .card-t .header-g h3 {
+                    font-size: 21px;
+                    margin-top: 0px;
+                }
+
+        ul.sidebar-menu li a img {
+            width: 14px;
+            height: 14px;
+            margin-top: 13px;
+            margin-left: 18px;
+        }
+
+        ul.sidebar-menu li {
+            height: 42px;
+        }
+
+            ul.sidebar-menu li a {
+                padding: 10px 0px 15px 10px;
+            }
+
+        .height_div {
+            display: none;
+        }
+
+
+
+        .img_dh {
+            height: 14px;
+            margin-left: 5px;
+            margin-bottom: 3px;
+            padding-right: 8px;
+        }
+
+        #sidebar ul li {
+            text-align: left;
+        }
+
+        .wrapper-dropdown-5 {
+            padding: 0px;
+            border-radius: 0px;
+            background: rgb(241, 245, 249);
+            color: #444;
+            width: 206px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 0px;
+        }
+
+            .wrapper-dropdown-5 .menuTitle {
+                height: 38px;
+                line-height: 38px;
+                padding-left: 15px;
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+        #sidebar .sub-menu * {
+            font-weight: 100;
+            font-size: 12px;
+        }
+
+        #sidebar .sub-menu {
+            border: 0px;
+            position: relative;
+        }
+
+            #sidebar .sub-menu .hot {
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                background: url("/img/hot.gif") no-repeat;
+            }
+
+            #sidebar .sub-menu .new {
+                width: 25px;
+                height: 20px;
+                position: absolute;
+                background: url("/img/new.png") no-repeat;
+            }
+
+
+        .wrapper-dropdown-5:after {
+            border-width: 0px 6px 6px 6px;
+        }
+
+        .wrapper-dropdown-5.active:after {
+            border-width: 6px 6px 0 6px;
+        }
+
+        .wrapper-dropdown-5.active {
+            background: rgb(241, 245, 249);
+            color: #444;
+        }
+
+        .wrapper-dropdown-5.active {
+            border-radius: 0px;
+        }
+
+        .wrapper-dropdown-5 .dropdown li {
+            padding: 0px;
+            text-indent: 25px;
+        }
+
+            .wrapper-dropdown-5 .dropdown li a {
+                border-bottom: 0px;
+                padding: 0px;
+                padding: 8px 0;
+            }
+
+        .wrapper-dropdown-5 .dropdown {
+            background: rgb(241, 245, 249);
+            border: 0px;
+        }
+
+            .wrapper-dropdown-5 .dropdown li:hover {
+                background: #fff;
+            }
+
+            .wrapper-dropdown-5 .dropdown li .active {
+                background: #fff;
+            }
+
+            .wrapper-dropdown-5 .dropdown li a b {
+                display: inline-block;
+                width: 3px;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                visibility: hidden;
+                background-color: #F39B13;
+            }
+
+            .wrapper-dropdown-5 .dropdown li .active b {
+                visibility: visible;
+            }
+
+        .wrapper-dropdown-5.active .dropdown {
+            border: 0px;
+        }
+
+        .wrapper-dropdown-5.active:after {
+            border-color: #444 transparent;
+        }
+
+        .wrapper-dropdown-5:after {
+            border-color: #444 transparent;
+        }
+        /*.hode:after {
+            border-width: 0;
+        }
+         .active.hode:after {
+            border-width: 0;
+        }*/
+    </style>
+
+</head>
+
+
+<body style="height: 100%; margin: 0px; padding: 0px;">
+
+
+
+    <section id="container" class="">
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <div>
+                    <div id="Div1" class="wrapper-dropdown-5" tabindex="1">
+                        <div class="menuTitle">个人评估</div>
+                        <ul class="dropdown">
+
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/shoujitonghu.png" style="margin-left: 0px; padding-right: 5px;" class="img_dh" />手机通话查询
+                                </a>
+                                <div class="hot" style="left: 127px; top: 3px;">
+                                </div>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/shouji.png" class="img_dh" />手机定位
+                                  <div class="hot" style="left: 105px; top: 3px;"></div>
+                                </a>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/duotou.png" class="img_dh" />多头借贷
+                                </a>
+                                <div class="new" style="left: 105px; top: 3px;">
+                                </div>
+                            </li>
+
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/gongjijin.png" class="img_dh" />公积金数据查询
+                                    
+                                </a>
+                                <div class="new" style="left: 139px; top: 3px;">
+                                </div>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/shebao.png" class="img_dh" />社保数据查询
+                                </a>
+                                <div class="new" style="left: 127px; top: 3px;">
+                                </div>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/zhifubao.png" class="img_dh" />支付宝
+                                </a>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/taobao.png" class="img_dh" />淘宝
+                                </a>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/jingdong.png" class="img_dh" />京东数据查询
+                                </a>
+                            </li>
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/yanhang.png" class="img_dh" />央行数据查询
+                                </a>
+                            </li>
+
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/putongshuj.png" class="img_dh" />普通数据验证
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="height_div">
+                    </div>
+                </div>
+                <div>
+                    <div id="Div2" class="wrapper-dropdown-5  " tabindex="1">
+                        <div class="menuTitle">车辆评估</div>
+                        <ul class="dropdown">
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/weizhang.png" class="img_dh" />违章查询
+                                </a>
+                                <div class="new" style="left: 105px; top: 3px;">
+                                </div>
+                            </li>
+                      <!--      <li class="sub-menu" >
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/weibao.png" class="img_dh" />维保查询
+                                </a>
+                                <div class="new" style="left: 105px; top: 3px;">
+                                </div>
+                            </li>-->
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/chuxian.png" class="img_dh" />出险查询
+                                </a>
+                                <div class="new" style="left: 105px; top: 3px;">
+                                </div>
+                            </li>
+
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/xingshizheng.png" class="img_dh" />行驶证查询
+                                </a>
+                                <div class="new" style="left: 115px; top: 3px;">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="height_div">
+                    </div>
+                </div>
+                <div>
+                    <!---->
+                    <div id="Div3" class="wrapper-dropdown-5  " style="border-width: 0;" tabindex="1">
+                        <div class="menuTitle  ">我的钻石</div>
+                        <ul class="dropdown">
+                            <li class="sub-menu">
+                                <a href="javascript:;">
+                                    <b></b>
+                                    <img src="/img/jingbi.png" class="img_dh" />我的钻石
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="height_div">
+                    </div>
+                </div>
+                <!--<div style="height: 150px; background-color: #165082; line-height: 150px; text-align: center;">
+                    <img src="img/dai.png" style="width: 80px;" />
+                </div> 
+                <!--  <ul class="sidebar-menu" id="nav-accordion" style="margin-top: 0;">
+                    <li class="sub-menu">
+                        <a href="javascript:;" class="active">
+                            <b></b>
+                            <img src="/img/shoujitonghu.png" class="img_dh" />
+                            <i class="fa"></i>
+                            手机通话查询
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <img src="/img/shouji.png" class="img_dh" />
+                            <i class="fa"></i>
+                            手机定位
+                        </a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <img src="/img/zhifubao.png" class="img_dh" />
+                            <i class="fa"></i>
+                            支付宝
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <img src="/img/taobao.png" class="img_dh" />
+                            <i class="fa"></i>
+                            淘宝
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <img src="/img/jingdong.png" class="img_dh" />
+                            <i class="fa"></i>
+                            京东数据查询
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+
+                            <img src="/img/yanhang.png" class="img_dh" />
+                            <i class="fa"></i>
+                            央行数据查询
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <img src="/img/gongjijin.png" class="img_dh" />
+                            <i class="fa"></i>
+                            公积金数据查询
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <img src="/img/shebao.png" class="img_dh" />
+                            <i class="fa"></i>
+                            社保数据查询
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <img src="/img/putongshuj.png" class="img_dh" />
+                            <i class="fa"></i>
+                            普通数据验证
+                        </a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+
+                            <img src="/img/jingbi.png" class="img_dh" />
+                            <i class="fa"></i>
+                            我的钻石
+                        </a>
+                    </li>
+
+                </ul>-->
+            </div>
+        </aside>
+
+        <section id="main-content" class="main-content-exa" style="height: 100%;">
+            <iframe id="mainframe" width="100%" src="" frameborder="no" border="0" style="height: 100%;"></iframe>
+        </section>
+
+
+        <div class="modal fade modal-dialog-center" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content-wrap">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Modal Tittle</h4>
+                        </div>
+                        <div class="modal-body">
+                            <iframe id="modalframe" width="100%" height="350px" frameborder="no" border="0"></iframe>
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='header-rg' style="position: absolute; top: 10px; z-index: 99999; right: 10px; display: none;">
+            <div class="card-t">
+                <div class="header-g">
+                    <h3 id="incrementMoney">
+                    0</h1>
+                </div>
+                <div class="container-c">
+                    <p>剩余钻石</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="layer/layer.js"></script>
+    <script src="js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/riskInfo.js" });
+            GetVersions(arr);
+        });
+
+    </script>
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+
+</body>
+</html>

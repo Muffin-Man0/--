@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>Modal</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="assets/gritter/css/jquery.gritter.css" />
+    <!--right slidebar-->
+    <link href="css/slidebars.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .txtsearch {
+            width: 250px;
+            height: 30px;
+            line-height: 30px;
+            margin: 22px 0 15px 0;
+            padding-left: 30px;
+            border: 1px solid #E4E4E4;
+            float: left;
+            background: url('img/search.png') no-repeat center left;
+            background-color: #fff;
+            border-radius: 5px;
+            color: #000;
+            font-family: "微软雅黑";
+            font-size: 14px;
+        }
+
+        .btnSearch {
+            border: 1px solid;
+            border-radius: 3px;
+            background-color: #ffffff;
+            border-color: #ffffff;
+            color: #337ab7;
+            cursor: pointer;
+        }
+
+            .btnSearch:hover {
+                background-color: #5bc0de;
+                border-color: #46b8da;
+                color: #fff;
+            }
+
+        ::-webkit-scrollbar-track {
+            background-color: #b46868;
+        }
+        ul.sidebar-menu li a {
+        padding:11px 0 12px 10px;
+        }
+        ul.sidebar-menu li {
+        height:42px;
+        }
+    </style>
+</head>
+
+<body style="height: 100%; margin: 0px; padding: 0px; font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif">
+
+    <section id="container" class="">
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <div style="height: 150px; background-color: #165082; line-height: 150px; text-align: center;">
+                    <img src="img/reportmain.png" />
+                </div>
+                <ul class="sidebar-menu" id="nav-accordion" style="margin-top: 0;">
+                    <li class="sub-menu">
+                        <a href="javascript:;" class="active">
+                            <b></b>
+                            <i class="fa fa-bell"></i>
+                            <!--   <img src="img/报警记录.png" />-->
+                            报警记录 
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-signal"></i>
+                            <!--   <img src="img/离线统计.png" />-->
+                            离线统计
+                        </a>
+                    </li>
+
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-arrows"></i>
+                            <!--      <img src="img/行车统计.png" />-->
+                            行车统计
+                        </a>
+                    </li>
+                      <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-car"></i>
+                            <!--    <img src="img/操作记录.png" />-->
+                            停车报表
+                        </a>
+                    </li>
+                        <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-map-marker"></i>
+                            <!--    <img src="img/操作记录.png" />-->
+                            经常停留点
+                        </a>
+                    </li>
+                          <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-flash"></i>
+                            <!--     <img src="img/剩余电量.png" />-->
+                            剩余电量
+                        </a>
+                    </li>
+
+                    <!--<li class="sub-menu">
+                      <a href="javascript:;">
+                          <i class="fa fa-truck"></i>
+                          <span>车辆行驶</span>
+                      </a
+                  </li>-->
+
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-bar-chart-o"></i>
+                            <!--    <img src="img/里程报表.png" />-->
+                            里程报表
+                        </a>
+                    </li>
+
+              
+
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-external-link"></i>
+                            <!--   <img src="img/离线统计.png" />-->
+                            总里程查询
+                        </a>
+                    </li>
+                 
+                    <li class="sub-menu" >
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-book"></i>
+                            <!--   <img src="img/离线统计.png" />-->
+                            指令查询
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <b></b>
+                            <i class="fa fa-file-text"></i>
+                            <!--    <img src="img/操作记录.png" />-->
+                            操作记录
+                        </a>
+                    </li>
+                   
+                    <!--<li class="sub-menu">
+                      <a href="javascript:;">
+                          <i class="fa fa-info-circle"></i>
+                          <span>服务到期</span>
+                      </a>
+                  </li>-->
+
+                    <!--<li class="sub-menu">
+                      <a href="javascript:;">
+                          <i class="fa fa-sort-amount-desc"></i>
+                          <span>速度报表</span>
+                      </a>
+                  </li>-->
+                    <!--<li id="btn" data-toggle="modal" href="#myModal"></li>-->
+
+                </ul>
+            </div>
+        </aside>
+
+        <section id="main-content" class="main-content-exa" style="height: 100%; overflow: hidden;">
+            <iframe id="mainframe" width="100%" src="alarmInfo.html" frameborder="no" border="0" style="height: 100%;"></iframe>
+        </section>
+
+
+        <div class="modal fade modal-dialog-center" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content-wrap">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Modal Tittle</h4>
+                        </div>
+                        <div class="modal-body">
+                            <iframe id="modalframe" width="100%" height="350px" frameborder="no" border="0"></iframe>
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div id="TreeDiv" style="width: 580px; height: 470px; z-index: 99; position: fixed; left: 225px; top: 70px; background-color: #eee; display: none; border: 1px solid; border-radius:3px;">
+            <div id="TreeDiv-1" class="col-lg-6">
+                <!--<input id="groupSearchTree" data-provide="typeahead" placeholder="快速搜索" autocomplete="off" class="txtsearch">-->
+        <!--<div id="TreeDiv-1-1" style="width: 250px; height: 380px; overflow-y:auto; padding: 5px; border: 1px solid #E4E4E4; background:#fff;">
+                    <div id="groupTree" class="ztree" style="height: 360px;"></div>
+                </div>
+
+            </div>-->
+        <!--<div id="TreeDiv-2" class="col-lg-6">
+                <input id="plateSearchTree" data-provide="typeahead" placeholder="快速搜索" autocomplete="off" class="txtsearch">
+                <span id="" class="layui-layer-setwin" style="top: 0px; right: 0px;">
+                    <a id="close1"  href="javascript:;"style="margin-right:5px; margin-top:3px;">
+                        <img id="gicon" src="img/gg.png" style="width:19px;height:19px;"/>
+                    </a>
+                </span>
+                <div id="TreeDiv-2-1" style="width: 250px; height: 380px; overflow: auto; padding: 5px; border: 1px solid #E4E4E4; background:#fff;">
+                    <div id="vehTree" class="ztree" style="height: 360px;"></div>
+                </div>
+
+            </div>
+        </div-->
+
+    </section>
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="layer/layer.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script type="text/javascript" src="assets/gritter/js/jquery.gritter.js"></script>
+    <script src="js/respond.min.js"></script>
+    <script type="text/javascript" src="js/jquery.pulsate.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+    <!--zTree-->
+    <link rel="stylesheet" href="assets/zTree/css/metroStyle/metroStyle.css" type="text/css">
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+
+    <!--right slidebar-->
+    <script src="js/slidebars.min.js"></script>
+    <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
+  
+
+    <!--script for this page only-->
+    <!--<script src="js/gritter.js" type="text/javascript"></script>
+    <script src="js/pulstate.js" type="text/javascript"></script>-->
+    <script src="js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/modal.js" });
+            GetVersions(arr);
+        });
+    </script>
+</body>
+</html>

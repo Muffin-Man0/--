@@ -1,0 +1,592 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>Dynamic Table</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+
+    <!--right slidebar-->
+    <link href="css/slidebars.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/bootstrap-select.min.css" rel="stylesheet" />
+    <!--<link rel="stylesheet" type="text/css" href="assets/bootstrap-datetimepicker/css/datetimepicker.css" />-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        label {
+            display: inline-block;
+            max-width: 100%;
+            margin-bottom: 5px;
+            /* font-weight: bold; */
+            font-size: 12px;
+        }
+
+        td {
+            font-size: 12px;
+        }
+
+        .Main table tr {
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body style="height: 90%;">
+
+    <section id="container" class="" style="height: 90%;">
+        <div class="Main">
+            <div>
+                <table>
+                    <tr>
+                        <td style="width: 120px;">
+                            <input type="radio" id="chkNao" name="nao" /><label for="chkNao">闹钟模式</label></td>
+                        <td style="width: 210px;">
+                            <input type="checkbox" id="chkOne" /><label for="chkOne">第一组</label>
+                            <input type="text" id="dtimeOne" onkeyup="cktime(this);" /></td>
+                        <td style="width: 210px;">
+                            <input type="checkbox" id="chkTwo" /><label for="chkTwo">第二组</label>
+                            <input type="text" id="dtimeTwo" onkeyup="cktime(this);" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="chkNaoClose" name="nao" checked="checked" /><label for="chkNaoClose">关闭闹钟</label></td>
+                        <td>
+                            <input type="checkbox" id="chkThree" /><label for="chkThree">第三组</label>
+                            <input type="text" id="dtimeThree" onkeyup="cktime(this);" /></td>
+                        <td>
+                            <input type="checkbox" id="chkFour" /><label for="chkFour">第四组</label>
+                            <input type="text" id="dtimeFour" onkeyup="cktime(this);" /></td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="chkDingshi" /><label for="chkDingshi">定时模式</label></td>
+                        <td colspan="2">
+                            <input type="text" id="txtTime" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" style="width: 150px;" value="000" />范围000-999分，设置000时表示定时关闭</td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="chkweek" name="weeks" /><label for="chkweek">星期模式</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="chkMon" name="week" /><label for="chkMon">星期一</label>&nbsp;&nbsp;
+                        <input type="checkbox" id="chkTue" name="week" /><label for="chkTue">星期二</label>
+
+                        </td>
+                        <td>
+                            <input type="checkbox" id="chkWed" name="week" /><label for="chkWed">星期三</label>&nbsp;&nbsp;
+                        <input type="checkbox" id="chkThurs" name="week" /><label for="chkThurs">星期四</label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="chkweekClose" name="weeks" checked="checked" /><label for="chkweekClose">关闭星期模式</label></td>
+                        <td>
+                            <input type="checkbox" id="chkFri" name="week" /><label for="chkFri">星期五</label>&nbsp;&nbsp;
+                        <input type="checkbox" id="chkSat" name="week" /><label for="chkSat">星期六</label></td>
+                        <td>
+                            <input type="checkbox" id="chkSun" name="week" /><label for="chkSun">星期日</label>&nbsp;&nbsp;
+                                    <input type="text" id="dtimeForWeek" style="width: 50px;" value="00:00" onkeyup="cktime(this);" /></td>
+                    </tr>
+                    <!--<tr>
+                                <td></td>
+                                <td>
+                                    <input type="text" id="dtimeForWeek" />
+                                </td>
+                            </tr>-->
+                </table>
+            </div>
+            <span style="font-size: 12px; color: red;">优先级：定时模式>星期模式>闹钟模式,若设置多个模式，按优先级生效第一个</span>
+            <div id="titlediv" style="display: none; font-size: 12px;">
+                <!-- 将只对本车组(注：不包含子车组的车辆)目前的超长待机设备进行设置. -->
+                <input type="checkbox" id="groupid_che" style="float: left; margin-top: 2px;" />
+                <label for="groupid_che">对该车组下的所有车组进行设置</label>
+            </div>
+            <div id="btnDiv">
+                <input type="button" value="确定" style="height: 28px; line-height: 28px; margin: 0 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; border-color: #4898d5; background-color: #2e8ded; color: #fff;"
+                    id="btnOK" />
+                <input type="button" value="取消" style="height: 28px; line-height: 28px; margin: 0 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none;"
+                    id="btnCancel" />
+            </div>
+        </div>
+    </section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="js/respond.min.js"></script>
+
+    <!--right slidebar-->
+    <script src="js/slidebars.min.js"></script>
+
+
+    <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
+    <!--<script src="js/advanced-form-components.js"></script>-->
+
+    <!--<script type="text/javascript" src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>-->
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="js/bootstrap-select.js"></script>
+    <script src="assets/timepicker/jquery.datetimepicker.js"></script>
+    <link href="assets/timepicker/jquery.datetimepicker.css" rel="stylesheet" />
+
+    <!--<script src="js/jquery-migrate-1.1.1.js"></script>
+    <script src="assets/autocomplete/jquery.autocomplete.js"></script>
+    <link href="assets/autocomplete/jquery.autocomplete.css" rel="stylesheet" />-->
+
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+    <script src="js/Common.js"></script>
+
+    <style>
+        .Main {
+            width: 540px;
+            height: 300px; /*height: 280px;*/
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+            .Main table tr {
+                height: 40px;
+            }
+
+        input[type=text] {
+            width: 80px;
+        }
+
+        #btnDiv {
+            margin-top: 10px;
+            margin-left: 30%;
+        }
+
+        #btnOK {
+            float: left;
+            height: 20px;
+            line-height: 15px;
+            cursor: pointer;
+            margin: 8px 5px;
+            width: 80px;
+            text-align: center;
+            background-color: #5499EF;
+            color: White;
+            border: 1px solid #0074CC;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
+        }
+
+        #btnCancel {
+            float: left;
+            height: 20px;
+            line-height: 15px;
+            cursor: pointer;
+            margin: 8px 5px;
+            width: 80px;
+            text-align: center;
+            background-color: #5499EF;
+            color: White;
+            border: 1px solid #0074CC;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
+        }
+    </style>
+    <script type="text/javascript">
+        var vehid = getQueryString("vehId");
+        var User = $.parseJSON(localStorage.getItem("User"));
+        var oldWakeTime = "";
+        var index = parent.layer.getFrameIndex(window.name);
+        function cktime(t) {
+            var vle = t.value;
+            if (vle.indexOf(':') > -1) {
+                var tarr = vle.split(':');
+                if (tarr.length == 2) {
+                    if (Number(tarr[0]) < 24 && Number(tarr[1]) < 60)
+                        return;
+                    else {
+                        if (Number(tarr[0]) > 23 && Number(tarr[1]) < 60) {
+                            t.value = "00:" + tarr[1];
+                            return;
+                        }
+                        if (Number(tarr[0]) < 24 && Number(tarr[1]) > 59) {
+                            t.value = tarr[0] + ":00";
+                            return;
+                        }
+                    }
+                }
+            }
+            t.value = "00:00";
+        }
+        function padingLeft(len, val, char) {
+            while (val && val.length < len) {
+                val = char + val;
+            }
+            return val;
+        }
+        function getA5Info(vehid, type) {
+
+            var str = "vehicleId";
+
+            if (type == true) {
+                str = "groupId";
+            }
+            myAjax({
+                type: 'Get',
+                url: ajax('http/Monitor/a5PassBackInfoQuery.json?&' + str + '=' + vehid),
+                dataType: 'json',                           //指定服务器返回的数据类型
+                timeout: 30000,                              //超时时间
+                cache: false,                               //是否缓存上一次的请求数据
+                async: true,                                //
+                beforeSend: function () {
+                    //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 });
+                },
+                success: function (data) {
+                    //console.log("获取数据:");
+                    //console.log(data);
+                    if (data.flag == 1 && data.obj) {
+                        var obj = data.obj;
+                        //D:"120"R:"0800,1000"W:"1,2,3,1000"
+                        $("#txtTime").val(padingLeft(3, obj.D, '0'));
+                        if (obj.D && obj.D != "" && parseInt(obj.D) > 0) {
+                            $("#chkDingshi").click();
+                        }
+                        if (obj.R && obj.R != "") {
+                            $("#chkNao").click();
+                            var r = obj.R.split(',');
+                            $.each(r, function (index) {
+                                var time = this.replace(/(.{2})/, '$1:');
+                                $($(".Main input[type='text']")[index]).val(time);
+                                $($(".Main input[type='checkbox']")[index]).click();
+                            })
+                        }
+                        if (obj.W && obj.W != "") {
+                            var einxar = obj.W.split(',');
+                            if (einxar[0] == "0") {
+                                $("#chkweekClose").click();
+                            } else if (einxar[0] == "1") {
+                                $("#chkweek").click();
+                                for (var i = 0; i < einxar[1].length; i++) {
+                                    if (einxar[1][i]) {
+                                        switch (Number(einxar[1][i])) {
+                                            case 1: $("#chkMon").click(); break;
+                                            case 2: $("#chkTue").click(); break;
+                                            case 3: $("#chkWed").click(); break;
+                                            case 4: $("#chkThurs").click(); break;
+                                            case 5: $("#chkFri").click(); break;
+                                            case 6: $("#chkSat").click(); break;
+                                            case 7: $("#chkSun").click(); break;
+                                        }
+                                    }
+                                }
+                                $("#dtimeForWeek").val(einxar[2].replace(/(.{2})/, '$1:'));
+                            }
+                        } else { $("#chkweekClose").click(); }
+
+                    }
+                },
+                error: function (msg) {
+
+                    layer.msg('请求发生错误' + msg.statusText, { icon: 2 });
+                }
+            });
+        }
+
+        function chkDingshiFun() {
+            if ($("#chkDingshi").is(":checked")) {
+                $("#txtTime").removeAttr("disabled");
+
+            }
+            else {
+                $("#txtTime").attr("disabled", "true");
+            }
+        }
+
+        function chkNaoFun() {
+            if ($("#chkNao").is(":checked")) {
+                $("#chkOne").removeAttr("disabled");
+                $("#dtimeOne").removeAttr("disabled");
+
+                $("#chkTwo").removeAttr("disabled");
+                $("#dtimeTwo").removeAttr("disabled");
+
+                $("#chkThree").removeAttr("disabled");
+                $("#dtimeThree").removeAttr("disabled");
+
+                $("#chkFour").removeAttr("disabled");
+                $("#dtimeFour").removeAttr("disabled");
+            }
+            else {
+                $("#chkOne").attr("checked", false).attr("disabled", "true");
+                $("#dtimeOne").attr("disabled", "true");
+
+                $("#chkTwo").attr("checked", false).attr("disabled", "true");
+                $("#dtimeTwo").attr("disabled", "true");
+
+                $("#chkThree").attr("checked", false).attr("disabled", "true");
+                $("#dtimeThree").attr("disabled", "true");
+
+                $("#chkFour").attr("checked", false).attr("disabled", "true");
+                $("#dtimeFour").attr("disabled", "true");
+            }
+        }
+
+        $(document).ready(function ($) {
+            if (getUrlParam('target') != null && getUrlParam('target') != "")
+            {
+                $("#titlediv").show();
+
+            }
+            $("#btnDiv").css("margin-top", "4px");
+
+            if (vehid != "0") {
+                getA5Info(vehid, false);
+            } else {
+                getA5Info(getUrlParam('target'), true);
+            }
+
+
+            $("input[type!='button']").attr("disabled", "true");
+            $("#chkNao").removeAttr("disabled");
+            $("#chkNaoClose").removeAttr("disabled");
+            $("#chkDingshi").removeAttr("disabled");
+            $("#chkweek").removeAttr("disabled");
+            $("#chkweekClose").removeAttr("disabled");
+
+
+            $("#chkNao").change(chkNaoFun);
+            $("#chkNaoClose").change(chkNaoFun);
+
+
+            $("#chkDingshi").change(chkDingshiFun)
+
+            $("#chkweek").change(chkweekFun)
+            $("#chkweekClose").change(chkweekFun)
+            function chkweekFun() {
+                if ($("#chkweek").is(":checked")) {
+                    $("#chkMon").removeAttr("disabled");
+                    $("#chkTue").removeAttr("disabled");
+                    $("#chkWed").removeAttr("disabled");
+                    $("#chkThurs").removeAttr("disabled");
+                    $("#chkFri").removeAttr("disabled");
+                    $("#chkSat").removeAttr("disabled");
+                    $("#chkSun").removeAttr("disabled");
+                    $("#dtimeForWeek").removeAttr("disabled");
+                }
+                else {
+                    $("#chkMon").attr("checked", false).attr("disabled", "true");
+                    $("#chkTue").attr("checked", false).attr("disabled", "true");
+                    $("#chkWed").attr("checked", false).attr("disabled", "true");
+                    $("#chkThurs").attr("checked", false).attr("disabled", "true");
+                    $("#chkFri").attr("checked", false).attr("disabled", "true");
+                    $("#chkSat").attr("checked", false).attr("disabled", "true");
+                    $("#chkSun").attr("checked", false).attr("disabled", "true");
+                    $("#dtimeForWeek").attr("disabled", "true");
+
+                }
+            }
+
+
+            $("#dtimeOne").val(new Date().Format("00:00"));
+            $('#dtimeOne').datetimepicker({
+                lang: 'ch',
+                timepicker: true,
+                format: 'H:i',
+                formatDate: 'H:i',
+                datepicker: false
+            });
+
+            $("#dtimeTwo").val(new Date().Format("00:00"));
+            $('#dtimeTwo').datetimepicker({
+                lang: 'ch',
+                timepicker: true,
+                format: 'H:i',
+                formatDate: 'H:i',
+                datepicker: false
+            });
+
+            $("#dtimeThree").val(new Date().Format("00:00"));
+            $('#dtimeThree').datetimepicker({
+                lang: 'ch',
+                timepicker: true,
+                format: 'H:i',
+                formatDate: 'H:i',
+                datepicker: false
+            });
+
+            $("#dtimeFour").val(new Date().Format("00:00"));
+            $('#dtimeFour').datetimepicker({
+                lang: 'ch',
+                timepicker: true,
+                format: 'H:i',
+                formatDate: 'H:i',
+                datepicker: false
+            });
+
+            $("#dtimeForWeek").val(new Date().Format("00:00"));
+            $('#dtimeForWeek').datetimepicker({
+                lang: 'ch',
+                timepicker: true,
+                format: 'H:i',
+                formatDate: 'H:i',
+                datepicker: false
+            });
+
+
+
+            $("#btnCancel").click(function () {
+                parent.layer.close(index);
+            })
+
+
+            $("#btnOK").click(function () {
+                var alarmClock = "";
+                var timing = "";
+
+                if ($("#chkNao").is(':checked')) {
+                    alarmClock = "*R:";
+                    if ($("#chkOne").is(':checked')) {
+                        var t = $("#dtimeOne").val().replace(":", "");
+
+                        alarmClock += (t.length == 3 ? "0" + t : t) + ","
+                    }
+
+                    if ($("#chkTwo").is(':checked')) {
+                        var t = $("#dtimeTwo").val().replace(":", "");
+
+                        alarmClock += (t.length == 3 ? "0" + t : t) + ","
+                    }
+
+                    if ($("#chkThree").is(':checked')) {
+                        var t = $("#dtimeThree").val().replace(":", "");
+
+                        alarmClock += (t.length == 3 ? "0" + t : t) + ","
+                    }
+
+                    if ($("#chkFour").is(':checked')) {
+                        var t = $("#dtimeFour").val().replace(":", "");
+
+                        alarmClock += (t.length == 3 ? "0" + t : t) + ","
+                    }
+                    if (alarmClock == "*R:") {
+                        layer.msg('请设置闹钟', function () { });
+                        return;
+                    }
+                }
+                if (alarmClock.length != 0) {
+                    alarmClock = alarmClock.substr(0, alarmClock.length - 1)
+                }
+                var isWeekFlag = "0";
+                if ($("#chkweek").is(":checked")) {
+                    isWeekFlag = "1";
+                }
+                else {
+                    isWeekFlag = "0";
+                }
+                var strWeek = "";
+                if ($("#chkMon").is(":checked")) {
+                    strWeek += "1";
+                }
+                if ($("#chkTue").is(":checked")) {
+                    strWeek += "2";
+                }
+                if ($("#chkWed").is(":checked")) {
+                    strWeek += "3";
+                }
+                if ($("#chkThurs").is(":checked")) {
+                    strWeek += "4";
+                }
+                if ($("#chkFri").is(":checked")) {
+                    strWeek += "5";
+                }
+                if ($("#chkSat").is(":checked")) {
+                    strWeek += "6";
+                }
+                if ($("#chkSun").is(":checked")) {
+                    strWeek += "7";
+                }
+                if (isWeekFlag == "1") {
+                    if (strWeek == "") {
+                        layer.msg('请选择星期模式日期', function () { });
+                        return;
+                    }
+                    strWeek += ",";
+                    var strTime = $("#dtimeForWeek").val().replace(":", "");
+
+                    strTime = (strTime.length == 3 ? "0" + strTime : strTime);
+                    alarmClock += "*W:1," + strWeek + strTime;
+                }
+                else {
+                    //if (strWeek != "") {
+                    //    var strTime = $("#dtimeForWeek").val().replace(":", "");
+                    //    strTime = (strTime.length == 3 ? "0" + strTime : strTime);
+                    //    alarmClock += "*W:0," + strWeek + "," + strTime;
+                    //}
+                    alarmClock += "*W:0";
+                }
+
+                if ($("#chkDingshi").is(':checked')) {
+                    if (isNaN($("#txtTime").val())) {
+                        window.parent.ParentMessage("请输入数字", "提示");
+                        return;
+                    }
+                    else {
+                        if ($("#txtTime").val() < 0 | $("#txtTime").val() > 999) {
+                            window.parent.ParentMessage("请输入000-999之间的数字。", "提示");
+                            return;
+                        }
+                    }
+                    timing = "*D:" + ($("#txtTime").val() == "" ? "000" : padingLeft(3, $("#txtTime").val(), '0'));
+
+                }
+                if (timing == "000" | timing == "") {
+                    timing = "*D:000";
+                }
+                alarmClock = alarmClock + oldWakeTime + timing;
+                var vehId = getUrlParam('vehId');
+                //console.log("A5数据:" + alarmClock);
+                //console.log(vehid);
+                if (vehid != "0") {
+                    parent.setWakeUp(vehId, alarmClock, index);
+                } else {
+                    var target = getUrlParam('target');
+                    var selectedSubGroup = 0;
+                    if ($("#groupid_che").is(':checked')) {
+                        selectedSubGroup = 1;
+                    }
+                    parent.setGroupWakeUp(target, alarmClock, index, selectedSubGroup);
+                }
+            })
+
+
+            $("#groupid_che").removeAttr("disabled");
+        })
+
+
+
+    </script>
+</body>
+</html>

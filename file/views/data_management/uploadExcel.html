@@ -1,0 +1,891 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--right slidebar-->
+    <link href="css/slidebars.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/bootstrap-select.min.css" rel="stylesheet" />
+
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <!--    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>-->
+    <script src="js/respond.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+
+    <!--right slidebar-->
+    <script src="js/slidebars.min.js"></script>
+
+    <!--common script for all pages-->
+    <!--    <script src="js/common-scripts.js"></script>-->
+    <!--script for this page-->
+    <script src="layer/layer.js"></script>
+    <!--<script src="js/jquery.stepy.js"></script>-->
+    <script src="js/jquery.form.js"></script>
+
+    <style>
+        .stepy-titles li.current div {
+            color: #fff;
+            cursor: auto;
+            background: #A9D86E;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            width: 200px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .btn-info {
+            margin: 20px;
+        }
+
+        .red {
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+    <section id="container" style="background: white; overflow: hidden; height: 400px;">
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper" style="margin-top: 0px; height: 100%; margin-bottom: 0px;">
+                <!-- page start-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel" style="height: 620px;">
+
+                            <div class="form-horizontal" id="default">
+                                <fieldset title="1.上传" class="step" id="step1" style="display: block;">
+                                    <legend></legend>
+                                    <div class="form-group ">
+                                        <form role="form" id="terminalForm" method="post" onsubmit="return uploadExcel();" enctype="multipart/form-data">
+                                            <input type="hidden" name="action" value="VehicleBatch" />
+                                            <div class="form-group" style="height: 400px; margin-top: 90px;">
+
+                                                <div class="col-md-1" style="padding: 5px;">
+
+                                                    <button id="submit" type="submit" class="btn btn-success btn-sm" name="event_submit_do_Upload" value="false" style="margin: 2px; display: none;">提交</button>
+                                                </div>
+
+                                                <!--    <div class="col-md-8">
+ 
+
+                                                    <input id="File1" type="file" name="message_img" style="display: none;" onchange="ye.value=value" />
+                                                    <input name="ye" class="form-control " value="None file" />
+
+                                                    <button type="button" class="btn btn-primary" onclick="$('#File1').click();"><i class="fa fa-cloud"></i>选择文件</button>
+
+                                                    <a class="btn btn-primary" href="../muban/批量导入模板.xls">下载模板</a>
+                                                </div>-->
+                                                <div class="row col-md-10">
+                                                    <div class="input-group col-md-12">
+                                                        <input id="File1" type="file" name="selectFile" accept="application/msexcel" style="display: none;" onchange="ye.value=value" />
+                                                        <input name="ye" class="form-control " value="请选择要上传的文件！" />
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary " onclick="$('#File1').click();" aria-expanded="false"><span>选择文件...</span> </button>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <!--     <div class="col-md-1">
+
+                                                        <a class="btn btn-primary" href="../muban/批量导入模板.xls">下载模板</a>
+                                                    </div>-->
+                                                    <br />
+                                                    <br />
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h3 class="panel-title">小技巧： </h3>
+
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <ul>
+                                                                <li>首次使用,<a href="/http/ExcelExport/DownloadTemplate.json" style="color: #0D73F1;">请点击下载最新导入模板!</a></li>
+                                                                <li>一次批量提交的车辆数不能超过 <strong>1000台</strong>，如果超过限制将提交失败！</li>
+                                                                <li style="display:none;">请注意批量提交的车辆数是否超过<strong>剩余加车数</strong>的限制，如果超过<strong>剩余加车数</strong>将提交失败！</li>
+                                                                <li>如果系统提示您有未完成的任务，可能是<strong>上次批量导入未完成</strong>或<strong>此时其他电脑正在用您的账户进行批量导入</strong>。</li>
+                                                                <li>请避免您的账号,同一时间,使用不同电脑进行批量导入！！</li>
+                                                                <li style="color:#f00; display:none;">批量加车请使用9月14号最新模板</li>
+                                                                <!--<li>Uploaded files will be deleted automatically after <strong>5 minutes</strong> (demo setting).</li>
+                                                                <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">Browser support</a>).</li>
+                                                                -->
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+                                </fieldset>
+
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <!-- page end-->
+            </section>
+        </section>
+    </section>
+
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <!--<script src="assets/bootstrap-table/extensions/editable/bootstrap-table-editable.js"></script>
+    <script src="assets/bootstrap-table/bootstrap3-editable/js/bootstrap-editable.js"></script>
+    <link href="assets/bootstrap-table/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />-->
+
+    <link href="assets/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+
+    <style>
+        /*隐藏导出按钮*/
+        .fixed-table-toolbar {
+            width: 50px;
+            float: right;
+            display: none;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var loginUser = $.parseJSON(localStorage.getItem('loginUser'));
+
+
+
+
+
+
+        $(document).ready(function () {
+            //  getHandStatus();//查询查询Excel批量上传的状态
+
+
+        });
+
+
+
+
+        //提交Excel
+        //$("#submit").click(function (event) {
+        //    event.preventDefault();//阻止元素发生默认的行为
+        //    $('form').ajaxSubmit({
+        //        timeout: 10000,
+        //        type: 'post', url: ajax('VehicleBatch/Upload.do'),
+        //        data: { 'action': 'VehicleBatch', 'event_submit_do_Upload': 1 },
+        //        success: function (obj) {
+        //            if (obj.flag > 0) {
+        //                $("#File1").attr('flag', 'true')
+        //                switch (obj.flag) {
+        //                    case 1:
+        //                        $("#submit").val('true');
+        //                        $("#next-1").click();
+        //                        checkExcel();
+        //                        break;
+        //                    case 2:
+        //                        layer.confirm(obj.msg, {
+        //                            btn: ['继续处理', '重新上传'] //按钮
+        //                        }, function () {
+        //                            getHandStatus();
+        //                        }, function () {
+        //                            delHandStatus(true);
+        //                        });
+        //                        break;
+        //                }
+        //            } else {
+        //                layer.msg(obj.msg, { icon: 5 });
+        //            }
+        //        },
+        //        error: function (msg) {
+        //            layer.msg(msg.statusText, { icon: 5 });
+        //            console.log('请求发生错误：' + msg.statusText);
+        //        }
+        //    });
+        //})
+        //$("#submit").click(function (event) {
+
+        //    alert(1);
+        //})
+
+        var checkSubmitFlg = false;
+        var qing = true;
+
+        function uploadExcel() {
+            if (qing) {
+                qing = false;
+
+                if (checkSubmitFlg == false) {
+                    $('form').ajaxSubmit({
+                        timeout: 10000,
+                        type: 'post',
+                        url: ajax('VehicleBatch/Upload.do'),
+                        //url: ajax('http/VehicleBatch/Upload.do'),
+                        data: { 'action': 'VehicleBatch', 'event_submit_do_Upload': 1 },
+                        beforeSend: function () {
+                            // Handle the beforeSend event
+                            // $("#File1").attr('flag', 'true')
+                        },
+                        success: function (obj) {
+                            checkSubmitFlg = false;
+                            if (obj.flag > 0) {
+                              //  qing = true;
+
+                                $("#File1").attr('flag', 'true')
+                                parent.uploadExcelSucessContinue(obj);
+
+                                return true;
+                            } else {
+                                if (obj.msg == undefined) {
+                                    parent.layer.msg(obj, { icon: 5 });
+                                } else {
+                                    parent.layer.msg(obj.msg, { icon: 5 });
+                                }
+                                return false;
+                            }
+                        },
+                        error: function (msg) {
+                            parent.uploadExcelErrorContinue(msg);
+                            checkSubmitFlg = false;
+                            return true;
+                        }
+                    });
+                }
+                checkSubmitFlg = true;
+                return true;
+
+            }
+
+        }
+
+
+        //检查excel是否完成
+        var index = -1;
+        function checkExcel() {
+            $.ajax({
+                type: 'get',
+                url: ajax('http/ExcelUpload/CheckExcel.json?'),
+                dataType: 'json',                           //指定服务器返回的数据类型
+                timeout: 30000,                              //超时时间
+                cache: false,                               //是否缓存上一次的请求数据
+                async: true,                                //是否异步
+                //data: info,
+                beforeSend: function () {
+                    //开启遮挡层
+                    index = layer.load(1, {
+                        shade: [0.5, '#fff'] //0.1透明度的白色背景
+                    });
+                },
+                success: function (data) {
+                    if (data.flag > 0) {
+                        setTimeout(function () {
+                            getHandStatus();
+                        }, 500);
+                        layer.msg(data.msg, { icon: 1 });
+                    } else {
+                        //layer.msg(data.msg, { icon: 5 });
+                        //console.log(data.msg);
+                        layer.close(index);
+                        //layer.msg(msg.responseText, { icon: 2 });
+                        if (data.responseText == null || data.responseText == "") {
+                            layer.msg(data.msg, { icon: 2 });
+                        } else {
+                            layer.msg(data.responseText, { icon: 2 });
+                        }
+
+                    }
+                },
+                error: function (msg) {
+                    //console.log('请求发生错误' + msg.statusText);
+                    layer.close(index);
+                    layer.msg(msg.responseText, { icon: 2 });
+                }
+            })
+        }
+
+        //完成
+        $("#complete").click(function () {
+            var treeObj = $.fn.zTree.getZTreeObj('groupView');
+            var nodes = treeObj.getCheckedNodes(true);
+            if (nodes.length > 0) {
+                complete(nodes[0]);
+            } else {
+                layer.msg('请先在左侧勾选将要导入的车组', { icon: 5 });
+            }
+        })
+
+        //上一步
+        $("[id ^= 'back-']").click(function () {
+            layer.msg(this.id);
+            switch (this.id) {
+                case 'back-1':
+                    var ly = layer.confirm('是否返回上一步重新上传？', {
+                        btn: ['确认', '取消'] //按钮
+                    }, function () {
+                        DataList = [];
+                        $("#tabVehicle").bootstrapTable('removeAll');
+                        $("#Table1").bootstrapTable('removeAll');
+                        layer.close(ly);
+                        $("#step2").hide();
+                        $("#div_st2").css({ "background-color": "#aeaeae" });
+                        $("#step1").show();
+                        delHandStatus(false);
+                    }, function () {
+
+                    });
+                    break;
+                case 'back-2':
+                    $("#step3").hide();
+                    $("#div_st3").css({ "background-color": "#aeaeae" });
+                    $("#step2").show();
+                    break;
+            }
+        })
+
+        //下一步
+        //$("[id ^= 'next-']").click(function () {
+        //    layer.msg(this.id);
+        //    switch (this.id) {
+        //        case 'next-1':
+        //            //if ($("#File1").val() != '') {
+        //            if ($("#File1").attr('flag') == undefined & $("#File1").val() != '') {
+        //                $("#submit").click();
+        //                //if ($("#submit").val() == 'true') {
+        //                //    return true;
+        //                //} else {
+        //                //    layer.msg('请先选择Excel文件,并成功提交', { icon: 5 });
+        //                //    return false;
+        //                //}
+        //            } else {
+        //                if ($("#File1").attr('flag') == 'true') {
+        //                    $("#step1").hide();
+        //                    $("#step2").show();
+        //                    $("#div_st2").css({ "background-color": "#A9D86E" });
+        //                } else {
+        //                    layer.msg('请选择Excel文件', { icon: 5 });
+        //                }
+        //            }
+        //            break;
+        //        case 'next-2':
+        //            var count = $('#tabVehicle').bootstrapTable('getData').length;
+        //            if (count > 0) {
+        //                var ly = layer.confirm('是否忽略不合法的数据进行下一步？', {
+        //                    btn: ['确认', '取消'] //按钮
+        //                }, function () {
+        //                    layer.close(ly);
+        //                    $("#step2").hide();
+        //                    $("#step3").show();
+        //                    $("#div_st3").css({ "background-color": "#A9D86E" });
+        //                    setTimeout(function () {
+        //                        $("#Table1").bootstrapTable('load', DataList);
+        //                    }, 500)
+        //                }, function () {
+        //                });
+        //            } else {
+        //                $("#step2").hide();
+        //                $("#step3").show();
+        //                $("#div_st3").css({ "background-color": "#A9D86E" });
+        //                setTimeout(function () {
+        //                    $("#Table1").bootstrapTable('load', DataList);
+        //                }, 500)
+        //            }
+        //            break;
+        //    }
+        //})
+
+        //删除没有处理完的Excel状态
+        //function delHandStatus(IsResubmit) {
+        //    $.ajax({
+        //        type: 'get',
+        //        url: ajax('http/ExcelUpload/DelHandStatus.json?'),
+        //        dataType: 'json',                           //指定服务器返回的数据类型
+        //        timeout: 3000,                              //超时时间
+        //        cache: false,                               //是否缓存上一次的请求数据
+        //        async: true,                                //是否异步
+        //        //data: info,
+        //        beforeSend: function () {
+        //            //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 
+        //        },
+        //        success: function (data) {
+        //            if (data.flag == 1) {
+        //                layer.msg(data.msg, { icon: 1 });
+        //                if (IsResubmit) {
+        //                    //$("#submit").click();//删除没有处理完的Excel状态成功,重新提交Excel
+        //                    uploadExcel();
+        //                }
+        //            } else {
+        //                console.log(data.msg);
+        //            }
+        //        },
+        //        error: function (msg) {
+        //            console.log('请求发生错误' + msg.statusText, { icon: 2 });
+        //        }
+        //    })
+        //}
+
+        //查询Excel批量上传的状态
+        //function getHandStatus() {
+        //    $.ajax({
+        //        type: 'get',
+        //        url: ajax('http/ExcelUpload/GetHandStatus.json?'),
+        //        dataType: 'json',                           //指定服务器返回的数据类型
+        //        timeout: 3000,                              //超时时间
+        //        cache: false,                               //是否缓存上一次的请求数据
+        //        async: true,                                //是否异步
+        //        //data: info,
+        //        beforeSend: function () {
+        //            //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 
+        //        },
+        //        success: function (data) {
+        //            if (data.flag == 1) {
+        //                //0或没有获取到对象，文件还没有上传;1文件已经上传到内中;2Excel表格校验完成;
+        //                //3数据库中车牌号重复性校验完毕;4数据库中终端编号重复性校验完毕;5数据库中SIM卡号重复性校验完毕;
+        //                //6文件正在写入中间车辆表7批量写入临时中间表完毕8数据正在写入车辆表9车辆表数据写入完毕
+        //                var status = data.obj.status;
+        //                if (status > 0) {
+        //                    $("#submit").val("true");
+        //                    $("#File1").attr('flag', 'true');
+        //                    var ly = layer.confirm('你有未完成的进度是否继续？', {
+        //                        btn: ['继续', '取消'] //按钮
+        //                    }, function () {
+        //                        switch (status) {
+        //                            case 1:
+        //                                //1文件已经上传到内中,开始Excel表格校验
+        //                                checkExcel();
+        //                                break;
+        //                            case 2:
+        //                            case 3:
+        //                            case 4:
+        //                            case 5:
+        //                            case 6:
+        //                                setTimeout(function () {
+        //                                    getHandStatus();
+        //                                }, 500);
+        //                                break;
+        //                            case 7:
+        //                                //7批量写入临时中间表完毕
+        //                                layer.closeAll();
+        //                                $("#submit").val('true');
+        //                                $("#next-1").click();
+        //                                //开启遮挡层
+        //                                index = layer.load(1, {
+        //                                    shade: [0.5, '#fff'] //0.1透明度的白色背景
+        //                                });
+        //                                getInvalidVehInfo(1);
+        //                                getInvalidVehInfo(0);
+        //                                break;
+        //                        }
+        //                        layer.close(ly);
+        //                        console.log(data.msg);
+        //                    }, function () {
+        //                        delHandStatus(false);
+        //                    });
+        //                }
+        //            } else {
+        //                console.log(data.msg);
+        //            }
+        //        },
+        //        error: function (msg) {
+        //            console.log('请求发生错误' + msg.statusText);
+        //        }
+        //    })
+        //}
+
+
+
+        var rowInfo = {};
+        //$("#upVehInfo_complete").click(function () {
+        //    if ($("#plate").val() == "") {
+        //        layer.tips("车牌号不能为空！", "#plate");
+        //        return false;
+        //    }
+        //    if ($("#terminalNo").val() == "") {
+        //        layer.tips("设备号不能为空！", "#terminalNo");
+        //        return false;
+        //    }
+        //    if ($("#sim").val() == "") {
+        //        layer.tips("SIM卡号不能为空！", "#sim");
+        //        return false;
+        //    }
+
+        //    rowInfo = { addFlag: 1, userId: $(this).attr('userId'), row: $(this).attr('row'), plate: $("#plate").val(), terminalNo: $("#terminalNo").val(), sim: $("#sim").val(), terminalType: $("#terminalType").val() }
+        //    updateRow(rowInfo);
+        //})
+
+        //$("#upVehInfo_close").click(function () {
+        //    $.each($("#upVehInfo input"), function () {
+        //        $(this).val("");
+        //    })
+        //    $.each($("[id$=ErrInfo]"), function () {
+        //        $(this).text("");
+        //    })
+        //    $(".layui-layer-close").click();
+        //})
+
+        //$('#chooseId').typeahead({
+        //    source: function (query, process) {
+        //        return groupsNameList;
+        //    },
+        //    updater: function (item) {
+        //        var treeObj = $.fn.zTree.getZTreeObj("groupView");
+        //        var node = treeObj.getNodeByParam("groupName", item, null);
+        //        VehGroup.tree.expandNode(node.getParentNode(), true, false);
+        //        VehGroup.tree.selectNode(node);
+        //        $("#" + node.tId + "_span").click();
+        //        return item;
+        //    }
+        //});
+
+        //var groupView_index = -1;
+        //function GetPosition(event) {
+        //    var x = $("#chooseId").offset().left + 'px';
+        //    var y = $("#chooseId").offset().top + 30 + 'px';
+        //    console.log('x:' + x + '; y:' + y);
+        //    groupView_index = layer.open({
+        //        type: 1,
+        //        title: false,
+        //        offset: [y, x],
+        //        closeBtn: 0,
+        //        shadeClose: true,
+        //        shade: [0.1, '#fff'], //0.1透明度的白色背景
+        //        content: $("#groupView")
+        //    });
+        //    //setTimeout(function () {
+        //    //    $(".layer-anim").css({ "z-index": "111" });
+        //    //}, 1000)
+        //}
+
+        //function complete(obj) {
+        //    $.ajax({
+        //        type: 'Get',
+        //        url: ajax('http/ExcelUpload/InsertBatchVeh.json?groupId=' + obj.groupId + '&groupName=' + obj.groupName),
+        //        dataType: 'json',                           //指定服务器返回的数据类型
+        //        timeout: 3000,                              //超时时间
+        //        cache: false,                               //是否缓存上一次的请求数据
+        //        async: true,                                //是否异步
+        //        //data: info,
+        //        beforeSend: function () {
+        //            //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 
+        //        },
+        //        success: function (data) {
+        //            if (data.flag == 1) {
+        //                layer.msg(data.msg);
+        //                location.reload(true);
+        //            } else {
+        //                console.log(data.msg);
+        //            }
+        //        },
+        //        error: function (msg) {
+        //            console.log('请求发生错误' + msg.statusText);
+        //        }
+        //    })
+        //}
+
+
+
+        //查询临时中间表中车辆数据(addFlag= 1表示查询不合法的信息；addFlag= 0表示查询合法的信息)
+        //var closeFlag = false;
+        //var DataList = [];
+        //function getInvalidVehInfo(flag) {
+        //    $.ajax({
+        //        type: 'get',
+        //        url: ajax('http/ExcelUpload/GetInvalidDevImport.json?addFlag=' + flag),
+        //        dataType: 'json',                           //指定服务器返回的数据类型
+        //        timeout: 30000,                              //超时时间
+        //        cache: false,                               //是否缓存上一次的请求数据
+        //        async: true,                                //是否异步
+        //        //data: info,
+        //        beforeSend: function () {
+        //            //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 
+        //        },
+        //        success: function (data) {
+        //            $("#tbInfo").text('');
+        //            //$("#tbInfo2").text('');
+        //            if (data.flag == 1) {
+        //                if (flag == 1) {
+        //                    $("#tbInfo").text("校验结果:不合法数据" + data.obj.length + "条");
+        //                    $.each(data.obj, function () {
+        //                        var str = "";
+        //                        $.each(this.checkMap, function () {
+        //                            if (this.join(',') != "合法") {
+        //                                str += this.join(',') + ',';
+        //                            }
+        //                        })
+        //                        this.verifiInfo = str.replace(/,$/gi, "");
+        //                    })
+        //                    $.each(data.obj, function (index) {
+        //                        if (this.checkMap.p.join(',') != "合法") {
+        //                            this.plate = '<span id="plate_' + this.row + '" title="' + this.checkMap.p.join(',') + '" class="red" >' + this.plate + '</span>';
+        //                        } else {
+        //                            this.plate = '<span id="plate_' + this.row + '" >' + this.plate + '</span>';
+        //                        }
+        //                        if (this.checkMap.n.join(',') != "合法") {
+        //                            this.terminalNo = '<span id="terminalNo_' + this.row + '" title="' + this.checkMap.n.join(',') + '" class="red" >' + this.terminalNo + '</span>';
+        //                        } else {
+        //                            this.terminalNo = '<span id="terminalNo_' + this.row + '" >' + this.terminalNo + '</span>';
+        //                        }
+        //                        if (this.checkMap.s.join(',') != "合法") {
+        //                            this.sim = '<span id="sim_' + this.row + '" title="' + this.checkMap.s.join(',') + '" class="red" >' + this.sim + '</span>';
+        //                        } else {
+        //                            this.sim = '<span id="sim_' + this.row + '" >' + this.sim + '</span>';
+        //                        }
+        //                        if (this.checkMap.t.join(',') != "合法") {
+        //                            this.terminalType = '<span id="terminalType_' + this.row + '" title="' + this.checkMap.t.join(',') + '" class="red" >' + this.terminalType + '</span>';
+        //                        } else {
+        //                            this.terminalType = '<span id="terminalType_' + this.row + '" >' + this.terminalType + '</span>';
+        //                        }
+        //                        this.verifiInfo = '<span id="verifiInfo_' + this.row + '" >' + this.verifiInfo + '</span>';
+
+        //                    })
+        //                    $("#tabVehicle").bootstrapTable('load', data.obj);
+        //                } else {
+        //                    $("#tbInfo2").append('<label class="col-md-2 control-label" style="text-align: center;padding-top: 2px;">校验结果:合法数据' + data.obj.length + '条</label>');
+        //                    $("#tbInfo2").append('<input id="chooseId" type="text" placeholder="请选择将要导入的目标车组" data-provide="typeahead" autocomplete="off" class="col-md-3 input-small" style="" onclick="GetPosition(event)" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ \-]/g,\'\')">');
+
+        //                    $('#chooseId').typeahead({
+        //                        source: function (query, process) {
+        //                            return groupsNameList;
+        //                        },
+        //                        updater: function (item) {
+        //                            var treeObj = $.fn.zTree.getZTreeObj("groupView");
+        //                            var node = treeObj.getNodeByParam("groupName", item, null);
+        //                            VehGroup.tree.expandNode(node.getParentNode(), true, false);
+        //                            VehGroup.tree.selectNode(node);
+        //                            VehGroup.tree.checkNode(nodes[i], true, true);
+        //                            $("#" + node.tId + "_span").click();
+        //                            return item;
+        //                        }
+        //                    });
+
+        //                    DataList = data.obj;
+        //                }
+        //            } else {
+        //                //layer.msg(data.msg, { icon: 2 });
+        //                console.log(data.msg)
+        //            }
+        //            //layer.close(index);//关闭遮挡层
+        //        },
+        //        error: function (msg) {
+        //            layer.close(index);//关闭遮挡层
+        //            console.log('请求发生错误' + msg.statusText);
+        //        }
+        //    })
+        //}
+
+
+        ////查询某行校验不合法的车辆数据(用于编辑车辆数据页面）
+        //function getRow(row) {
+        //    $.ajax({
+        //        type: 'get',
+        //        url: ajax('http/ExcelUpload/GetInvalidRow.json?row=' + row),
+        //        dataType: 'json',                           //指定服务器返回的数据类型
+        //        timeout: 3000,                              //超时时间
+        //        cache: false,                               //是否缓存上一次的请求数据
+        //        async: true,                                //是否异步
+        //        //data: info,
+        //        beforeSend: function () {
+        //            $("#upVehInfo_complete").attr("row", "");
+        //            rowInfo = {};
+        //        },
+        //        success: function (data) {
+        //            $("[id $= 'ErrInfo']").text('');
+        //            if (data.flag == 1) {
+        //                rowInfo = data.obj[0];
+        //                $("#upVehInfo_complete").attr("row", rowInfo.row);
+        //                $("#upVehInfo_complete").attr("userId", rowInfo.userId);
+        //                $("#plate").val(rowInfo.plate);
+        //                $("#terminalNo").val(rowInfo.terminalNo);
+        //                $("#terminalType").val(rowInfo.terminalType);
+        //                $("#sim").val(rowInfo.sim);
+        //                var str = rowInfo.checkMap.p.join(',').replace(/,$/gi, "");
+        //                if (str != "合法") {
+        //                    $("#plateErrInfo").append('<label style="color:red;">' + rowInfo.checkMap.p.join(',').replace(/,$/gi, "") + '</label>');
+        //                } else {
+        //                    $("#plateErrInfo").append('<label class="fa  fa-check">合法</label>');
+        //                }
+        //                if (rowInfo.checkMap.n.join(',') != "合法") {
+        //                    $("#terNoErrInfo").append('<label style="color:red;">' + rowInfo.checkMap.n.join(',').replace(/,$/gi, "") + '</label>');
+        //                } else {
+        //                    $("#terNoErrInfo").append('<label class="fa  fa-check">合法</label>');
+        //                }
+        //                if (rowInfo.checkMap.s.join(',') != "合法") {
+        //                    $("#simErrInfo").append('<label style="color:red;">' + rowInfo.checkMap.s.join(',').replace(/,$/gi, "") + '</label>');
+        //                } else {
+        //                    $("#simErrInfo").append('<label class="fa  fa-check">合法</label>');
+        //                }
+        //                if (rowInfo.checkMap.t.join(',') != "合法") {
+        //                    $("#typeErrInfo").append('<label style="color:red;">' + rowInfo.checkMap.t.join(',').replace(/,$/gi, "") + '</label>');
+        //                } else {
+        //                    $("#typeErrInfo").append('<label class="fa  fa-check">合法</label>');
+        //                }
+        //            } else {
+        //                layer.msg(data.msg, { icon: 2 });
+        //            }
+        //        },
+        //        error: function (msg) {
+        //            console.log('请求发生错误' + msg.statusText);
+        //        }
+        //    })
+        //}
+
+        ////对某行校验不合法的车辆，进行修改。
+        //function updateRow(row) {
+        //    //var row = $("#tabVehicle").bootstrapTable('getRowByUniqueId', index);
+        //    $.ajax({
+        //        type: 'POST',
+        //        url: ajax('http/ExcelUpload/UpdateInvalidRow.json?'),
+        //        dataType: 'json',                           //指定服务器返回的数据类型
+        //        timeout: 3000,                              //超时时间
+        //        cache: false,                               //是否缓存上一次的请求数据
+        //        async: true,                                //是否异步
+        //        data: row,
+        //        beforeSend: function () {
+        //            //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 
+        //        },
+        //        success: function (data) {
+        //            $("[id $= 'ErrInfo']").text('');
+        //            if (data.flag == 1) {
+        //                layer.msg(data.msg, { icon: 1 });
+        //                layer.close(upVehInfo_index);
+        //                rowInfo = data.obj;
+        //                $("#upVehInfo_complete").attr("row", rowInfo.row);
+        //                $("#upVehInfo_complete").attr("userId", rowInfo.userId);
+        //                $("#plate").val(rowInfo.plate);
+        //                $("#terminalNo").val(rowInfo.terminalNo);
+        //                $("#terminalType").val(rowInfo.terminalType);
+        //                $("#sim").val(rowInfo.sim);
+
+        //                $("#plate_" + rowInfo.row).removeClass('red');
+        //                $("#plate_" + rowInfo.row).text(rowInfo.plate);
+        //                $("#plateErrInfo").append('<label class="fa  fa-check">合法</label>');
+
+        //                $("#terminalNo_" + rowInfo.row).removeClass('red');
+        //                $("#terminalNo_" + rowInfo.row).text(rowInfo.terminalNo);
+        //                $("#terNoErrInfo").append('<label class="fa  fa-check">合法</label>');
+
+        //                $("#sim_" + rowInfo.row).removeClass('red');
+        //                $("#sim_" + rowInfo.row).text(rowInfo.sim);
+        //                $("#simErrInfo").append('<label class="fa  fa-check">合法</label>');
+
+        //                $("#terminalType_" + rowInfo.row).removeClass('red');
+        //                $("#terminalType_" + rowInfo.row).text(rowInfo.terminalType);
+        //                $("#typeErrInfo").append('<label class="fa  fa-check">合法</label>');
+
+        //                $("#verifiInfo_" + rowInfo.row).text('合法');
+
+        //                //$("#tabVehicle").bootstrapTable('updateByUniqueId', { id: data.obj.row, row: data.obj });
+
+        //            } else {
+        //                if (data.obj != undefined && data.msg == "修改失败") {
+        //                    rowInfo = data.obj;
+        //                    $("#upVehInfo_complete").attr("row", rowInfo.row);
+        //                    $("#upVehInfo_complete").attr("userId", rowInfo.userId);
+        //                    $("#plate").val(rowInfo.plate);
+        //                    $("#terminalNo").val(rowInfo.terminalNo);
+        //                    $("#terminalType").val(rowInfo.terminalType);
+        //                    $("#sim").val(rowInfo.sim);
+
+        //                    if (rowInfo.checkMap.p.join(',') != "合法") {
+        //                        $("#plateErrInfo").append('<label style="color:red;">' + rowInfo.checkMap.p.join(',').replace(/,$/gi, "") + '</label>');
+        //                    } else {
+        //                        $("#plate_" + rowInfo.row).removeClass('red');
+        //                        $("#plate_" + rowInfo.row).text(rowInfo.plate);
+        //                        $("#plateErrInfo").append('<label class="fa  fa-check">合法</label>');
+        //                    }
+        //                    if (rowInfo.checkMap.n.join(',') != "合法") {
+        //                        $("#terNoErrInfo").append('<label style="color:red;">' + rowInfo.checkMap.n.join(',').replace(/,$/gi, "") + '</label>');
+        //                    } else {
+        //                        $("#terminalNo_" + rowInfo.row).removeClass('red');
+        //                        $("#terminalNo_" + rowInfo.row).text(rowInfo.terminalNo);
+        //                        $("#terNoErrInfo").append('<label class="fa  fa-check">合法</label>');
+        //                    }
+        //                    if (rowInfo.checkMap.s.join(',') != "合法") {
+        //                        $("#simErrInfo").append('<label style="color:red;">' + rowInfo.checkMap.s.join(',').replace(/,$/gi, "") + '</label>');
+        //                    } else {
+        //                        $("#sim_" + rowInfo.row).removeClass('red');
+        //                        $("#sim_" + rowInfo.row).text(rowInfo.sim);
+        //                        $("#simErrInfo").append('<label class="fa  fa-check">合法</label>');
+        //                    }
+        //                    if (rowInfo.checkMap.t.join(',') != "合法") {
+        //                        $("#typeErrInfo").append('<label style="color:red;">' + rowInfo.checkMap.t.join(',').replace(/,$/gi, "") + '</label>');
+        //                    } else {
+        //                        $("#terminalType_" + rowInfo.row).removeClass('red');
+        //                        $("#terminalType_" + rowInfo.row).text(rowInfo.terminalType);
+        //                        $("#typeErrInfo").append('<label class="fa  fa-check">合法</label>');
+        //                    }
+        //                }
+        //                //layer.msg(data.msg, { icon: 5 });
+        //                console.log(data.msg);
+        //            }
+        //        },
+        //        error: function (msg) {
+        //            console.log('修改失败：' + msg.statusText);
+        //        }
+        //    })
+        //}
+        var upVehInfo_index = -1;
+        function showUpinfo(index) {
+            getRow(index);
+            upVehInfo_index = layer.open({
+                id: 'upVehInfoDiv',
+                type: 1, //Page层类型
+                area: ['780px', '350px'],
+                title: '修改',
+                shade: 0.6, //遮罩透明度
+                maxmin: false, //允许全屏最小化
+                anim: 1, //0-6的动画形式，-1不开启
+                content: $("#upVehInfo")
+            });
+        }
+
+        function removeRow(index) {
+            $("#tabVehicle").bootstrapTable('removeByUniqueId', index);
+        }
+
+        //批量写入车辆表 groupId=2&groupName=测试车组
+        function batchInsertVeh(info) {
+            $.ajax({
+                type: 'get',
+                url: ajax('http/ExcelUpload/GetInvalidRow.json?'),
+                dataType: 'json',                           //指定服务器返回的数据类型
+                timeout: 30000,                              //超时时间
+                cache: false,                               //是否缓存上一次的请求数据
+                async: true,                                //是否异步
+                data: info,
+                beforeSend: function () {
+                    //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 
+                },
+                success: function (data) {
+                    if (data.flag == 1) {
+                        layer.msg(data.msg, { icon: 1 });
+                    } else {
+                        layer.msg(data.msg, { icon: 2 });
+                    }
+                },
+                error: function (msg) {
+                    console.log('请求发生错误' + msg.statusText);
+                }
+            })
+        }
+    </script>
+</body>
+</html>

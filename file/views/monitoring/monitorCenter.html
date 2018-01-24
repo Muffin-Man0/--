@@ -1,0 +1,2259 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+    <title>monitorCenter</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="assets/gritter/css/jquery.gritter.css" />
+    <!--right slidebar-->
+    <link href="css/slidebars.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/Ele2.css"> 
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="assets/gritter/css/jquery.gritter.css" />
+    <link href="css/monitor_center.css" rel="stylesheet" />
+    <link href="css/jquery-ui.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .toolBar {
+            background-color: rgba(255, 255, 255, 0.65);
+            filter: alpha(opacity=90);
+            opacity: 0.9;
+            -moz-opacity: 0.9;
+            -khtml-opacity: 0.9;
+        }
+
+            .toolBar:hover {
+                /*background-color: rgba(0,0,0,.175);*/
+            }
+
+        .toolBarMenu li {
+            /*border-bottom: 1px solid rgba(169, 161, 161, 0.62);*/
+            margin: 3px;
+        }
+
+            .toolBarMenu li:hover {
+                background-color: #51A6EF;
+            }
+
+            .toolBarMenu li a {
+                padding: 6px 12px;
+                cursor: pointer;
+            }
+
+                .toolBarMenu li a:hover {
+                    padding: 6px 12px;
+                    color: white;
+                }
+
+
+
+        .areaPoiPnl li {
+            /*border-bottom: 1px solid rgba(169, 161, 161, 0.62);*/
+            margin: 5px;
+        }
+
+            .areaPoiPnl li:hover {
+                background: #58C9F3;
+            }
+
+            .areaPoiPnl li div div {
+                cursor: pointer;
+            }
+
+                .areaPoiPnl li div div:hover {
+                    color: white;
+                }
+
+            .areaPoiPnl li i {
+                cursor: pointer;
+                margin: 5px;
+            }
+
+                .areaPoiPnl li i:hover {
+                    color: white;
+                }
+
+
+
+        .imgFocus {
+            height: 30px;
+            margin: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .searchPlaceBtn {
+            float: left;
+            margin-top: 8px;
+            background: white;
+            border: 1px solid #B7AEAE;
+            height: 24px;
+        }
+
+            .searchPlaceBtn:hover {
+                background-color: #51A6EF;
+                border: 1px solid #51A6EF;
+                color: white;
+            }
+
+        .areaDiv {
+            word-wrap: break-word;
+            word-break: normal;
+            width: 90px;
+            float: left;
+        }
+
+        .btn2 {
+            border-radius: 0px;
+            border: 1px solid transparent;
+        }
+
+        .btn-warning2, .btn-warning2:hover, .btn-warning2:active, .btn-warning2:focus, .btn-warning2.focus, .btn-warning2:active:hover {
+            color: #fff;
+            background-color: #bec3c7;
+            border-color: #bec3c7;
+        }
+
+        .dropdown-menu {
+            font-size: 12px;
+            margin: 0px;
+            padding: 3px 0px;
+            /*margin-left: 38px;*/
+        }
+
+            .dropdown-menu > li > a {
+                padding: 3px 10px;
+            }
+
+        .dropdown-menu2 {
+            min-width: 80px;
+        }
+
+            .dropdown-menu2 > li > a {
+                padding: 3px 10px;
+            }
+
+
+
+        /************************/
+        .edit-oper-cover {
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.1);
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 999;
+            display: none;
+        }
+
+        .edit-oper-title {
+            height: 44px;
+            line-height: 44px;
+            position: relative;
+            border-bottom: #e0e5ed 1px solid;
+            text-indent: 30px;
+            font-size: 14px;
+            color: #6d6d6d;
+            font-weight: bold;
+        }
+
+            .edit-oper-title button {
+                width: 23px;
+                height: 20px;
+                float: right;
+                background: url(plug-ins/customer/img/mult-close.png);
+                border: none;
+                cursor: pointer;
+                margin: 13px 12px 0 0;
+                outline: none;
+            }
+
+                .edit-oper-title button:hover {
+                    opacity: 0.8;
+                }
+
+        .edit-oper-bottom {
+            height: 58px;
+            line-height: 58px;
+            position: absolute;
+            border-top: #e0e5ed 1px solid;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+            .edit-oper-bottom button {
+                width: 120px;
+                height: 32px;
+                line-height: 32px;
+                margin: 13px auto;
+                border-radius: 16px;
+                border: none;
+                color: #FFF;
+                font-size: 14px;
+                background: #5d7fac;
+                display: block;
+                outline: none;
+                cursor: pointer;
+            }
+
+                .edit-oper-bottom button:hover {
+                    opacity: 0.8;
+                }
+
+        .edit-box {
+            height: 30px;
+            border: #e0e5ed 1px solid;
+            margin-right: 0px;
+            overflow: hidden;
+            width: 200px;
+        }
+
+            .edit-box input {
+                width: 100%;
+                border: none;
+                text-indent: 10px;
+                height: 100%;
+                color: #666666;
+            }
+
+        .edit-label {
+            width: 140px;
+            line-height: 30px;
+            font-size: 12px;
+            color: #6d6d6d;
+            text-indent: 24px;
+            position: relative;
+            float: left;
+            font-weight: bold;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        .edit-row {
+            margin-top: 10px;
+            float: left;
+            width: 360px;
+            position: relative;
+        }
+
+            .edit-row textarea {
+                height: 68px;
+                width: 565px;
+                padding: 6px 10px;
+                position: absolute;
+                top: 0;
+                left: 135px;
+                border: #e0e5ed 1px solid;
+                resize: none;
+                outline: none;
+                font-size: 12px;
+                line-height: 16px;
+                color: #666;
+            }
+
+        .edit-textbox {
+            width: 100%;
+            height: 80px;
+            float: left;
+        }
+
+        .edit-table {
+            width: 562px;
+            margin-left: 135px;
+            border-left: #e0e5ed 1px solid;
+            border-top: #e0e5ed 1px solid;
+            margin-top: 36px;
+            margin-bottom: 30px;
+        }
+
+            .edit-table tr td {
+                border-bottom: #e0e5ed 1px solid;
+                border-right: #e0e5ed 1px solid;
+                width: 33%;
+            }
+
+            .edit-table tr:nth-child(2n+0) {
+                background-color: #f9f9f9;
+            }
+
+            .edit-table tr:nth-child(2n+1) {
+                background-color: #ffffff;
+            }
+
+            .edit-table thead tr {
+                background: #4176c4 !important;
+                font-weight: bold;
+                color: #FFF !important;
+            }
+
+            .edit-table tr {
+                height: 36px;
+                text-indent: 12px;
+                font-size: 12px;
+                color: #636363;
+            }
+
+        .icon-row {
+            width: 100% !important;
+        }
+
+        .car-type {
+            display: block;
+            height: 30px;
+            width: 52px;
+            float: left;
+            cursor: pointer;
+            position: relative;
+        }
+
+            .car-type img {
+                display: block;
+                width: 26px;
+                height: 26px;
+                position: absolute;
+                top: 2px;
+                right: 9px;
+            }
+
+            .car-type span {
+                width: 14px;
+                height: 14px;
+                display: block;
+                position: absolute;
+                top: 8px;
+                left: 0;
+            }
+
+        .edit-flex-box {
+            display: flex;
+            height: 50px;
+            line-height: 50px;
+            font-size: 14px;
+        }
+
+        .edit-flex-item {
+            width: 137px;
+            text-align-last: justify;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .close {
+            float: right;
+            font-size: 21px;
+            font-weight: bold;
+            line-height: 1;
+            color: #ffffff;
+            text-shadow: 0 1px 0 #fff;
+            filter: alpha(opacity=20);
+            /* opacity: .8; */
+            opacity: 1;
+        }
+            /* opacity: .8; */
+            .close:hover, .close:focus {
+                color: #fff;
+                text-decoration: none;
+                cursor: pointer;
+                filter: alpha(opacity=50);
+                /*opacity: .5;*/
+                opacity: 1;
+            }
+
+
+
+        .search {
+            width: 200px;
+        }
+
+        .blueColor {
+            color: #0b6be4;
+        }
+
+            .blueColor div {
+                color: #555;
+            }
+
+        .displayCol {
+            display: none;
+        }
+
+        .timeqixian {
+            clear: both;
+            overflow: hidden;
+            height: 37px;
+        }
+
+            .timeqixian a {
+                width: 30px;
+                height: 30px;
+                display: block;
+                float: left;
+                background-color: #E8E8E8;
+                text-align: center;
+                line-height: 30px;
+                border-right: 1px solid #E2E2E2;
+            }
+
+            .timeqixian .atci {
+                background-color: #43BFE3;
+                color: #fff;
+            }
+
+        .quedingxf {
+            width: 200px;
+            float: right;
+            text-align: center;
+        }
+
+            .quedingxf .xx {
+                font-size: 18px;
+                font-weight: 900;
+            }
+
+        #vehicleRenewalDiv {
+            padding: 20px;
+        }
+
+        i {
+            font-style: normal;
+        }
+
+        .layui-layer-title {
+            color: #fff!important;
+            background-color: #165082 !important;
+        }
+
+        .close {
+            color: #fff !important;
+            opacity: 1;
+        }
+
+        .tpoptilediv {
+            width: 33%;
+            height: 25px;
+            float: left;
+        }
+
+            .tpoptilediv:hover {
+                color: #fff;
+                background-color: #337ab7;
+            }
+
+        .atlc {
+            color: #fff;
+            background-color: #337ab7;
+        }
+
+        .TPOPzTable {
+            display: none;
+            width: 100%;
+        }
+
+        #zjTPOPzTable tbody tr {
+            cursor: pointer;
+        }
+
+            #zjTPOPzTable tbody tr a {
+                color: #0b6be4;
+            }
+
+        #zjTPOPzTable .xzaddress {
+            background-color: #ccc;
+        }
+
+        .enclosure_div {
+            display: none;
+        }
+
+        /*#terminalInfoForm .tile_H {
+            border: 1px solid #ccc;
+            width: 100px;
+            font-size: 16px;
+            text-align: center;
+            float: left;
+            padding: 5px;
+            cursor: pointer;
+            background-color: #f5f5f5;
+        }
+
+            #terminalInfoForm .tile_H:hover {
+                background-color: #fff;
+                border-bottom: 0px;
+            }*/
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            color: #322f2f;
+            cursor: default;
+            background-color: #ffffff;
+            /* border-bottom: 2px solid #ddd; */
+            /* border-bottom-color: transparent; */
+            font-weight: bold;
+            /* border-bottom: 4px solid #f39b13; */
+            border: 0px;
+            border-bottom: 5px solid #f39b13;
+        }
+
+        .nav-tabs > li > a {
+            margin-right: 2px;
+            line-height: 1.42857143;
+            border: 1px solid transparent;
+            /* border-radius: 4px 4px 0 0; */
+        }
+
+        #terminalInfoForm .ato {
+            background-color: #fff;
+            border-bottom: 0px;
+        }
+
+        #terminalInfoForm .x_divmain {
+            display: none;
+            min-height: 350px;
+        }
+
+        #x_divmain_2 .dropdown-menu {
+            left: 140px;
+        }
+
+        .followMenuspan {
+            display: block;
+            width: 25%;
+            float: left;
+            border-left: 1px solid #ccc;
+        }
+
+            .followMenuspan:hover {
+                background-color: red;
+                color: #fff;
+                cursor: pointer;
+            }
+
+        .ui-widget-content {
+            background-color: #fff !important;
+            border: 1px solid #ccc !important;
+            border-radius: 5px !important;
+            -webkit-border-radius: 5px !important;
+        }
+
+        .ui-state-focus {
+            background-color: #337ab7 !important;
+            color: #fff !important;
+        }
+
+        .ui-menu .ui-menu-item a {
+            font-weight: 100;
+            font-size: 12px;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        #mileage_RMP_del {
+            background-color: #d65050;
+            border-color: #d65050;
+        }
+
+            #mileage_RMP_del:hover {
+                background-color: #e43f3f;
+                border-color: #e43f3f;
+            }
+
+        @media screen and (max-width:1366px) {
+
+
+            #iframeMent {
+                height: 420px;
+            }
+
+            #formRight {
+                height: 416px;
+            }
+        }
+
+        .edit-oper-cover {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 999;
+            display: none;
+        }
+
+        .edit-oper-title {
+            height: 44px;
+            line-height: 44px;
+            position: relative;
+            border-bottom: #e0e5ed 1px solid;
+            text-indent: 30px;
+            font-size: 14px;
+            color: #6d6d6d;
+            font-weight: bold;
+        }
+
+            .edit-oper-title button {
+                width: 23px;
+                height: 20px;
+                float: right;
+                background: url(plug-ins/customer/img/mult-close.png);
+                border: none;
+                cursor: pointer;
+                margin: 13px 12px 0 0;
+                outline: none;
+            }
+
+                .edit-oper-title button:hover {
+                    opacity: 0.8;
+                }
+
+        .edit-oper-bottom {
+            height: 58px;
+            line-height: 58px;
+            position: absolute;
+            border-top: #e0e5ed 1px solid;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+            .edit-oper-bottom button {
+                width: 120px;
+                height: 32px;
+                line-height: 32px;
+                margin: 13px auto;
+                border-radius: 16px;
+                border: none;
+                color: #FFF;
+                font-size: 14px;
+                background: #5d7fac;
+                display: block;
+                outline: none;
+                cursor: pointer;
+            }
+
+                .edit-oper-bottom button:hover {
+                    opacity: 0.8;
+                }
+
+        .edit-box {
+            height: 30px;
+            border: #e0e5ed 1px solid;
+            margin-right: 0px;
+            overflow: hidden;
+            width: 200px;
+        }
+
+            .edit-box input {
+                width: 100%;
+                border: none;
+                text-indent: 10px;
+                height: 100%;
+                color: #666666;
+            }
+
+        .edit-label {
+            width: 140px;
+            line-height: 30px;
+            font-size: 12px;
+            color: #6d6d6d;
+            text-indent: 24px;
+            position: relative;
+            float: left;
+            font-weight: bold;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        .edit-row {
+            margin-top: 10px;
+            float: left;
+            width: 360px;
+            position: relative;
+        }
+
+            .edit-row textarea {
+                height: 68px;
+                width: 565px;
+                padding: 6px 10px;
+                position: absolute;
+                top: 0;
+                left: 135px;
+                border: #e0e5ed 1px solid;
+                resize: none;
+                outline: none;
+                font-size: 12px;
+                line-height: 16px;
+                color: #666;
+            }
+
+        .edit-textbox {
+            width: 100%;
+            height: 80px;
+            float: left;
+        }
+
+        .positions {
+            position: relative;
+        }
+
+        .del {
+            display: inline-block;
+            border-radius: 50%;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            font-size: 12px;
+            height: 16px;
+            width: 16px;
+            line-height: 16px;
+            vertical-align: middle;
+            top: -1px;
+            right: -5px;
+            color: #67c23a;
+        }
+
+            .del:hover {
+                background-color: #67c23a;
+                color: #fff;
+            }
+
+        .edit-table {
+            width: 562px;
+            margin-left: 135px;
+            border-left: #e0e5ed 1px solid;
+            border-top: #e0e5ed 1px solid;
+            margin-top: 36px;
+            margin-bottom: 30px;
+        }
+
+            .edit-table tr td {
+                border-bottom: #e0e5ed 1px solid;
+                border-right: #e0e5ed 1px solid;
+                width: 33%;
+            }
+
+            .edit-table tr:nth-child(2n+0) {
+                background-color: #f9f9f9;
+            }
+
+            .edit-table tr:nth-child(2n+1) {
+                background-color: #ffffff;
+            }
+
+            .edit-table thead tr {
+                background: #4176c4 !important;
+                font-weight: bold;
+                color: #FFF !important;
+            }
+
+            .edit-table tr {
+                height: 36px;
+                text-indent: 12px;
+                font-size: 12px;
+                color: #636363;
+            }
+
+        .tips-item-box {
+            float: left;
+            margin: 11px 0px 0 60px;
+        }
+
+        .icon-row {
+            width: 100% !important;
+        }
+
+        .el-input__inner {
+            height: 32px;
+            padding: 1px 120px;
+        }
+
+        .car-type {
+            display: block;
+            height: 30px;
+            width: 52px;
+            float: left;
+            cursor: pointer;
+            position: relative;
+        }
+
+            .car-type img {
+                display: block;
+                width: 26px;
+                height: 26px;
+                position: absolute;
+                top: 2px;
+                right: 9px;
+            }
+
+            .car-type span {
+                width: 14px;
+                height: 14px;
+                display: block;
+                position: absolute;
+                top: 8px;
+                left: 0;
+            }
+
+        .close {
+            float: right;
+            font-size: 21px;
+            font-weight: bold;
+            line-height: 1;
+            color: #ffffff;
+            text-shadow: 0 1px 0 #fff;
+            filter: alpha(opacity=20);
+            /* opacity: .8; */
+            opacity: 1;
+        }
+            /* opacity: .8; */
+
+            .close:hover,
+            .close:focus {
+                color: #fff;
+                text-decoration: none;
+                cursor: pointer;
+                filter: alpha(opacity=50);
+                /*opacity: .5;*/
+                opacity: 1;
+            }
+
+        .closeBtns {
+            position: absolute;
+            cursor: pointer;
+            right: -20px;
+            top: 23px;
+            line-height: 9px;
+            height: 12px;
+            width: 12px;
+            text-align: center;
+            background: #ff0707;
+            color: #fff;
+            border-radius: 50%;
+        }
+
+        .closeBtn {
+            position: absolute;
+            display: none;
+            cursor: pointer;
+            top: 9px;
+            line-height: 8px;
+            height: 12px;
+            width: 12px;
+            text-align: center;
+            background: #ff0707;
+            color: #fff;
+            border-radius: 50%;
+        }
+
+        .timeqixian {
+            clear: both;
+            overflow: hidden;
+            height: 37px;
+        }
+
+        .edit-flex-box {
+            display: flex;
+            height: 60px;
+            line-height: 60px;
+            font-size: 14px;
+        }
+
+        .edit-flex-item {
+            width: 101px;
+            text-align-last: justify;
+            text-align: right;
+            font-size: 12px;
+            color: #6d6d6d;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .timeqixian a {
+            width: 30px;
+            height: 30px;
+            display: block;
+            float: left;
+            background-color: #E8E8E8;
+            text-align: center;
+            line-height: 30px;
+            border-right: 1px solid #E2E2E2;
+        }
+
+        .adddel {
+            border-radius: 50%;
+            text-align: center;
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            font-size: 12px;
+            height: 16px;
+            width: 16px;
+            line-height: 14px;
+            vertical-align: middle;
+            top: -2px;
+            right: -5px;
+            color: #409eff;
+        }
+
+            .adddel:hover {
+                background-color: #409eff;
+                color: #fff;
+            }
+
+        .timeqixian .atci {
+            background-color: #43BFE3;
+            color: #fff;
+        }
+
+        .quedingxf {
+            width: 200px;
+            float: right;
+            text-align: center;
+        }
+
+            .quedingxf .xx {
+                font-size: 18px;
+                font-weight: 900;
+            }
+
+        #vehicleRenewalDiv {
+            padding: 20px;
+        }
+
+        .edit-box .dropdown-menu {
+            left: 140px;
+        }
+
+        .col-sm-10 .dropdown-menu,
+        .col-lg-10 .dropdown-menu,
+        .col-md-9 .dropdown-menu {
+            left: 15px;
+        }
+
+        .tips-list-left {
+            width: 100px;
+            text-align-last: justify;
+        }
+
+        .groups5 .TreeDiv {
+            top: inherit;
+        }
+
+        .tips-list {
+            display: flex;
+            font-size: 13px;
+            color: #ff0000;
+            margin: 10px 0 0 0;
+        }
+
+        i {
+            font-style: normal;
+        }
+
+        .layui-layer-title {
+            color: #fff!important;
+            background-color: #165082 !important;
+        }
+
+        .search {
+            width: 200px;
+        }
+        /*#terminalInfoForm .tile_H {
+            border: 1px solid #ccc;
+            width: 100px;
+            font-size: 16px;
+            text-align: center;
+            float: left;
+            padding: 5px;
+            cursor: pointer;
+            background-color: #f5f5f5;
+        }
+
+            #terminalInfoForm .tile_H:hover {
+                background-color: #fff;
+                border-bottom: 0px;
+            }*/
+        .tips-title {
+            font-size: 16px;
+            color: #92cb33;
+            border-left: 5px solid #92cb33;
+            padding-left: 7px;
+        }
+
+        #terminalInfoForm .ato {
+            background-color: #fff;
+            border-bottom: 0px;
+        }
+
+        #terminalInfoForm .x_divmain {
+            display: none;
+            min-height: 350px;
+        }
+
+        #x_divmain_2 .dropdown-menu {
+            left: 140px;
+        }
+
+
+        .nav-tabs > li.active > a,
+        .nav-tabs > li.active > a:hover,
+        .nav-tabs > li.active > a:focus {
+            color: #322f2f;
+            cursor: default;
+            background-color: #ffffff;
+            /* border-bottom: 2px solid #ddd; */
+            /* border-bottom-color: transparent; */
+            font-weight: bold;
+            /* border-bottom: 4px solid #f39b13; */
+            border: 0px;
+            border-bottom: 5px solid #f39b13;
+        }
+
+        .edit-flex-item-right-str {
+            font-size: 12px;
+            border: 1px solid #dcdfe6;
+            padding: 1px 20px 0 10px;
+            border-radius: 4px;
+            max-width: 420px;
+        }
+
+            .edit-flex-item-right-str span {
+                margin: 0 10px 0 0;
+                display: block;
+                line-height: 30px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 400px;
+                position: relative;
+            }
+
+            .edit-flex-item-right-str a {
+                color: #409EFF;
+                cursor: pointer;
+            }
+
+        .nav-tabs > li > a {
+            margin-right: 2px;
+            line-height: 1.42857143;
+            border: 1px solid transparent;
+            /* border-radius: 4px 4px 0 0; */
+        }
+
+        .el-cascader {
+            width: 250px;
+        }
+    </style>
+</head>
+
+<body style="height: 100%; overflow-y: hidden;">
+    <div id='app'>
+   <section id="container">
+        <!--header start-->
+        <div id="menuControlgroup" class="dropdown" style="z-index: 99; display: none; width: 0px; height: 0px;"></div>
+        <div id="menuControl" class="dropdown" style="z-index: 99; display: none; width: 0px; height: 0px;"></div>
+        <div id="follow_div" class="dropdown" style="z-index: 99; display: none; width: 0px; height: 0px;"></div>
+        <section id="main-content" style="height: 100%;">
+            <section class="wrapper" style="padding-top: 0px; padding-bottom: 0px; padding-right: 0px; margin-top: 0px; padding-left: 0px;">
+                <div id="leftrow" class="row1" style="margin-left: 0px; margin-right: 0px; height: 100%;">
+                    <div class="col-sm-1" id="leftPnl" style="border-right: 1px solid #ccc; width: 310px; background-color: #ffffff; border-top: 1px solid #ccc;">
+                        <div id="teamrow" class="rowMonitor">
+                            <div class="panel" style="margin-bottom: 0px;">
+                                <div class="panel-heading" style="background-color: #F9F9F9; height: 33px; padding: 8px 15px 5px 15px; border-bottom: 1px solid rgb(234, 234, 234); padding-right: 1px;">
+                                    <span style="font-size: 15px; font-weight: bold; color: #555">车组列表</span>
+                                    <a id="cancelAllSelectedGroup" style="float: right; color: #171616; font-size: 12px; text-decoration: underline; cursor: pointer; display: none;">取消选中</a>
+                                </div>
+                                <div class="panel-body" style="padding: 2px;">
+                                    <iframe id="userIframe" class="col-md-12" style="padding-left: 0px; padding-right: 0px; border-bottom: 1px solid #ccc;" frameborder="no" border="0"></iframe>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <!--             <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="submit" name="submit" class="btn btn2 btn-flat btn-warning2">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                            <input id="typeahead" type="text" data-provide="typeahead" disabled="disabled" autocomplete="off" name="search" class="form-control" placeholder="车组和库存搜索">
+                                        </div>-->
+                            <div id="divVehSearch" class="rowMonitor" style="height: 35px; font-size: 16px; padding-top: 5px; padding-left: 15px; padding-right: 15px;">
+                                <!--  <div class="input-group" style="padding-top: 2px;">-->
+
+                                <!--      <div class="input-group m-bot15 ">-->
+                                <!--   <span class="input-group-btn">
+                                            <button type="button" style="border: 1px solid #686869;" class="btn btn-white input-sm"><i class="fa fa-search" style="color: #686869; font-size: 20px; margin-top: -3px;"></i></button>
+                                        </span>-->
+
+
+                                <div class="iconic-input">
+                                    <i class="fa  fa-search" style="color: #2a77b9;"></i>
+                                    <input id="typeaheadVeh" type="text" data-provide="typeaheadVeh" class="form-control input-sm" placeholder="输入车牌号/设备号/SIM号/车主名" style="width: 280px; border: 1px solid #bdbdcc; color: #3c3737 !important; font-size: 10px; border-radius: 20px;">
+                                    <!-- </div>-->
+                                </div>
+
+                                <!--   <div class="input-group-btn">
+                                        <button id="searchType" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-radius: 0px; padding: 7px 4px; width: 60px;">搜索<span class="caret"></span></button>
+                                        <ul class="dropdown-menu dropdown-menu2 searchType">
+                                            <li><a href="javascript:;" val="0">搜索</a></li>
+                                            <li><a href="javascript:;" val="1">车牌号</a></li>
+                                            <li><a href="javascript:;" val="2">SIM卡</a></li>
+                                            <li><a href="javascript:;" val="3">终端号</a></li>
+                                            <li><a href="javascript:;" val="4">车主名</a></li>
+                                        </ul>
+                                    </div>
+                                    <input id="typeaheadVeh" type="text" data-provide="typeaheadVeh" disabled="disabled" class="form-control" placeholder="请至少输入2个字符" style="border-radius: 0px; height: 37px;">-->
+                                <!-- </div>-->
+
+                                <!--<div class="col-sm-3" style="padding:0px;">
+                                <select id="searchType" class="form-control" style="padding:5px;">
+                                    <option value="all">模糊搜索</option>
+                                    <option value="p">车牌号</option>
+                                    <option value="s">SIM卡</option>
+                                    <option value="z">终端号</option>
+                                    <option value="c">车主名</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-9" style="padding:0px 3px;">
+                                <input id="typeaheadVeh" type="text" disabled="disabled" placeholder="车牌,SIM,终端号,车主搜索(至少输入2个字符)" name="plate" data-provide="typeaheadVeh" style="border: 1px solid #FFFFFF; background-color: #FFFFFF;padding:5px;"
+                                    autocomplete="off" class="form-control   input-small" value="">
+                            </div>-->
+                                <!--<input type="text" class="form-control1" >-->
+                                <!--placeholder="请输入车牌号" -->
+
+                            </div>
+                            <div class="col-lg-12">
+                                <!--<div class="input-group m-bot15" style="margin-bottom: 2px; box-shadow: 1px 2px 1px rgba(0,0,0,.15);">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-white" style="background-color: #1E86F1; color: #FBFBFB; border: 1px solid #93C0EF;"><i class="fa   fa-search"></i></button>
+                                                </span>
+                                                <input id="typeahead" type="text" placeholder="车组和库存搜索" data-provide="typeahead" style="border: 1px solid #FFFFFF; background-color: #FFFFFF;" disabled="disabled" autocomplete="off" class="form-control input-small" value="" />
+                                            </div>-->
+                            </div>
+
+
+                        </div>
+
+                        <div id="divDrag" class="rowMonitor" style="background: #fff; color: #a7a7a7; height: 35px; font-size: 16px; border-bottom: 1px solid #ACB2B9;">
+                            <!--    <div class="col-sm-6" style="text-align: cen n ter;">
+                                <a class="fa fa-angle-double-up" data-toggle="modal" href="#editGroup"></a>
+                            </div>
+                            <div class="col-sm-6" style="text-align: center;">
+                                <a class="fa fa-angle-double-down" href="#"></a>
+                            </div>-->
+
+
+                            <div class="btn-group btn-group-justified" style="background-color: #ffffff; border-bottom: 1px solid #ccc;">
+                                <div class="btn  " style="padding: 6px 5px;">
+                                    <div id="btnShowAll" class="vehListType" style="width: 100px;">
+                                        <i class="fa fa-inbox"></i><a id="labelAllCount">全部</a>
+                                    </div>
+                                </div>
+                                <div class="btn  " style="padding: 6px 5px;">
+                                    <div id="btnShowOnline" class="vehListType" style="width: 100px;"><i class="fa fa-location-arrow"></i><a id="labelOnlineCount">在线</a></div>
+                                </div>
+                                <div class="btn  " style="padding: 6px 5px;">
+                                    <div id="btnShowOffline" class="vehListType" style="width: 100px;"><i class="fa fa-signal"></i><a id="labelOfflineCount">离线</a></div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div id="vehrow" class="rowMonitor" style="border-top: 2px solid #CCC;">
+                            <div class="panel" style="margin-bottom: 0px; border-radius: 0px;">
+                                <div class="panel-body" style="padding: 0px;">
+                                    <!--<iframe id="vehframe" class="col-md-12" src="monitorCenterVehInbox.html" height="280px" style="padding-right: 0px; padding-left: 0px; border-color: #76BEFD; border-width: 1px; border-top-width: 0px;"
+                                        frameborder="no" border="0"></iframe>-->
+                                    <iframe id="vehframe" class="col-md-12" style="height: 325px; overflow: hidden; padding-right: 0px; padding-left: 0px;" frameborder="no" border="0"></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="pages" class="btn-group btn-group-justified rowMonitor" style="width: 110%; display: none; border-top: 1px solid #C1BBBB">
+                            <a id="btnFirst" class="btn btn-white" style="background-color: #ECF0F5; border: 0; padding: 0; font-weight: bold; font-size: 12px;"
+                                onclick='first()'>首页</a>
+                            <a id="btnprevious" class="btn btn-white" style="background-color: #ECF0F5; border: 0; padding: 0; font-weight: bold; font-size: 12px;"
+                                onclick='previous()'>上一页</a>
+                            <div id="divPageIndex" class="btn-group dropup">
+                                <button id="btnPageIndex" data-toggle="dropdown" style="background-color: #ECF0F5; border: 0; padding: 0; font-weight: bold; font-size: 12px;"
+                                    class="btn btn-white dropdown-toggle" type="button">
+                                    0/0</button>
+                                <!--   <ul id="ulPageIndex" role="menu" class="dropdown-menu">
+                                       <li><a href="#">第1页</a></li>
+                                    <li><a href="#">第2页</a></li>
+                                    <li><a href="#">第3页</a></li>
+                                    <li><a href="#">第4页</a></li>
+                                </ul>-->
+                            </div>
+                            <a id="btnNext" class="btn btn-white" style="background-color: #ECF0F5; border: 0; padding: 0; font-weight: bold; font-size: 12px;"
+                                onclick='next()'>下一页</a>
+                            <a id="btnLast" class="btn btn-white" style="background-color: #ECF0F5; border: 0; padding: 0; font-weight: bold; font-size: 12px; border-right: 1px solid #C1BBBB;"
+                                onclick='last()'>尾页</a>
+                        </div>
+                        <!--   <div id="btnrow" class="  btn-group" style="height: 33px; background-color: #DDDDDD; width: 100%">
+                       <button class='btn ' style='width: 73px; float: right;' onclick='next()' type='button'>下一页 </button>
+                            <button class='btn ' style='width: 73px; float: right;' onclick='previous()' type='button'>上一页 </button>
+
+                            <div class="btn-group dropup">
+                                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">第1页 <span class="caret"></span></button>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li><a href="#">第1页</a></li>
+                                    <li><a href="#">第2页</a></li>
+                                    <li><a href="#">第3页</a></li>
+                                    <li><a href="#">第4页</a></li>
+                                </ul>
+                            </div>
+                          
+
+                        </div>-->
+                    </div>
+
+                    <div id="menu_div" class="toolBar  alert alert-info  " style="top: 0px; right: 0px; height: 33px; margin-bottom: 0px; color: #012544; padding: 0px; border-radius: 0px; position: absolute; width: 100%; border-bottom: 1px solid #E6E6E6; border-top: 1px solid #E6E2E2; background-color: #F9F9F9;">
+
+                        <a id="strAddress" title="" data-id="" style="margin: 10px; margin-right: 0px; float: left; color: #337ab7; overflow: hidden; height: 20px; text-overflow: ellipsis; white-space: nowrap;"></a>
+
+                        <ul id="menu" role="menu" style="text-align: center; float: right; margin: 3px; /*margin-right: 10px; */" class="toolBarMenu">
+
+                            <li style="float: right; margin-left: 0; margin-right: 0;" onclick="openTPOP();">
+                                <a class="fa   fa-dot-circle-o  ">二押点</a>
+                            </li>
+
+                            <li style="float: right; margin-left: 0; margin-right: 0;" onclick="openAreaPnl();">
+                                <a class="fa   fa-dot-circle-o  ">围栏</a>
+
+                            </li>
+
+                            <li style="float: right; margin-left: 0; margin-right: 0;" onclick="openPointPnl();">
+                                <a class="fa fa-thumb-tack  ">位置点</a>
+
+                            </li>
+
+                            <li style="float: right; margin-left: 0; margin-right: 0;" onclick="startRule();">
+                                <a class="fa fa-eraser  ">测距</a>
+
+                            </li>
+                            <li style="float: right; margin-left: 0; margin-right: 0;" onclick="regionalCheckVehicle();">
+                                <a class="fa fa-arrows  ">区域查车</a>
+
+                            </li>
+                            <li style="float: right; margin-left: 0; margin-right: 0;" onclick="setShowLuKuang();">
+                                <a class="fa fa-road  ">路况</a>
+
+
+                            </li>
+                            <li style="float: right; margin-left: 0px; margin-right: 0px;" onclick="setLayers()">
+                                <a id="mapTypeLabel" class="fa fa-globe">卫星地图</a>
+
+                            </li>
+
+                            <li style="float: right; margin-left: 0px; margin-right: 0px;">
+                                <select id="changeMap">
+                                    <option value="gdmap">高德地图</option>
+                                    <option value="bdmap">百度地图</option>
+                                </select>
+
+                            </li>
+                        </ul>
+                        <!-- <div class="btn" style=" float:left; border-left: 1px solid #E2E2E2; padding-left: 5px;padding-right: 3px;">
+                                    <a class="fa fa-chevron-left" style="color:#007EFF"></a>
+                                </div>-->
+                        <!--    <div style="float: right;">
+                                <input id="placeText" type="text" placeholder="位置搜索" style="padding-left: 5px; float: left; width: 180px; margin: 8px; margin-right: 0px; /* border-right: 0px; */border: 1px solid #B7AEAE; border-right: 0px; height: 24px;">
+                                <button class="searchPlaceBtn" style="" onclick="serachPlace()">搜索</button>
+                            </div>-->
+                    </div>
+
+                    <div class="col-sm-11" id="rightPnl" style="padding-right: 0px; padding-left: 0px; top: 33px;">
+                        <iframe id="mapframe" name="mapframe" style="padding-right: 0px; padding-left: 0px; height: 100%" class="col-md-12" frameborder="no" border="0"></iframe>
+
+                        <div class="alert alert-info fade in" style="margin-left: 5px; margin-bottom: 0px; padding: 5px; border-radius: 0px; background-color: #FFFFFF; top: 0; right: 0px; position: absolute;">
+                            <!--  <a id="labelCountDown" style="margin-left: 5px;"></a>-->
+
+                        </div>
+                        <!--<div class="checkboxes">
+                                              <label class="label_check c_on" for="checkbox-01">
+                                                  <input name="sample-checkbox-01" id="checkbox-01" value="1" type="checkbox" checked=""> I agree to the terms &amp; conditions.
+                                              </label>
+                                              <label class="label_check c_on" for="checkbox-02">
+                                              <input name="sample-checkbox-02" id="checkbox-02" value="1" type="checkbox"> Please send me regular updates. </label>
+                                              <label class="label_check c_off" for="checkbox-03">
+                                              <input name="sample-checkbox-02" id="checkbox-03" value="1" type="checkbox"> This is nice checkbox.</label>
+                                          </div>-->
+
+                        <div id="div1" class="alert alert-info fade in" style="top: 30px; right: 5px; border-top: 2px solid #1E86F1; margin-bottom: 0px; color: #012544; padding: 5px; background-color: #fff; border-radius: 0px; position: absolute; visibility: collapse; box-shadow: 1px 2px 1px  #ADADAD;">
+
+                            <div class="btn-group">
+                                <button data-toggle="dropdown" class="btn btn-white dropdown-toggle btn-xs" type="button" aria-expanded="false">图标标签设置 <span class="caret"></span></button>
+                                <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                                    <li onclick="setLabel(1);"><a>车牌号</a></li>
+                                    <li onclick="setLabel(2);"><a>车牌,速度</a></li>
+                                    <li id="btn" data-toggle="modal" href="#myModal"></li>
+                                    <!--    <li onclick="setLabel(3);"><a>车牌,速度,时间</a></li>
+                                    <li class="divider"></li>
+                                    <li onclick="setLabel(4);"><a>设备号</a></li>
+                                    <li onclick="setLabel(5);"><a>设备号,速度</a></li>
+                                    <li onclick="setLabel(6);"><a>设备号,速度,时间</a></li>-->
+                                    <li class="divider"></li>
+                                    <li onclick="setLabel(0);"><a>关闭</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div id="divLabelCountDown" style="display: none; top: 4px; left: 67px; position: absolute; background-color: white; height: 30px; line-height: 10px; border: 1px solid #e2e2e2; width: 100px; text-align: center;">
+                            <div id="labelCountDown" style="margin: 10px; float: left;"></div>
+                        </div>
+
+
+
+                        <div id="divTPOPPnl" class="areaPoiList  alert alert-info fade in  " style="display: none; top: 140px; right: 1px; height: 40px; margin-bottom: 0px; color: #012544; padding: 0px; border-radius: 0px; position: absolute; height: 400px; width: 350px; background: rgba(255, 255, 255, 0.75);">
+                            <div style="height: 30px; padding: 10px; border-bottom: 1px solid #4B89BF;">
+                                <a style="color: #337ab7; font-weight: bold;">二押点</a>
+                                <i class="fa fa-times" style="float: right; cursor: pointer;" onclick="closeTPOPPnl()"></i>
+                            </div>
+                            <!--     <div style="padding: 5px; height: 33px;">
+
+                                <input type="button" value="添加二押点" onclick="showModal('添加二押点', 'pointguard.html?type=TPOPmap');" />
+                                <input type="button" value="管理绑定车辆" onclick="showModal('管理绑定车辆', 'pointguard.html?type=TPOPplate');" />
+                                <input type="button" value="查看系统二押点" onclick="showModal('查看系统二押点', 'bindCityFz.html?TPOP=1');" />
+                            </div>
+                            <div style="overflow: auto; height: 330px; border: 1px solid #DADADA; margin: 1px; background: rgba(247, 247, 247, 0.57);">
+
+
+                                <div style="width: 100%; margin-top: -20px;">
+                                    <table id="zjTPOPzTable"></table>
+                                </div>
+                            </div>-->
+
+                        </div>
+
+
+                        <div id="divAreaPnl" class="areaPoiList  alert alert-info fade in  " style="display: none; top: 140px; right: 1px; height: 40px; margin-bottom: 0px; color: #012544; padding: 0px; border-radius: 0px; position: absolute; height: 400px; width: 250px; background: rgba(255, 255, 255, 0.75);">
+                            <div style="height: 30px; padding: 10px; border-bottom: 1px solid #4B89BF;">
+                                <a style="color: #337ab7; font-weight: bold;">围栏</a>
+                                <i class="fa fa-times" style="float: right; cursor: pointer;" onclick="closeAreaPnl()"></i>
+                            </div>
+                            <!--     <div style="padding: 5px; height: 33px;">
+                                <button type="button" title="查看围栏" class="btn btn-info btn-xs" style="float: right; margin-right: 5px;" onclick="showOrCloseArea()"><i id="iconShowOrCloseArea" class="fa fa-eye"></i></button>
+
+                                <button type="button" title="添加围栏" class="btn btn-info btn-xs" style="float: right; margin-right: 5px;" onclick="showModal('围栏设置', 'areaSetting.html?');"><i class="fa fa-plus-square"></i></button>
+
+                            </div>
+                            <div style="overflow: auto; height: 330px; border: 1px solid #DADADA; margin: 1px; background: rgba(247, 247, 247, 0.57);">
+                                <ul id="areaPnl" role="menu" style="text-align: center;" class="areaPoiPnl">
+                                    <li style="margin: 5px; margin-left: 0; margin-right: 0; margin: 5px;" onclick="startRule();">
+                                     
+                                    </li>
+                                </ul>
+                            </div>-->
+
+                        </div>
+
+
+                        <div id="divPoiPnl" class="areaPoiList  alert alert-info fade in  " style="display: none; top: 140px; right: 1px; height: 40px; margin-bottom: 0px; color: #012544; padding: 0px; border-radius: 0px; position: absolute; height: 400px; width: 200px; background: rgba(255, 255, 255, 0.75);">
+                            <div style="height: 30px; padding: 10px; border-bottom: 1px solid #4B89BF;">
+                                <a style="color: #337ab7; font-weight: bold;">位置点</a>
+                                <i class="fa fa-times" style="float: right; cursor: pointer;" onclick="closePoiPnl()"></i>
+                            </div>
+                            <!--<div style="padding: 5px; height: 33px;">
+                                <button type="button" title="查看位置点" class="btn btn-info btn-xs" style="float: right; margin-right: 5px;" onclick="showOrClosePoint()"><i id="iconShowOrClosePoint" class="fa fa-eye"></i></button>
+
+                                <button type="button" title="添加位置点" class="btn btn-info btn-xs" style="float: right; margin-right: 5px;" onclick="showModal('位置点设置', 'pointSetting.html?type=0');"><i class="fa fa-plus-square"></i></button>
+
+                            </div>
+                            <div style="overflow: auto; height: 330px; border: 1px solid #DADADA; margin: 1px; background: rgba(247, 247, 247, 0.57);">
+                                <ul id="pointPnl" role="menu" style="text-align: center;" class="areaPoiPnl">
+                                </ul>
+                            </div>-->
+
+                        </div>
+
+
+                        <!--      <div class="alert alert-info fade in" style="bottom: 2px; height: 54px; left: 0px; margin-bottom: 2px; color: #012544; padding: 0px; background-color: #fff; border-radius: 0px; position: absolute; box-shadow: 1px 2px 1px  #ADADAD;">
+                            <span id="divAddress" style="float: left; display: none;"></span>
+
+
+                        </div>-->
+
+
+
+                        <div id="count" style="background: white; display: none; border-top-left-radius: 8px;">
+                            <div id="menuBar" class="der" style="border-top-left-radius: 8px;">
+                                <!--<div  style="float: left;width: 40px;background: #ff6c60;     color: #FBFBFB;text-align: center;"><i class="fa  fa-warning (alias)"></i></div>-->
+                                <!--          <div id="lefttitle" class="lefttitle">统计</div>-->
+                                <div id="Div2" style="float: left;">
+                                    <span id="totalCountDiv" style="float: left; margin-left: 5px; font-size: 12px; font-weight: 500; color: white;"></span>
+                                    <!--总共:12354辆/在线:13521辆/离线:23124辆-->
+                                    <span id="alarmCountDiv" style="float: left; font-size: 12px; font-weight: 500; color: white;"></span>
+
+
+                                    <button id="btnCancelAll" class="btn btn-white dropdown-toggle btn-xs  " style="background: rgba(255, 0, 0, 0); border: 0px solid #fff; color: white; display: none; margin-left: 5px; float: left; margin-top: 5px;" type="button" aria-expanded="false">
+                                        <i class="fa fa-edit (alias)" style="font-size: 14px;"></i>
+                                        处理选中报警
+                                    </button>
+
+
+                                    <button id="btnBell" class="btn btn-white dropdown-toggle btn-xs  " style="background: rgba(255, 0, 0, 0); border: 0px solid #fff; color: white; display: none; margin-left: 5px; float: left; margin-top: 5px;" type="button" aria-expanded="false">
+                                        <i id="alarmVoice" class="fa fa-check-square" style="font-size: 14px;">
+                                            <audio id="audio" src="js/Vibration.mp3" preload="none" loop="loop"></audio>
+                                        </i>
+                                        报警铃声
+                                    </button>
+
+                                    <!--        <button id="btnShowAlarmOnMap" class="btn btn-showAlarmMark dropdown-toggle btn-xs" style=" visibility:hidden; margin-left: 5px;" type="button" aria-expanded="false">
+                                    <i class="fa  fa-thumb-tack"></i>
+                                    地图显示
+                                </button>-->
+                                </div>
+                                <!--<div id="menuTitle" style="float: left; width: 100px; height: 30px;">
+                                </div>-->
+
+                                <span id="nomal" class="glyphicon glyphicon-resize-full" style="line-height: 30px; float: right; color: #fff"></span>
+                                <span id="full" class="glyphicon glyphicon-plus" style="line-height: 30px; float: right; color: #fff"></span>
+                                <span id="min" class="glyphicon glyphicon-minus" style="line-height: 30px; float: right; color: #fff"></span>
+                            </div>
+                            <div class="under">
+                                <iframe id="alarmFrame" name="alarmFrame" style="padding-right: 0px; padding-left: 0px; height: 200px;" class="col-md-12" frameborder="no" border="0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="enclosure_div" style="float: right; display: none; border-left: #ccc; margin-top: 33px; background-color: #fff;">
+
+                        <div style="height: 30px; padding: 10px; border-bottom: 1px solid #4B89BF;">
+                            <a id="enclosure_tile" style="color: #337ab7; font-weight: bold;"></a>
+                            <i class="fa fa-times" style="float: right; cursor: pointer;" onclick="clse_enclosure_div()"></i>
+                            <a id="helpTPOP" style="float: right; margin-top: -2px; display: none; cursor: pointer; width: 40px; color: #082af8;">
+                                <img style="width: 20px; float: left;" src="img/help.png" /></a>
+                        </div>
+                        <!--位置点-->
+                        <div id="enclosure_div_1" class="enclosure_div">
+                            <div style="padding: 5px; height: 33px;">
+                                <button type="button" title="查看位置点" class="btn btn-info btn-xs" style="float: right; margin-right: 5px;" onclick="showOrClosePoint()"><i id="iconShowOrClosePoint" class="fa fa-eye"></i></button>
+                                <button type="button" title="添加位置点" class="btn btn-info btn-xs" style="float: right; margin-right: 5px;" onclick="showModal('位置点设置', 'pointSetting.html?type=0');"><i class="fa fa-plus-square"></i></button>
+                            </div>
+                            <div class="enclosure_div_main" style="overflow: auto; border: 1px solid #DADADA; margin: 1px; background: rgba(247, 247, 247, 0.57);">
+                                <ul id="pointPnl" role="menu" style="text-align: center;" class="areaPoiPnl">
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!--围栏-->
+                        <div id="enclosure_div_2" class="enclosure_div">
+                            <div style="padding: 5px; height: 33px;">
+                                <button type="button" title="查看围栏" class="btn btn-info btn-xs" style="float: right; margin-right: 5px;" onclick="showOrCloseArea()"><i id="iconShowOrCloseArea" class="fa fa-eye"></i></button>
+
+                                <button type="button" title="添加围栏" class="btn btn-info btn-xs" style="float: right; margin-right: 5px;" onclick="showModal('围栏设置', 'areaSetting.html?');"><i class="fa fa-plus-square"></i></button>
+
+                            </div>
+                            <div class="enclosure_div_main" style="overflow: auto; border: 1px solid #DADADA; margin: 1px; background: rgba(247, 247, 247, 0.57);">
+                                <ul id="areaPnl" role="menu" style="text-align: center;" class="areaPoiPnl">
+                                    <li style="margin: 5px; margin-left: 0; margin-right: 0; margin: 5px;" onclick="startRule();"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--二押点-->
+                        <div id="enclosure_div_3" class="enclosure_div">
+                            <div style="padding-top: 5px; height: 33px;">
+                                <input type="button" value="自定义二押点" onclick="showModal('自定义二押点', 'pointguard.html?type=TPOPmap');" />
+                                <input type="button" value="绑车" onclick="showModal('绑车', 'pointguard.html?type=TPOPplate');" />
+                                <input type="button" value="云端二押点" onclick="showModal('云端二押点', 'bindCityFz.html?TPOP=1');" />
+                            </div>
+                            <div class="enclosure_div_main" style="overflow: auto; border: 1px solid #DADADA; margin: 1px; background: rgba(247, 247, 247, 0.57);">
+                                <div style="width: 100%; margin-top: -20px;">
+                                    <table id="zjTPOPzTable"></table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="helpTPOP_div" style="background-color: #FFF9CC; z-index: 99999; top: 64px; right: 24px; width: 310px; border: 1px dashed #F4CB48; position: absolute; display: none;">
+
+
+                            <div style="padding: 15px;">
+                                <p>
+                                    <i style="font-size: 14px; font-weight: bold;">功能简介</i>
+                                </p>
+                                <p style="text-indent: 20px;">
+                                    防止车辆在二手车抵押点停留，增加风险预防。
+                                </p>
+                                <p>
+                                    <i style="font-size: 14px; font-weight: bold;">自定义二押点</i>
+                                </p>
+                                <p style="text-indent: 20px;">
+                                    用户可以在地图上自定义位置添加二押点。
+                                </p>
+                                <p>
+                                    <i style="font-size: 14px; font-weight: bold;">绑车</i>
+                                </p>
+                                <p style="text-indent: 20px;">
+                                    用户绑定车辆将作用于（自定义二押点 + 云端二押点）
+                                </p>
+                                <p>
+                                    <i style="font-size: 14px; font-weight: bold;">云端二押点</i>
+                                </p>
+                                <p style="text-indent: 20px;">
+                                    由云平台提供的二押点，用户默认拥有，云平台会定时更新云端二押点。
+                                </p>
+                                <p>
+                                    <i style="font-size: 14px; font-weight: bold;">报警：</i>
+                                </p>
+                                <p style="text-indent: 20px;">
+                                    当绑定的车辆在您设置的二押点(您设置的半径)范围，或者经过云端二押点(半径50米)范围，并且满足满足停留时间60分钟，系统会自动报警。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade modal-dialog-center" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content-wrap">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="height: 42px;">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 id="modalTitle" class="modal-title">Modal Tittle</h4>
+                                    </div>
+                                    <div class="modal-body" id="modalframediv">
+                                        <iframe id="modalframe" width="100%" height="350px" frameborder="no" border="0"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <a class="edit" data-toggle="modal" style="display: none;" href="#editVehicle">修改</a>
+                    <div class="modal fade modal-dialog-center" id="editVehicle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog modal-lg" style='width:760px;'>
+                            <div class="modal-content-wrap">
+                                <div class="modal-content" style="background-color: #F1F2F7;">
+                                    <div class="modal-header" style="height: 42px;">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 id="VehicleInfoTitel" class="modal-title">编辑车辆数据</h4>
+                                    </div>
+                                    <div class="modal-body" style="padding: 0px; border: 1px solid #ddd; padding-bottom: 10px; background-color: #fff;">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <form id="terminalInfoForm"   class="form-vertical" onsubmit="return false">
+                                                    <input type="hidden" id="terminalId" name="terminalId" value="4028818c5aa175c7015aa2174b3f0007">
+                                                    <!--  <div style="height: 35px; width: 100%; overflow: hidden;">
+                                                        <div data-type="1" class="tile_H ato">
+                                                            基本信息
+                                                        </div>
+                                                        <div data-type="2" class="tile_H" style="border-left: 0px;">
+                                                            关联设备
+                                                        </div>
+                                                        <div data-type="3" class="tile_H" style="border-left: 0px;">
+                                                            车主信息
+                                                        </div>
+                                                        <div data-type="4" class="tile_H" style="border-left: 0px;">
+                                                            安装信息
+                                                        </div>
+                                                        <div data-type="5" class="tile_H" style="border-left: 0px;">
+                                                            风控设置
+                                                        </div>
+                                                        <div style="border-bottom: 1px solid #ccc; float: left; height: 35px; width: 310px;">
+                                                        </div>
+                                                    </div>-->
+
+                                                    <ul class="nav nav-tabs" style="margin: 5px; margin-bottom: 0px; margin-top: 0px; background: white; margin-left: 0px; margin-right: 0px; padding-left: 5px;">
+                                                        <li data-type="1" class="active tile_H"><a href="#huabojilu" data-toggle="tab" style="line-height: 30px;">基本信息</a></li>
+                                                        <li data-type="2" class="tile_H"><a href="#huabojilu" data-toggle="tab" style="line-height: 30px;">关联设备</a></li>
+                                                        <li data-type="3" class="tile_H"><a href="#huabojilu" data-toggle="tab" style="line-height: 30px;">车主信息</a></li>
+                                                        <li data-type="4" class="tile_H"><a href="#huabojilu" data-toggle="tab" style="line-height: 30px;">安装信息</a></li>
+                                                        <li data-type="5" class="tile_H"><a href="#huabojilu" data-toggle="tab" style="line-height: 30px;">风控设置</a></li>
+
+                                                    </ul>
+
+
+                                                    <!--基本信息-->
+                                                    <div id="x_divmain_1" class="x_divmain" style="display: block;">
+                                                        <div class="edit-row">
+                                                            <span class="edit-label"><a style="color: red; margin-right: 5px;">*</a>车牌号</span>
+                                                            <div class="edit-box">
+                                                                <!--  <input type="text" class="form-control" id="modelName" name="modelName" readonly="readonly" onkeydown=" if(event.keyCode==8){return false;}">-->
+                                                                <input class="form-control " id="plate" name="plate" onfocus='this.select()' type="text" maxlength="20">
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-row">
+                                                            <span class="edit-label"><a style="color: red; margin-right: 5px;">*</a>SIM卡号</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="sim" type="text" name="sim" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-row">
+                                                            <span class="edit-label"><a style="color: red; margin-right: 5px;">*</a>设备类型</span>
+                                                            <div class="edit-box">
+                                                                <select id="terminalType_txt" class="form-control" style="border: 0px solid #e2e2e4;">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-row">
+                                                            <span class="edit-label"><a style="color: red; margin-right: 5px;">*</a>设备号</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="terminalNo" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="edit-row">
+                                                            <span class="edit-label"><a style="color: red; margin-right: 5px;">*</a>所属车组</span>
+                                                            <div class="edit-box">
+                                                                <select id="groups" class="form-control" style="margin-bottom: 0px; border: 0px solid #e2e2e4;">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="edit-row">
+                                                            <span class="edit-label">车架号</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="frameNo" type="text" name="frameNo" required="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-row">
+                                                            <span class="edit-label">发动机号</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="engineNo" type="text" name="engineNo" required="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-row">
+                                                            <span class="edit-label">车型</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="brand" style="margin-top: 0;" name="brand" required="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-row">
+                                                            <span class="edit-label">ICCID</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="iccid" name="iccid" required="">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="edit-row">
+                                                            <span class="edit-label">服务密码</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="serviceCode" type="text" name="serviceCode" required="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-row">
+                                                            <span class="edit-label">激活时间</span>
+                                                            <div class="edit-box" id="activationTme" style="line-height: 30px;">
+                                                            </div>
+                                                        </div>
+                                                           <div class="edit-row">
+                                                            <span class="edit-label">安装时间</span><!--<a style="color: red; margin-right: 5px;">*</a>-->
+                                                            <div class="edit-box">
+                                                                <input id="installDate" type="text" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                         <div class="edit-row">
+                                                            <span class="edit-label">车主</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="owner" type="text" name="owner" required="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-row" style="display: none;">
+                                                            <span class="edit-label">过期时间</span>
+                                                            <div class="edit-box" id="expireDateStr" style="line-height: 30px;">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="edit-row" id="displayYear_div" style="display: none">
+                                                            <span class="edit-label">续费年限</span>
+                                                            <div class="edit-box">
+                                                                <select id="displayYear" class="form-control" style="border: 0px solid #e2e2e4;">
+                                                                    <option value="0">未选择</option>
+                                                                    <option value="1">1年</option>
+                                                                    <option value="2">2年</option>
+                                                                    <option value="3">3年</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="edit-textbox">
+                                                            <div class="edit-row">
+                                                                <span class="edit-label">备注</span>
+                                                                <textarea class="form-control" id="remark" style="width:566px;left:139px;" name="remark"></textarea>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                
+                                         <!--设备-->
+                                        <div id="x_divmain_2" class="x_divmain">
+                                            <div class="edit-textbox" style="height: auto; margin-top: 10px;">
+                                                <div class="edit-row" style="margin-top: 0px; width: auto;">
+                                                    <span class="edit-label">搜索设备：</span>
+                                                    <input class="form-control" id="equipment_txt" type="text" style="width: 250px; height: 30px;   border: 1px solid #dcdfe6;
+    padding: 1px 40px 0 10px;
+    border-radius: 4px;" placeholder="车牌/设备号" />
+                                                </div>
+                                            </div>
+                                            <div id="tuijShebei" class="edit-textbox" style="height: auto; display:none;">
+                                                <div class="edit-row" style="margin-top: 5px; width: auto;">
+                                                    <span class="edit-label">推荐设备：</span>
+                                                    <div id="addassociatedshow_div" style="width: 450px; margin-left: 126px;   font-size: 12px;
+    padding: 1px 40px 0 10px;
+    border-radius: 4px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="edit-textbox" style="margin-top: 17px;">
+
+                                                <div class="edit-row" style="margin-top: 0px; width:100%;">
+                                                    <span class="edit-label" style="float:left;">关联设备：</span>
+                                                    <div id="associatedshow_div" data-objvehicle="" style="width: 512px; overflow:auto; height: 139px; float:left;      font-size: 12px;
+    border: 1px solid #dcdfe6;
+    padding: 1px 40px 0 10px;
+    border-radius: 4px;">
+                                                    </div>
+                                                </div>
+                                                <div class='tips-item-box'>
+                                                        <div class='tips-box'  style=" background-color: rgb(234, 249, 255);  padding: 13px; border:1px solid rgb(177, 196, 234); padding-bottom :0px;padding-top:0px;">
+                                                                <div class='tips-title' style="display:none;">
+                                                                    <i class='fa fa-lightbulb-o'>
+                                                                    </i>
+                                                                    <span>使用说明：</span>
+                                                                </div>
+                                                     <div class='tips-list' style="margin-bottom:3px;">
+                                                                    <div class='tips-list-left'>使用步骤：</div>
+                                                                    <div>
+                                                                        <p style="margin:0px;">
+                                                                            1.在搜索设备输入框输入车牌号或设备号，也可以选择推荐设备；
+
+                                                                        </p>
+                                                                      <p style="margin:0px;">
+                                                                            2.保存设置后，在监控中心的小气泡框点击关联设备按钮，查看关联设备的详情；
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                      <div class='tips-list' style="margin-top: 0px;margin-bottom:3px;  ">
+                                                                    <div class='tips-list-left'>关联设备：</div>
+                                                                    <div>
+                                                                       方便用户查看，同一台车上绑定多台设备的状态
+                                                                    </div>
+                                                                </div>
+                                                               <div class='tips-list' style=" margin-top: 0px; padding-bottom:8px;  margin-bottom:3px;">
+                                                                    <div class='tips-list-left'>注意事项：</div>
+                                                                    <div>
+                                                                       可绑定任意一台或多台未绑定设备，已绑定的设备之间不能重复绑定
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                </div>
+                                                <!--   <button onclick="associated()" class="btn btn-danger" type="button" name="upVeh" style="height: 28px; line-height: 28px; margin: 0 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; border-color: #4898d5; background-color: #2e8ded; color: #fff; float: right; margin-right: 28px;">
+                                                添加关联设备</button>-->
+                                            </div>
+ 
+                                            <!-- <div style="color: #f00;position: absolute;right: 10px;top: 60px; background: #fce6a2; padding:4px;">
+                                                可绑定任意一台或多台未绑定设备，已绑定的设备之间不能重复绑定
+                                            </div> -->
+                                        </div>
+                                                    <!--车主信息-->
+                                                    <div id="x_divmain_3" class="x_divmain">
+                                                       
+                                                        <div class="edit-row">
+                                                            <span class="edit-label">证件号</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="license" name="license" required="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-row">
+                                                            <span class="edit-label">联系方式</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="phone" type="text" name="phone" required="">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="edit-row">
+                                                            <span class="edit-label">车主地址</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="address" name="address" required="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--安装信息-->
+                                                    <div id="x_divmain_4" class="x_divmain">
+                                                       
+                                                        <div class="edit-row">
+                                                            <span class="edit-label">安装人员</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="installers" type="text" name="installers" maxlength="15">
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-row">
+                                                            <span class="edit-label">安装地点</span>
+                                                            <div class="edit-box">
+                                                                <input class="form-control " id="installPlace" type="text" name="installPlace" required="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-textbox">
+                                                            <div class="edit-row">
+                                                                <span class="edit-label">安装备注</span>
+                                                                <textarea id="installRemark" style="width:566px;left:139px;" class="form-control" name="installRemark"></textarea>
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+
+                                                    <!--风控设置-->
+                                                    <!-- <div id="x_divmain_5" class="x_divmain">
+                                                        <div class="edit-textbox" style="height: 50px;">
+                                                            <div class="edit-row" style="width: auto;">
+                                                                <span class="edit-label" style="width: 200px;">是否绑定二押点报警：</span>
+                                                                <span class="edit-label" style="text-align: left;">
+                                                                    <select id="isTwoCharge" style="height: 28px; margin-top: 2px;">
+                                                                        <option value="0">否</option>
+                                                                        <option value="1">是</option>
+                                                                    </select>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="edit-textbox" style="height: 50px;">
+                                                            <div class="edit-row" style="width: auto;">
+                                                                <span class="edit-label" style="width: 197px;">省市区：</span>
+                                                                <span class="edit-label" style="width: auto;" id="areaName"></span>
+                                                                <button class="btn btn-danger" onclick="setCitiArea()" type="button" style="height: 28px; line-height: 28px; margin: 0 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; border-color: #4898d5; background-color: #2e8ded; color: #fff;">设置</button>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="edit-textbox" style="height: 50px;">
+                                                            <div class="edit-row" style="width: auto;">
+                                                                <span class="edit-label" style="width: 197px;">经常停留点：</span>
+
+                                                                <div class="edit-label" style="width: auto; text-align: left;">
+                                                                    <p id="stayPaint_1">
+                                                                    </p>
+                                                                    <p id="stayPaint_2">
+                                                                    </p>
+                                                                </div>
+
+                                                            </div>
+                                                            <button class="btn btn-danger" onclick="parkingCircleSetting_cl()" type="button" style="height: 28px; line-height: 28px; margin: 11px 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; border-color: #4898d5; background-color: #2e8ded; color: #fff;">设置</button>
+                                                        </div>
+
+                                                        <div style="color: #f00; position: absolute; right: 10px; top: 60px; background: #fce6a2; padding: 4px;">
+                                                            风控设置只对指定本设备有效
+                                                        </div>
+                                                    </div> -->
+                                                           <div id="x_divmain_5" class="x_divmain" style='padding:0px 63px;'>
+                                            <div class='edit-flex-box'>
+                                                <div class='edit-flex-item'>绑定出省报警 : </div>
+                                                <div class='edit-flex-item-right'>
+                                                    <div class='positions'>
+                                                        <el-cascader :options="options" change-on-select :props='propst' @change='openlist' v-model='atrval' ></el-cascader>
+                                                        <i v-show='showcloseBtn' @click='clearInput' class='closeBtns'>x</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='edit-flex-box'>
+                                                <div class='edit-flex-item'>经常停留点设置 : </div>
+                                                <div class='edit-flex-item-right'>
+                                                    <div>
+                                                       
+                                                        <div id="stayPaint_div" class="edit-flex-item-right-str"   >
+                                                            <div class='positions'>
+                                                                <span id="stayPaint_1">
+                                                                        <el-button @click='settingBtn' type="text">选择地址</el-button>
+                                                                       
+                                                                </span>
+                                                                <i onclick='stayPaint_close(this,1)' class='closeBtn'>x</i>
+                                                            </div>
+                                                            <div class='positions'>
+                                                                <span id="stayPaint_2">
+                                                                        <el-button @click='settingBtn' type="text">选择地址</el-button>
+                                                                </span>
+                                                                <i onclick='stayPaint_close(this,2)' class='closeBtn'>x</i>
+                                                            </div>
+                                                            </div>
+                                                            
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='edit-flex-box'>
+                                                <div class='edit-flex-item'>启用二押点报警 : </div>
+                                                <div class='edit-flex-item-right'>
+                                                    <el-radio-group v-model="bindradio">
+                                                        <el-radio :label="1">启用</el-radio>
+                                                        <el-radio :label="0">关闭</el-radio>
+                                                      </el-radio-group>
+                                                </div>
+                                            </div>
+
+                                          <!--  <div style=" border-left: 2px solid rgb(49, 110, 222);font-size: 18px;font-weight: bold;margin-bottom: 8px;padding-left: 5px;">
+                                                重要提示
+                                            </div>-->
+                                                                     <div class='tips-box' style=" background-color: rgb(234, 249, 255);  padding: 13px; border:1px solid rgb(177, 196, 234); padding-bottom :8px;padding-top:8px; ">
+
+                                                    <div class='tips-title' style="display:none">
+                                                        <i class='fa fa-lightbulb-o'>
+                                                        </i>
+                                                        <span>使用说明：</span>
+                                                    </div>
+                                                    <div class='tips-list' style="margin-top:3px;">
+                                                        <div class='tips-list-left'>二押点：</div>
+                                                        <div style="width:377px;">防止车辆在二手抵押点停留，增加风险预防。</div>
+                                                    </div>
+                                                    <div class='tips-list' style="margin-top:3px;">
+                                                            <div class='tips-list-left'>绑定省市：</div>
+                                                            <div style="width:377px;">绑定省市区域后，该车辆驶出所绑定的区域，触发超出区域报警。</div>
+                                                        </div>
+                                                        <div class='tips-list' style="margin-top:3px;">
+                                                                <div class='tips-list-left'>设置经常停留：</div>
+                                                                <div style="width:470px;">当车辆连续三天不经过您设置的两点(范围：1000米)，系统会自动推送车辆异常停留报警。</div>
+                                                            </div>
+                                                   <div class='tips-list' style="margin-top:3px;">
+                                                                <div class='tips-list-left'>注意事项：</div>
+                                                                <div style="width:377px;">风控设置只对指定本设备有效</div>
+                                                            </div>
+                                                </div>
+                                        </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button id="confirm_veh" class="btn btn-danger" type="button" name="upVeh" style="height: 28px; line-height: 28px; margin: 0 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; border-color: #4898d5; background-color: #2e8ded; color: #fff;">保存</button>
+                                            <button id="cancel_veh" class="btn btn-default" type="button" style="height: 28px; line-height: 28px; margin: 0 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none;">取消</button>
+
+                                        </div>
+                                        <!--<div class="img-view-cover" id="img-cover">
+                                        <div class="img-view">
+                                            <button onclick="imgHide()"></button>
+                                            <div class="img-view-img" id="imgDiv">
+                                                <img src="">
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                    </div>
+                                    <!--     <div class="modal-body">
+                          
+                                    <div class=" form row">
+                                        <div class="col-lg-4">
+                                            <form class="cmxform form-horizontal tasi-form" id="commentForm" method="get" action="">
+                                                <div class="form-group has-error">
+                                                    <label for="cemail" class="control-label col-lg-4">车牌号</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="plate" type="text" maxlength="15" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group has-error">
+                                                    <label for="cname" class="control-label col-lg-4">所属车组</label>
+                                                    <div class="col-lg-8">
+                                                        <select id="groups" class="form-control m-bot15" style="margin-bottom: 0px;">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group has-error">
+                                                    <label for="cemail" class="control-label col-lg-4">设备号</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="terminalNo" type="text" onkeyup="value=value.replace(/[^\d]/g,'')">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group has-error">
+                                                    <label for="curl" class="control-label col-lg-4">设备类型</label>
+                                                    <div class="col-lg-8">
+                                                        <select id="terminalType_txt" class="form-control">
+                                                            <option value="A5B">A5B</option>
+                                                            <option value="A5C">A5C</option>
+                                                            <option value="A5C-3">A5C-3</option>
+                                                            <option value="A5C-5">A5C-5</option>
+                                                            <option value="A5C-8">A5C-8</option>
+                                                            <option value="A5D">A5D</option>
+                                                            <option value="A5E">A5E</option>
+                                                            <option value="A5H">A5H</option>
+                                                            <option value="M6">M6</option>
+                                                            <option value="M11">M11</option>
+                                                            <option value="GPRS-部标">GPRS-部标</option>
+                                                            <option value="mini">mini</option>
+                                                            <option value="Acar">Acar</option>
+                                                            <option value="Bcar">Bcar</option>
+                                                            <option value="KM-01">KM-01</option>
+                                                            <option value="KM-02">KM-02</option>
+                                                            <option value="Otrack">Otrack</option>
+                                                            <option value="GT02D">GT02D</option>
+                                                            <option value="K9">K9</option>
+                                                            <option value="K10">K10</option>
+                                                            <option value="K11">K11</option>
+                                                            <option value="K10A">K10A</option>
+                                                            <option value="TQ">TQ</option>
+                                                            <option value="FS-A8S">FS-A8S</option>
+                                                        </select> 
+                                                    </div>
+                                             
+                                                </div>
+                                                <div class="form-group has-error">
+                                                    <label for="ccomment" class="control-label col-lg-4">SIM卡号</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="sim" type="text" name="sim" onkeyup="value=value.replace(/[^\d]/g,'')" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-lg-4">ICCID</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="iccid" type="text" name="iccid" onkeyup="value=value.replace(/[^\d]/g,'')" />
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <form class="cmxform form-horizontal tasi-form" id="Form1" method="get" action="">
+
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-lg-4">车架号</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="frameNo" type="text" name="frameNo" required=""></input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-lg-4">发动机号</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="engineNo" type="text" name="engineNo" required=""></input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-lg-4">车主</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="owner" type="text" name="owner" required=""></input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-xs-4" style="text-align: center">证件号:</label>
+                                                    <div class="col-xs-8">
+                                                        <input class="form-control " id="license" name="license" required=""></input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-xs-4" style="text-align: center">车型:</label>
+                                                    <div class="col-xs-8">
+                                                        <input class="form-control " id="brand" style="margin-top: 0;" name="brand" required=""></input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-xs-4" style="text-align: center">车主地址:</label>
+                                                    <div class="col-xs-8">
+                                                        <input class="form-control " id="address" name="address" required=""></input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-lg-offset-2 col-lg-8">
+                                                        <button id="confirm_veh" class="btn btn-danger" type="button">保存</button>
+                                                        <button id="cancel_veh" class="btn btn-default" type="button">取消</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <form class="cmxform form-horizontal tasi-form" id="Form2" method="get" action="">
+
+                                                <div class="form-group has-error">
+                                                    <label for="ccomment" class="control-label col-lg-4">安装时间</label>
+                                                    <div class="col-lg-8">
+                                                        <input id="installDate" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-lg-4">安装人员</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="installers" type="text" name="installers" maxlength="15"></input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-lg-4">安装地点</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="installPlace" type="text" name="installPlace" required=""></input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-lg-4">联系方式</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="phone" type="text" name="phone" required=""></input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-lg-4">服务密码</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="serviceCode" type="text" name="serviceCode" required=""></input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="ccomment" class="control-label col-lg-4">备注</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control " id="remark" type="text" name="remark" required=""></input>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+
+                                </div>-->
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+            </section>
+        </section>
+  
+        <div id="rightPnlPov" class="sb-slidebar sb-right sb-style-overlay" style="margin-top: 0px; overflow: hidden; margin-right: -432px; transform: translate(-432px);">
+            <h5 class="side-title">街景<i class="fa fa-times pull-right" onclick="showOrCloseRightPnl(false)"></i></h5>
+            <iframe id="povFrame" width="95%" src="pov.html" frameborder="no" border="0" style="margin: 10px;"></iframe>
+
+        </div>
+
+        <!--关联设备-->
+        <!--   <div style="border: 10px solid rgb(204, 204, 204);background-color: rgb(255, 255, 255);padding: 2px;overflow: hidden;width: 500px;height: 600px;position: absolute;top: 32px;right: 3px;z-index: 999999;">
+            <iframe id="associatedmap" src="associatedDevice.html?type=map" style="width: 500px; height: 600px; border:0px; "></iframe>
+        </div>-->
+    </section>
+
+      </div>
+    
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="js/respond.min.js"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script type="text/javascript" src="assets/gritter/js/jquery.gritter.js"></script>
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+    <script type="text/javascript" src="assets/jquery.bootstrap-growl/jquery.bootstrap-growl.min.js"></script>
+    <!--right slidebar-->
+    <script src="js/slidebars.min.js"></script>
+    <script src="layer/layer.js"></script>
+    <!--   <script src="js/monitorCenter.js"></script>
+    <script src="js/jqPaginator.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>-->
+
+    <script src='/js/vue.min.js'></script>
+    <script src='/js/ele2.js'></script>
+
+    <script src="assets/timepicker/jquery.datetimepicker.js"></script>
+    <link href="assets/timepicker/jquery.datetimepicker.css" rel="stylesheet" />
+
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+
+
+
+    <script src="js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/monitorCenter.js" });
+            arr.push({ src: "/js/jqPaginator.js" });
+            arr.push({ src: "/js/jquery.nicescroll.js" });
+            GetVersions(arr);
+        });
+   
+        var vue = new Vue({
+            el: '#app',
+            data: {
+                options: [],
+                atrval:[],
+                showcloseBtn : false,
+                propst: {
+                    label:'name',
+                    value:'name',
+                    children:'list',
+                },
+                bindradio:0
+            },
+            methods : {
+                clearInput :function  () {
+                 this.atrval = []
+                 this.showcloseBtn =  false
+        },
+             handleItemChange:function  (data) {
+                 console.log(data)
+        },
+     settingBtn :function () {
+         parkingCircleSetting_cl()
+     },
+        onchangepro :function (data) {
+            var str = ''
+            for(var i = 0;i<this.options.length;i++){
+                if(data[0] == this.options[i].name){
+                    str+=this.options[i].name+'_'+this.options[i].code
+                    if(data.length>1){
+
+                        for(var j = 0;j<this.options[i].list.length;j++){
+                            if(data[1] == this.options[i].list[j].name){
+                               
+
+                                str+='|'+data[1]+'_'+this.options[i].list[j].code
+                                if(data.length>2){
+                                    for(var g = 0;g<this.options[i].list[j].list.length;g++){
+                                        if(data[2] == this.options[i].list[j].list[g].name){
+                                            str+='|'+data[2]+'_'+this.options[i].list[j].list[g].code
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return str;
+        },
+    openlist:function  () {
+        var _this = this
+        $('.el-cascader-menu__item').dblclick(function (data) {
+            $('.el-cascader-menus').hide()
+            $('.el-cascader').click()
+           
+        });
+        
+        this.showcloseBtn = true
+    }
+        },
+        mounted:function () {
+            var _this = this
+            $.ajax({
+                url: ajax('http/monitor/getAreaBaseInfo.json'),
+                type: 'get',
+                dataType: 'json',
+                success: function (res) {
+                    _this.options = res.obj.list
+               
+                }
+            })
+    
+    
+ 
+      
+        }
+        })
+
+    </script>
+
+
+
+</body>
+</html>

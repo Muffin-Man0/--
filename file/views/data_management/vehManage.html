@@ -1,0 +1,1460 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="height: 100%; overflow: hidden">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <!--Form Wizard-->
+    <link rel="stylesheet" type="text/css" href="css/jquery.steps.css" />
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/Ele2.css">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+    <link href="css/bootstrap-select.min.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+
+    <![endif]-->
+    <style>
+        .ztree span {
+            line-height: 18px;
+            margin: 2px;
+            font-size: 13px;
+        }
+
+        .TreeDiv {
+            z-index: 999;
+            width: 465px;
+            height: 220px;
+            background-color: white;
+            overflow-y: auto;
+            position: absolute !important;
+            left: 17px !important;
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 3px;
+            box-shadow: rgb(102, 102, 102) 0px 1px 5px;
+            display: none;
+        }
+
+        #TreeDiv1 {
+            width: 250px !important;
+            height: 300px !important;
+        }
+
+        .TreeDiv * {
+            color: #797979 !important;
+        }
+
+        #iframeMent {
+            height: 540px;
+            overflow-x: hidden;
+            width: 100%;
+            border-bottom: 1px solid #ccc;
+        }
+
+        tr td {
+            color: #47596f !important;
+        }
+
+        @media screen and (max-width:1366px) {
+
+
+            #iframeMent {
+                height: 420px;
+            }
+
+            #formRight {
+                height: 416px;
+            }
+        }
+
+        .edit-oper-cover {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 999;
+            display: none;
+        }
+
+        .edit-oper-title {
+            height: 44px;
+            line-height: 44px;
+            position: relative;
+            border-bottom: #e0e5ed 1px solid;
+            text-indent: 30px;
+            font-size: 14px;
+            color: #6d6d6d;
+            font-weight: bold;
+        }
+
+            .edit-oper-title button {
+                width: 23px;
+                height: 20px;
+                float: right;
+                background: url(plug-ins/customer/img/mult-close.png);
+                border: none;
+                cursor: pointer;
+                margin: 13px 12px 0 0;
+                outline: none;
+            }
+
+                .edit-oper-title button:hover {
+                    opacity: 0.8;
+                }
+
+        .edit-oper-bottom {
+            height: 58px;
+            line-height: 58px;
+            position: absolute;
+            border-top: #e0e5ed 1px solid;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+            .edit-oper-bottom button {
+                width: 120px;
+                height: 32px;
+                line-height: 32px;
+                margin: 13px auto;
+                border-radius: 16px;
+                border: none;
+                color: #FFF;
+                font-size: 14px;
+                background: #5d7fac;
+                display: block;
+                outline: none;
+                cursor: pointer;
+            }
+
+                .edit-oper-bottom button:hover {
+                    opacity: 0.8;
+                }
+
+        .edit-box {
+            height: 30px;
+            border: #e0e5ed 1px solid;
+            margin-right: 0px;
+            overflow: hidden;
+            width: 200px;
+        }
+
+            .edit-box input {
+                width: 100%;
+                border: none;
+                text-indent: 10px;
+                height: 100%;
+                color: #666666;
+            }
+
+        .edit-label {
+            width: 140px;
+            line-height: 30px;
+            font-size: 12px;
+            color: #6d6d6d;
+            text-indent: 24px;
+            position: relative;
+            float: left;
+            font-weight: bold;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        .edit-row {
+            margin-top: 10px;
+            float: left;
+            width: 360px;
+            position: relative;
+        }
+
+            .edit-row textarea {
+                height: 68px;
+                width: 565px;
+                padding: 6px 10px;
+                position: absolute;
+                top: 0;
+                left: 135px;
+                border: #e0e5ed 1px solid;
+                resize: none;
+                outline: none;
+                font-size: 12px;
+                line-height: 16px;
+                color: #666;
+            }
+
+        .edit-textbox {
+            width: 100%;
+            height: 80px;
+            float: left;
+        }
+
+        .positions {
+            position: relative;
+        }
+
+        .del {
+            display: inline-block;
+            border-radius: 50%;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            font-size: 12px;
+            height: 16px;
+            width: 16px;
+            line-height: 16px;
+            vertical-align: middle;
+            top: -1px;
+            right: -5px;
+            color: #67c23a;
+        }
+
+            .del:hover {
+                background-color: #67c23a;
+                color: #fff;
+            }
+
+        .edit-table {
+            width: 562px;
+            margin-left: 135px;
+            border-left: #e0e5ed 1px solid;
+            border-top: #e0e5ed 1px solid;
+            margin-top: 36px;
+            margin-bottom: 30px;
+        }
+
+            .edit-table tr td {
+                border-bottom: #e0e5ed 1px solid;
+                border-right: #e0e5ed 1px solid;
+                width: 33%;
+            }
+
+            .edit-table tr:nth-child(2n+0) {
+                background-color: #f9f9f9;
+            }
+
+            .edit-table tr:nth-child(2n+1) {
+                background-color: #ffffff;
+            }
+
+            .edit-table thead tr {
+                background: #4176c4 !important;
+                font-weight: bold;
+                color: #FFF !important;
+            }
+
+            .edit-table tr {
+                height: 36px;
+                text-indent: 12px;
+                font-size: 12px;
+                color: #636363;
+            }
+
+        .tips-item-box {
+            float: left;
+            margin: 11px 0px 0 60px;
+        }
+
+        .icon-row {
+            width: 100% !important;
+        }
+
+        .el-input__inner {
+            height: 32px;
+            padding: 1px 120px;
+        }
+
+        .car-type {
+            display: block;
+            height: 30px;
+            width: 52px;
+            float: left;
+            cursor: pointer;
+            position: relative;
+        }
+
+            .car-type img {
+                display: block;
+                width: 26px;
+                height: 26px;
+                position: absolute;
+                top: 2px;
+                right: 9px;
+            }
+
+            .car-type span {
+                width: 14px;
+                height: 14px;
+                display: block;
+                position: absolute;
+                top: 8px;
+                left: 0;
+            }
+
+        .close {
+            float: right;
+            font-size: 21px;
+            font-weight: bold;
+            line-height: 1;
+            color: #ffffff;
+            text-shadow: 0 1px 0 #fff;
+            filter: alpha(opacity=20);
+            /* opacity: .8; */
+            opacity: 1;
+        }
+            /* opacity: .8; */
+
+            .close:hover,
+            .close:focus {
+                color: #fff;
+                text-decoration: none;
+                cursor: pointer;
+                filter: alpha(opacity=50);
+                /*opacity: .5;*/
+                opacity: 1;
+            }
+
+        .closeBtns {
+            position: absolute;
+            cursor: pointer;
+            right: -20px;
+            top: 23px;
+            line-height: 9px;
+            height: 12px;
+            width: 12px;
+            text-align: center;
+            background: #ff0707;
+            color: #fff;
+            border-radius: 50%;
+        }
+
+        .closeBtn {
+            position: absolute;
+            display: none;
+            cursor: pointer;
+            top: 9px;
+            line-height: 8px;
+            height: 12px;
+            width: 12px;
+            text-align: center;
+            background: #ff0707;
+            color: #fff;
+            border-radius: 50%;
+        }
+
+        .timeqixian {
+            clear: both;
+            overflow: hidden;
+            height: 37px;
+        }
+
+        .edit-flex-box {
+            display: flex;
+            height: 60px;
+            line-height: 60px;
+            font-size: 14px;
+        }
+
+        .edit-flex-item {
+            width: 101px;
+            text-align-last: justify;
+            text-align: right;
+            font-size: 12px;
+            color: #6d6d6d;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .timeqixian a {
+            width: 30px;
+            height: 30px;
+            display: block;
+            float: left;
+            background-color: #E8E8E8;
+            text-align: center;
+            line-height: 30px;
+            border-right: 1px solid #E2E2E2;
+        }
+
+        .adddel {
+            border-radius: 50%;
+            text-align: center;
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            font-size: 12px;
+            height: 16px;
+            width: 16px;
+            line-height: 14px;
+            vertical-align: middle;
+            top: -2px;
+            right: -5px;
+            color: #409eff;
+        }
+
+            .adddel:hover {
+                background-color: #409eff;
+                color: #fff;
+            }
+
+        .timeqixian .atci {
+            background-color: #43BFE3;
+            color: #fff;
+        }
+
+        .quedingxf {
+            width: 200px;
+            float: right;
+            text-align: center;
+        }
+
+            .quedingxf .xx {
+                font-size: 18px;
+                font-weight: 900;
+            }
+
+        #vehicleRenewalDiv {
+            padding: 20px;
+        }
+
+        .edit-box .dropdown-menu {
+            left: 140px;
+        }
+
+        .col-sm-10 .dropdown-menu,
+        .col-lg-10 .dropdown-menu,
+        .col-md-9 .dropdown-menu {
+            left: 15px;
+        }
+
+        .tips-list-left {
+            width: 100px;
+            text-align-last: justify;
+        }
+
+        .groups5 .TreeDiv {
+            top: inherit;
+        }
+
+        .tips-list {
+            display: flex;
+            font-size: 13px;
+            color: #ff0000;
+            margin: 10px 0 0 0;
+        }
+
+        i {
+            font-style: normal;
+        }
+
+        .layui-layer-title {
+            color: #fff!important;
+            background-color: #165082 !important;
+        }
+
+        .search {
+            width: 200px;
+        }
+        /*#terminalInfoForm .tile_H {
+            border: 1px solid #ccc;
+            width: 100px;
+            font-size: 16px;
+            text-align: center;
+            float: left;
+            padding: 5px;
+            cursor: pointer;
+            background-color: #f5f5f5;
+        }
+
+            #terminalInfoForm .tile_H:hover {
+                background-color: #fff;
+                border-bottom: 0px;
+            }*/
+        .tips-title {
+            font-size: 16px;
+            color: #92cb33;
+            border-left: 5px solid #92cb33;
+            padding-left: 7px;
+        }
+
+        #terminalInfoForm .ato {
+            background-color: #fff;
+            border-bottom: 0px;
+        }
+
+        #terminalInfoForm .x_divmain {
+            display: none;
+            min-height: 350px;
+        }
+
+        #x_divmain_2 .dropdown-menu {
+            left: 140px;
+        }
+
+
+        .nav-tabs > li.active > a,
+        .nav-tabs > li.active > a:hover,
+        .nav-tabs > li.active > a:focus {
+            color: #322f2f;
+            cursor: default;
+            background-color: #ffffff;
+            /* border-bottom: 2px solid #ddd; */
+            /* border-bottom-color: transparent; */
+            font-weight: bold;
+            /* border-bottom: 4px solid #f39b13; */
+            border: 0px;
+            border-bottom: 5px solid #f39b13;
+        }
+
+        .edit-flex-item-right-str {
+            font-size: 12px;
+            border: 1px solid #dcdfe6;
+            padding: 1px 20px 0 10px;
+            border-radius: 4px;
+            max-width: 420px;
+        }
+
+            .edit-flex-item-right-str span {
+                margin: 0 10px 0 0;
+                display: block;
+                line-height: 30px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: 400px;
+                position: relative;
+            }
+
+            .edit-flex-item-right-str a {
+                color: #409EFF;
+                cursor: pointer;
+            }
+
+        .nav-tabs > li > a {
+            margin-right: 2px;
+            line-height: 1.42857143;
+            border: 1px solid transparent;
+            /* border-radius: 4px 4px 0 0; */
+        }
+
+        .el-cascader {
+            width: 250px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id='app'>
+        <!-- BEGIN PAGE CONTENT-->
+        <div>
+
+            <div id="teamrow" class="row col-lg-12" style="padding-right: 0; padding-left: 0; background: white;">
+                <div class="panel" style="margin-bottom: 0px; /* height: 100px; *//* border-bottom: 1px solid #c3c1c1; */border: 1px solid #ccc; border-bottom: 1px solid #c3c1c1; margin: 3px;">
+                    <div class="panel-heading" style="background-color: #F9F9F9; height: 48px; padding: 8px 15px 5px 15px; border-bottom: 1px solid rgb(234, 234, 234); padding-right: 1px; /*margin-left: 25%; */">
+                        <!--     <span style="font-size: 15px; font-weight: bold; color: #555; line-height:35px;">车组信息</span>-->
+
+                        <button id="btnTransVeh" style="margin-left: 10px; background: #165082; border-color: #165082;" type="button" class="btn btn-primary"
+                            data-toggle="modal" href="#transVeh">
+                            <i class="fa fa-cloud"></i>车辆转移
+                        </button>
+
+
+                        <button id="brnBicTransVeh" style="margin-left: 5px; background: #165082; border-color: #165082;" class="btn btn-info" data-toggle="modal">
+                            <i class="fa fa-mail-forward (alias)"></i>转移选中项
+                        </button>
+
+                        <button id="btnOutPut" type="button" data-loading-text="Loading..." class="btn btn-success" style="margin-left: 5px; background-color: #ffffff; border-color: #c5c5c5; color: #165082;">
+                            <i class="fa  fa-share-square"></i>导出
+                        </button>
+
+
+                        <a id="txtVehCounts" style="float: right; margin-right: 10px; line-height: 30px; font-size: 17px;"></a>
+
+                    </div>
+
+                    <div class="panel-body col-sm-3" style="padding: 2px; background-color: white; border-left: 1px solid rgb(204, 202, 202); border-right: 1px solid rgb(204, 202, 202); /*margin-top: -49px*/">
+                        <div class="col-lg-12" style="height: 40px; padding: 5px;">
+
+                            <div class="iconic-input">
+                                <i class="fa  fa-search" style="color: #2a77b9"></i>
+                                <input id="vehGroupSearch" type="text" data-provide="typeahead" class="form-control input-sm" placeholder="车组/车牌/sim卡/终端号"
+                                    style="border: 1px solid #bdbdcc; color: #3c3737 !important; font-size: 10px; border-radius: 20px;">
+                            </div>
+                        </div>
+                        <div class="col-lg-5" style="display: none;">
+                            <span class="tools pull-right">
+                                <a id="addGroup" class="fa fa-plus" data-toggle="modal" href="#editGroup"></a>
+                                <a id="delGroup" class="fa fa-minus"></a>
+                                <a id="UpGroup" class="fa fa-edit (alias)" data-toggle="modal" href="#editGroup"></a>
+                            </span>
+                        </div>
+                        <iframe name="vehIframe" style="width: 100%;" id="iframeMent" frameborder="0" border="0"></iframe>
+                    </div>
+                    <div class="panel-body col-sm-9" style="padding: 2px; background-color: white;">
+                        <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
+
+                            <table id="tabVehicle"></table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- <div id="Div1" class="row col-lg-9" style="padding-right: 0; padding-left: 0;">
+            <div class="panel" style="margin-bottom: 0px; /* height: 100px; *//* border-bottom: 1px solid #c3c1c1; */border: 1px solid #ccc; border-bottom: 1px solid #c3c1c1; margin: 3px;">
+                <div class="panel-heading" style="background-color: #F9F9F9; height: 50px; padding: 8px 15px 5px 15px; border-bottom: 1px solid rgb(234, 234, 234); padding-right: 1px;">
+
+                    <button id="btnTransVeh" style="margin-left: 15px; background: #165082; border-color: #165082;"
+                        type="button" class="btn btn-primary" data-toggle="modal" href="#transVeh">
+                        <i class="fa fa-cloud"></i>车辆转移</button>
+                    <button id="brnBicTransVeh" style="margin-left: 20px;" class="btn btn-info" data-toggle="modal"><i class="fa fa-send"></i>批量转移</button>
+
+
+               
+                </div>
+                <div class="panel-body" style="padding: 2px;">
+                    <div class="col-lg-12" style="padding: 10px;">
+
+                        <table id="tabVehicle"></table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>-->
+
+
+
+
+        </div>
+
+
+
+        <!--main content end-->
+        <a id="addVeh" data-toggle="modal" href="#editVehicle" style="display: none;"></a>
+
+        <div class="modal fade modal-dialog-center" id="uploadTer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+            style="display: none;">
+            <div class="modal-dialog modal-lg-8">
+                <div class="modal-content-wrap">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">设备入库</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">设备类型:</label>
+                                    <div class="col-lg-10">
+                                        <select id="terminalType2" class="form-control m-bot15">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">设备编号:</label>
+                                    <div class="col-lg-10">
+                                        <textarea id="terminalNos2" class="form-control" style="height: 150px;" onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                            placeholder="多台设备请换行,一行一条！"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-8">
+                                        <button id="Storage" type="button" class="btn btn-info">入库</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade modal-dialog-center" id="transVeh" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+            style="display: none;">
+            <div class="modal-dialog modal-lg-8">
+                <div class="modal-content-wrap">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button id="closex" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">车辆转移</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class=" col-sm-2 control-label">转移到:</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control " id="groups2" type="text">
+                                        <div id="TreeDiv2" class="TreeDiv">
+                                            <div id="groupTree2" class="ztree"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="  col-sm-2 control-label" style="float: left;">转移方式:</label>
+                                    <div class="col-sm-10">
+
+                                        <select id="EQS_type" class="form-control m-bot15" name="EQS_type">
+                                            <option value='plate'>根据车牌号</option>
+                                            <!--   <option value='sim'>根据sim卡号</option>-->
+                                            <option value='terminalNo'>根据设备号</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="transDevlable  col-sm-2 control-label" style="float: left;">车牌号:</label>
+                                    <div class="col-sm-10">
+                                        <!--<textarea id="terminalNos3" class="form-control" style="height: 150px;" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\,\\n]/g,'')" placeholder="多台设备请用逗号隔开,例如:13567827365,1367287365,"></textarea>-->
+                                        <textarea id="terminalNos3" oninput="terminalCount();" class="form-control" style="height: 150px;" placeholder="多台设备请换行,一行一条！"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-10">
+                                        <a id="txt"></a>
+                                        <button id="transDevList" type="button" class="btn btn-info" style="float: right;">转移车辆</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade modal-dialog-center" id="bicTransVeh" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+            style="display: none;">
+            <div class="modal-dialog modal-lg-8">
+                <div class="modal-content-wrap">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">车辆转移</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class=" col-sm-2 control-label">转移到:</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control " id="groups9" type="text">
+                                        <div id="TreeDiv9" class="TreeDiv">
+                                            <div id="groupTree9" class="ztree"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-10">
+                                        <button id="bicTransDevList" type="button" class="btn btn-info">转移车辆</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade modal-dialog-center" id="transVeh_Single" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg-8">
+                <div class="modal-content-wrap">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">车辆转移</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class=" col-sm-2 control-label">转移到:</label>
+                                    <div class="col-lg-10 groups5">
+                                        <input class="form-control " id="groups5" type="text">
+                                        <div id="TreeDiv5" class="TreeDiv">
+                                            <div id="groupTree5" class="ztree"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="  col-sm-2 control-label">设备号:</label>
+                                    <div class="col-lg-10">
+                                        <input id="terminalNo_Tran" type="text" class="form-control" onkeyup="value=value.replace(/[^0-9]/g,'')" placeholder="请输入设备号"
+                                            disabled="disabled">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-10">
+                                        <button id="singleVehTran" type="button" class="btn btn-info">转移车辆</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade modal-dialog-center" id="editGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+            style="display: none;">
+            <div class="modal-dialog modal-lg-8">
+                <div class="modal-content-wrap">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">编辑车组数据</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class=" form">
+                                <form class="cmxform form-horizontal tasi-form" id="vehGroup" method="get" action="">
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-md-3" style="text-align: center">上级车组：</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control " id="groups3" type="text">
+                                            <div id="TreeDiv3" class="TreeDiv">
+                                                <div id="groupTree3" class="ztree"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-error">
+                                        <label for="cemail" class="control-label col-md-3" style="text-align: center">车组名：</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control " id="groupName" type="text" maxlength="15">
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-md-3" style="text-align: center">联系方式：</label>
+                                        <div class="col-md-9">
+                                            <input class="form-control " id="vehGroupPhone" type="text" onkeyup="value=value.replace(/[^\0-9\,\ \-]/g,'')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="ccomment" class="control-label col-md-3" style="text-align: center">备注：</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control " id="vehGroupRemark" required=""></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="notice_div" style="display: none;">
+                                        <label for="ccomment" class="control-label col-md-3" style="text-align: center">公告：</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control " id="notice" required=""></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-8">
+                                            <button id="confirm_vehGroup" class="btn btn-danger" type="button">保存</button>
+                                            <button id="cancel_vehGroup" class="btn btn-default" type="button">取消</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade modal-dialog-center"  id="editVehicle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+            style="display: none;">
+            <div class="modal-dialog modal-lg" style='width:730px;'>
+                <div class="modal-content-wrap">
+                    <div class="modal-content" style="background-color: #F1F2F7;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">编辑车辆数据</h4>
+                        </div>
+                        <div class="modal-body" style="padding: 0px;  background-color: #fff;">
+                            <div class=" form row" style="border: 1px solid #ddd; padding-bottom: 10px;">
+
+
+
+
+                                <!--           <div class="form-group ">
+                                <label for="ccomment" class="control-label col-xs-4" style="text-align: center">ICCID:</label>
+                                <div class="col-xs-8">
+                                    <input class="form-control " id="iccid" name="iccid" onkeyup="value=value.replace(/[^\d]/g,'')" />
+                                </div>
+                            </div>-->
+
+
+
+
+                                <div class="col-xs-12" style='padding-left:0;padding-right:0;'>
+                                    <form id="terminalInfoForm" class="form-vertical" onsubmit="return false">
+                                        <input type="hidden" id="terminalId" name="terminalId" value="4028818c5aa175c7015aa2174b3f0007">
+                                        <!--     <div style="height: 35px; width: 100%; overflow: hidden;">
+                                        <div data-type="1" class=" ato">
+                                            基本信息
+                                        </div>
+                                        <div data-type="2" class="tile_H" style="border-left: 0px;">
+                                            关联设备
+                                        </div>
+                                        <div data-type="3" class="tile_H" style="border-left: 0px;">
+                                            车主信息
+                                        </div>
+                                        <div data-type="4" class="tile_H" style="border-left: 0px;">
+                                            安装信息
+                                        </div>
+                                        <div data-type="5" class="tile_H" style="border-left: 0px;">
+                                            风控设置
+                                        </div>
+                                        <div style="border-bottom: 1px solid #ccc; float: left; height: 35px; width: 310px;">
+                                        </div>
+                                    </div>-->
+
+
+
+                                        <ul class="nav nav-tabs" style="margin: 5px; margin-bottom: 0px; margin-top: 0px; background: white; margin-left: 0px; margin-right: 0px; padding-left: 5px;">
+                                            <li data-type="1" class="active tile_H">
+                                                <a href="#huabojilu" data-toggle="tab" style="line-height: 30px;">基本信息</a>
+                                            </li>
+                                            <li data-type="2" class="tile_H">
+                                                <a href="#huabojilu" data-toggle="tab" style="line-height: 30px;">关联设备</a>
+                                            </li>
+                                            <li data-type="3" class="tile_H">
+                                                <a href="#huabojilu" data-toggle="tab" style="line-height: 30px;">车主信息</a>
+                                            </li>
+                                            <li data-type="4" class="tile_H">
+                                                <a href="#huabojilu" data-toggle="tab" style="line-height: 30px;">安装信息</a>
+                                            </li>
+                                            <li data-type="5" class="tile_H">
+                                                <a href="#huabojilu" data-toggle="tab" style="line-height: 30px;">风控设置</a>
+                                            </li>
+
+                                        </ul>
+
+
+                                        <!--基本信息-->
+                                        <div id="x_divmain_1" class="x_divmain" style="display: block;">
+                                            <div class="edit-row">
+                                                <span class="edit-label">
+                                                    <a style="color: red; margin-right: 5px;">*</a>车牌号</span>
+                                                <div class="edit-box">
+                                                    <!--  <input type="text" class="form-control" id="modelName" name="modelName" readonly="readonly" onkeydown=" if(event.keyCode==8){return false;}">-->
+                                                    <input class="form-control " id="plate" name="plate" onfocus='this.select()' type="text" maxlength="20">
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">
+                                                    <a style="color: red; margin-right: 5px;">*</a>SIM卡号</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="sim" type="text" name="sim" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">
+                                                    <a style="color: red; margin-right: 5px;">*</a>设备类型</span>
+                                                <div class="edit-box">
+                                                    <select id="terminalType_txt" class="form-control" style="border: 0px solid #e2e2e4;">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">
+                                                    <a style="color: red; margin-right: 5px;">*</a>设备号</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="terminalNo" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">
+                                                    <a style="color: red; margin-right: 5px;">*</a>所属车组</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="groups4" type="text">
+                                                    <div id="TreeDiv4" class="TreeDiv">
+                                                        <div id="groupTree4" class="ztree"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">车架号</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="frameNo" type="text" name="frameNo" required="">
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">发动机号</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="engineNo" type="text" name="engineNo" required="">
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">车型</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="brand" style="margin-top: 0;" name="brand" required="">
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">ICCID</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="iccid" name="iccid" required="">
+                                                </div>
+                                            </div>
+
+                                            <div class="edit-row">
+                                                <span class="edit-label">服务密码</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="serviceCode" type="text" name="serviceCode" required="">
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">激活时间</span>
+                                                <div class="edit-box" id="activationTme" style="line-height: 30px;">
+                                                </div>
+                                            </div>
+                                             <div class="edit-row">
+                                                <span class="edit-label">安装时间</span>
+                                                <!-- <a style="color: red; margin-right: 5px;">*</a>-->
+                                                <div class="edit-box">
+                                                    <input id="installDate" type="text" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">车主</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="owner" type="text" name="owner" required="">
+                                                </div>
+                                            </div>
+                                            <div class="edit-row" style="display: none;">
+                                                <span class="edit-label">过期时间</span>
+                                                <div class="edit-box" id="expireDateStr" style="line-height: 30px;">
+                                                </div>
+                                            </div>
+
+                                            <div class="edit-row" id="displayYear_div" style="display: none;">
+                                                <span class="edit-label">续费年限</span>
+                                                <div class="edit-box">
+                                                    <!-- <input class="form-control "   type="text"   required="">-->
+                                                    <select id="displayYear" class="form-control" style="border: 0px solid #e2e2e4;">
+                                                        <option value="0">未选择</option>
+                                                        <option value="1">1年</option>
+                                                        <option value="2">2年</option>
+                                                        <option value="3">3年</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="edit-textbox">
+                                                <div class="edit-row">
+                                                    <span class="edit-label">备注</span>
+                                                    <textarea class="form-control" id="remark"   style="width:566px;left:139px;" name="remark"></textarea>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!--设备-->
+                                        <div id="x_divmain_2" class="x_divmain">
+                                            <div class="edit-textbox" style="height: auto; margin-top: 10px;">
+                                                <div class="edit-row" style="margin-top: 0px; width: auto;">
+                                                    <span class="edit-label">搜索设备：</span>
+                                                    <input class="form-control" id="equipment_txt" type="text" style="width: 250px; height: 30px;   border: 1px solid #dcdfe6;
+    padding: 1px 40px 0 10px;
+    border-radius: 4px;" placeholder="车牌/设备号" />
+                                                </div>
+                                            </div>
+                                            <div id="tuijShebei" class="edit-textbox" style="height: auto; display:none;">
+                                                <div class="edit-row" style="margin-top: 5px; width: auto;">
+                                                    <span class="edit-label">推荐设备：</span>
+                                                    <div id="addassociatedshow_div" style="width: 450px; margin-left: 126px;   font-size: 12px;
+    padding: 1px 40px 0 10px;
+    border-radius: 4px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="edit-textbox" style="margin-top: 17px;">
+
+                                                <div class="edit-row" style="margin-top: 0px; width:100%;">
+                                                    <span class="edit-label" style="float:left;">关联设备：</span>
+                                                    <div id="associatedshow_div" data-objvehicle="" style="width: 512px; overflow:auto; height: 139px; float:left;      font-size: 12px;
+    border: 1px solid #dcdfe6;
+    padding: 1px 40px 0 10px;
+    border-radius: 4px;">
+                                                    </div>
+                                                </div>
+                                                <div class='tips-item-box'>
+                                                        <div class='tips-box'  style=" background-color: rgb(234, 249, 255);  padding: 13px; border:1px solid rgb(177, 196, 234); padding-bottom :0px;padding-top:0px;">
+                                                                <div class='tips-title' style="display:none;">
+                                                                    <i class='fa fa-lightbulb-o'>
+                                                                    </i>
+                                                                    <span>使用说明：</span>
+                                                                </div>
+  
+                                                                <div class='tips-list' style="  margin-bottom: 3px;">
+
+                                                                    <div class='tips-list-left'>使用步骤：</div>
+                                                                    <div>
+                                                                        <p style="margin:0px;">
+                                                                            1.在搜索设备输入框输入车牌号或设备号，也可以选择推荐设备；
+
+                                                                        </p>
+                                                                      <p style="margin:0px;">
+                                                                            2.保存设置后，在监控中心的小气泡框点击关联设备按钮，查看关联设备的详情；
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+
+                                                                      <div class='tips-list' style="margin-top: 0px;  margin-bottom: 3px;  ">
+                                                                    <div class='tips-list-left'>关联设备：</div>
+                                                                    <div>
+                                                                       方便用户查看，同一台车上绑定多台设备的状态
+                                                                    </div>
+                                                                </div>
+                                                               <div class='tips-list' style=" margin-top: 0px; padding-bottom:8px;   margin-bottom: 3px;">
+                                                                    <div class='tips-list-left'>注意事项：</div>
+                                                                    <div>
+                                                                       可绑定任意一台或多台未绑定设备，已绑定的设备之间不能重复绑定
+                                                                    </div>
+                                                                </div>
+ 
+                                                            </div>
+                                                </div>
+                                                <!--   <button onclick="associated()" class="btn btn-danger" type="button" name="upVeh" style="height: 28px; line-height: 28px; margin: 0 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; border-color: #4898d5; background-color: #2e8ded; color: #fff; float: right; margin-right: 28px;">
+                                                添加关联设备</button>-->
+                                            </div>
+ 
+                                            <!-- <div style="color: #f00;position: absolute;right: 10px;top: 60px; background: #fce6a2; padding:4px;">
+                                                可绑定任意一台或多台未绑定设备，已绑定的设备之间不能重复绑定
+                                            </div> -->
+                                        </div>
+                                        <!--车主信息-->
+                                        <div id="x_divmain_3" class="x_divmain">
+                                            
+                                            <div class="edit-row">
+                                                <span class="edit-label">证件号</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control" type="text" id="license" name="license" required="">
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">联系方式</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="phone" type="text" name="phone" required="">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="edit-row">
+                                                <span class="edit-label">车主地址</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " type="text" id="address" name="address" required="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--安装信息-->
+                                        <div id="x_divmain_4" class="x_divmain">
+                                           
+                                            <div class="edit-row">
+                                                <span class="edit-label">安装人员</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="installers" type="text" name="installers" maxlength="15">
+                                                </div>
+                                            </div>
+                                            <div class="edit-row">
+                                                <span class="edit-label">安装地点</span>
+                                                <div class="edit-box">
+                                                    <input class="form-control " id="installPlace" type="text" name="installPlace" required="">
+                                                </div>
+                                            </div>
+                                            <div class="edit-textbox">
+                                                <div class="edit-row">
+                                                    <span class="edit-label">安装备注</span>
+                                                    <textarea id="installRemark"  style="width:566px;left:139px;" class="form-control"  name="installRemark"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--风控设置-->
+
+
+                                        <div id="x_divmain_5" class="x_divmain" style='padding:0px 63px;'>
+                                            <div class='edit-flex-box'>
+                                                <div class='edit-flex-item'>绑定出省报警 : </div>
+                                                <div class='edit-flex-item-right'>
+                                                    <div class='positions'>
+                                                        <el-cascader :options="options" change-on-select :props='propst' @change='openlist' v-model='atrval' ></el-cascader>
+                                                        <i v-show='showcloseBtn' @click='clearInput' class='closeBtns'>x</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='edit-flex-box'>
+                                                <div class='edit-flex-item'>经常停留点设置 : </div>
+                                                <div class='edit-flex-item-right'>
+                                                    <div>
+                                                       
+                                                        <div id="stayPaint_div" class="edit-flex-item-right-str"   >
+                                                            <div class='positions'>
+                                                                <span id="stayPaint_1">
+                                                                        <el-button @click='settingBtn' type="text">选择地址</el-button>
+                                                                </span>
+                                                                <i onclick='stayPaint_close(this,1)' class='closeBtn'>x</i>
+                                                            </div>
+                                                            <div class='positions'>
+                                                                <span id="stayPaint_2">
+                                                                        <el-button @click='settingBtn' type="text">选择地址</el-button>
+                                                                </span>
+                                                                <i onclick='stayPaint_close(this,2)' class='closeBtn'>x</i>
+                                                            </div>
+                                                            </div>
+                                                            
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='edit-flex-box'>
+                                                <div class='edit-flex-item'>启用二押点报警 : </div>
+                                                <div class='edit-flex-item-right'>
+                                                    <el-radio-group v-model="bindradio">
+                                                        <el-radio :label="1">启用</el-radio>
+                                                        <el-radio :label="0">关闭</el-radio>
+                                                      </el-radio-group>
+                                                </div>
+                                            </div>
+
+                                          <!--  <div style=" border-left: 2px solid rgb(49, 110, 222);font-size: 18px;font-weight: bold;margin-bottom: 8px;padding-left: 5px;">
+                                                重要提示
+                                            </div>-->
+                                            <div class='tips-box' style=" background-color: rgb(234, 249, 255);  padding: 13px; border:1px solid rgb(177, 196, 234); padding-bottom :8px;padding-top:8px; ">
+
+                                                    <div class='tips-title' style="display:none">
+                                                        <i class='fa fa-lightbulb-o'>
+                                                        </i>
+                                                        <span>使用说明：</span>
+                                                    </div>
+                                                    <div class='tips-list' style="margin-top:3px;">
+                                                        <div class='tips-list-left'>二押点：</div>
+                                                        <div style="width:377px;">防止车辆在二手抵押点停留，增加风险预防。</div>
+                                                    </div>
+                                                    <div class='tips-list' style="margin-top:3px;">
+                                                            <div class='tips-list-left'>绑定省市：</div>
+                                                            <div style="width:377px;">绑定省市区域后，该车辆驶出所绑定的区域，触发超出区域报警。</div>
+                                                        </div>
+                                                        <div class='tips-list' style="margin-top:3px;">
+                                                                <div class='tips-list-left'>设置经常停留：</div>
+                                                                <div style="width:470px;">当车辆连续三天不经过您设置的两点(范围：1000米)，系统会自动推送车辆异常停留报警。</div>
+                                                            </div>
+                                                   <div class='tips-list' style="margin-top:3px;">
+                                                                <div class='tips-list-left'>注意事项：</div>
+                                                                <div style="width:377px;">风控设置只对指定本设备有效</div>
+                                                            </div>
+                                                </div>
+                                        </div>
+
+                                        <!-- <div class="edit-textbox" style="height: 50px;">
+                                        <div class="edit-row" style="width: auto;">
+                                            <span class="edit-label" style="width: 200px;">是否绑定二押点报警：</span>
+                                            <span class="edit-label" style="text-align: left;">
+                                                <select id="isTwoCharge" style="height: 28px; margin-top: 2px;">
+                                                    <option value="0">否</option>
+                                                    <option value="1">是</option>
+                                                </select>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="edit-textbox" style="height: 50px;">
+                                        <div class="edit-row" style="width: auto;">
+                                            <span class="edit-label" style="width: 197px;">省市区：</span>
+                                            <span class="edit-label" style="width: auto;" id="areaName"></span>
+                                            <button class="btn btn-danger" onclick="setCitiArea()" type="button" style="height: 28px; line-height: 28px; margin: 0 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; border-color: #4898d5; background-color: #2e8ded; color: #fff;">设置</button>
+                                        </div>
+
+                                    </div>
+                                    <div class="edit-textbox" style="height: 50px;">
+                                        <div class="edit-row" style="width: auto;">
+                                            <span class="edit-label" style="width: 197px;">经常停留点：</span>
+
+                                            <div class="edit-label" style="width: auto; text-align: left;">
+                                                <p id="stayPaint_1">
+                                                </p>
+                                                <p id="stayPaint_2">
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                        <button class="btn btn-danger" onclick="parkingCircleSetting_cl()" type="button" style="height: 28px; line-height: 28px; margin: 11px 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; border-color: #4898d5; background-color: #2e8ded; color: #fff;">设置</button>
+                                    </div>
+                                    
+                                                    <div style="color: #f00;position: absolute;right: 10px;top: 60px; background: #fce6a2; padding:4px;">
+                                                        风控设置只对指定本设备有效
+                                                    </div> -->
+                                    </form>
+                                </div>
+
+                                <div class="text-center">
+                                    <hr>
+                                    <button id="confirm_veh" class="btn btn-danger" type="button" name="upVeh" style="height: 28px; line-height: 28px; margin: 0 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none; border-color: #4898d5; background-color: #2e8ded; color: #fff;">保存</button>
+                                    <button id="cancel_veh" class="btn btn-default" type="button" style="height: 28px; line-height: 28px; margin: 0 6px; padding: 0 15px; border: 1px solid #dedede; background-color: #f1f1f1; color: #333; border-radius: 2px; font-weight: 400; cursor: pointer; text-decoration: none;">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--LONA CREATE VIEW-->
+        <div class="modal fade" id="lonaCreateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="height: 340px;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">新增贷款</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal" role="form">
+                            <div class="form-group  col-md-6">
+                                <label class="col-md-3 control-label">裸车价格:</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" id="c_nakedVehPrice" type="number" />
+                                    <input type="hidden" id="c_jsonVehicle" />
+                                </div>
+                            </div>
+                            <div class="form-group  col-md-6">
+                                <label class="col-md-3 control-label">还款期限(月):</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" id="c_repaymentTerm" type="number" maxlength="3" min="1" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class=" col-md-3 control-label">放贷金额:</label>
+                                <div class="col-md-9">
+                                    <input class="form-control " id="c_loanAmount" type="number" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class=" col-md-3 control-label">贷款金额:</label>
+                                <div class="col-md-9">
+                                    <input class="form-control " id="c_valueOfLoan" type="number" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6 ">
+                                <label class="col-md-3 control-label">每月还款日:</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" id="c_monthPayDate" type="number" min="1" maxlength="2" max="31" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 ">
+                                <label class="col-md-3 control-label">每月还款金额:</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" id="c_monthPayMoney" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="form-group  col-md-6">
+                                <label class=" col-md-3 control-label">还款结束日期:</label>
+                                <div class="col-md-9">
+                                    <input class="form-control exdate" id="c_deadlinepayDate" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6 ">
+                                <label class="col-md-3 control-label">操作员:</label>
+                                <div class="col-md-9">
+                                    <input class="form-control " data-ucoding="1" id="c_operator" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12 text-center">
+                                <button class="btn btn-info c_save" style="margin-right: 20px;">新增</button>
+                                <button class="btn btn-default c_cancel" onclick="$('#lonaCreateModel').modal('hide');">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END LONA CREATE VIEW-->
+
+
+
+        <div id="associated_div" style="display: none;">
+            <div style="margin-top: 20px;">
+                <div>
+                    搜索设备：
+                    <input type="text" id="associatedDevice" />
+                    <p>推荐设备：</p>
+                    <table>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-typeahead.js"></script>
+    <script src='/js/vue.min.js'></script>
+    <script src='/js/ele2.js'></script>
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <link href="assets/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+    <script src="js/jquery-migrate-1.1.1.js"></script>
+    <script src="assets/autocomplete/jquery.autocomplete.js"></script>
+    <link href="assets/autocomplete/jquery.autocomplete.css" rel="stylesheet" />
+    <script src="assets/timepicker/jquery.datetimepicker.js"></script>
+    <link href="assets/timepicker/jquery.datetimepicker.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/jquery.nicescroll.js"></script>
+    <script type="text/javascript" src="js/jquery.table2excel.js"></script>
+    <script src="layer/layer.js"></script>
+    <script src="js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({
+                src: "/js/vehManager.js"
+            });
+            GetVersions(arr);
+        });
+        String.prototype.trim = function () {
+            return this.replace(/(^\s*)|(\s*$)/g, "");
+        }
+
+    </script>
+
+</body>
+
+</html>

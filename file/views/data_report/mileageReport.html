@@ -1,0 +1,345 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>Dynamic Table</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <link href="css/slidebars.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="assets/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body style="height: 100%;">
+    <div id="helpinfoMile_div" style="background-color: #FFF9CC; z-index: 99999; top: 64px; right: 24px; width: 380px; border: 1px dashed #F4CB48; position: absolute; display: none;">
+        <div style="padding: 15px;">
+            <p style="margin: 0 0 10px;">
+                <i style="font-size: 14px; font-weight: bold; font-style: normal">特殊设备的里程显示为估算值：</i>
+            </p>
+              <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                <span id="pinfoMile_shebei" style="color: #f00;"></span>
+            </p>
+          <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                该设备不支持里程数据上传，显示里程为<span style="color: #f00;">估算值</span>，仅供参考使用！当发生以下情况，可能会导致里程<span style="color: #f00;">有误差</span>：
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                1.当设备处于<span style="color: #f00;">不定位</span>状态时（例如：停车场或处于GPS信号弱的地方）；
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 0 10px;">
+                2.当设备处于<span style="color: #f00;">基站定位</span>时；
+            </p>
+            <p style="text-indent: 20px; font-size: 12px; line-height: 20px; margin: 0 ">
+                3.其他可能导致<span style="color: #f00;">定位异常</span>情况；
+            </p>
+         
+        </div>
+    </div>
+
+    <section id="container" class="" style="height: 100%; overflow: hidden;">
+
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper" style="padding-top: 15px; margin-top: 0px;">
+                <!-- page start-->
+                <div id="div_search" class="row" style="background-color: white; padding: 15px; margin-left: 15px; margin-right: 15px; /* margin-bottom: 10px; */
+    padding-bottom: 0px; border-bottom: 1px solid #f0f1f6;">
+
+
+                    <div class="row">
+                        <div style="float: left; height: 33px; line-height: 33px; font-weight: bold;">
+                            选择日期：
+                        </div>
+                        <div class="col-sm-2" style="padding-left: 3px; padding-right: 3px;">
+                            <section class="panel">
+                                <input id="startTime" type="text" placeholder="请输入开始时间" class="form-control cor_bck" readonly="" size="16">
+                            </section>
+                        </div>
+
+                        <div class="col-sm-2" style="padding-left: 3px; padding-right: 3px;">
+                            <section class="panel">
+                                <input id="endTime" type="text" placeholder="请输入结束时间" class="form-control cor_bck" readonly="" size="16">
+                            </section>
+                        </div>
+
+
+                        <div style="float: left; height: 33px; margin-left: 30px; line-height: 33px; color: #096fc7;">
+                            <a class="atime">今天</a>
+                            <a>|</a>
+                            <a class="atime">昨天</a>
+                            <a>|</a>
+                            <a class="atime">近三天</a>
+                            <a>|</a>
+                            <a class="atime">近七天</a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div style="padding-right: 3px; width: 350px;">
+                            <div style="float: left; height: 33px; line-height: 33px; font-weight: bold;">
+                                车辆车组：
+                            </div>
+                            <section class="panel input-group m-bot15" style="padding-left: 3px; float: left; width: 250px;">
+                                <input id="chooseId" type="text" placeholder="请选择车组或者车辆" data-provide="typeahead" autocomplete="off" class="form-control input-small cor_bck">
+                                <span class="input-group-btn">
+                                    <button id="btnChooseId" class="btn btn-white" type="button" style="border-radius: 0px;"><i id="iChooseId" class="fa fa-sitemap"></i></button>
+                                </span>
+                            </section>
+
+                            <a id="infoMile_tile" style="position: absolute; top: 94px; left: 355px;" class="tile"><img style="width: 18px;float: left;margin-left: 10px;" src="img/help.png"></a>
+                        </div>
+                        <div class="typeahead dropdown-menu" id="TreeDiv">
+                            <p id="TreeTitel" style="margin: 3px; font-size: 12px; padding-left: 10px;">
+                                <i style="font-weight: 900; color: #f00;">“双击”</i>左边节点选择<i style="font-weight: 900; color: #f00;">“车组”</i>，
+                                 <i style="font-weight: 900; color: #f00;">“单击”</i>右边节点选择<i style="font-weight: 900; color: #f00;">“车辆”</i>
+                            </p>
+                            <div id="groupTree" class="ztree RpZtree"></div>
+                            <div id="vehTree" class="ztree RpZtree" style="border-left: 1px solid #b0b5b9;"></div>
+                        </div>
+                        <div class="col-sm-2" style="width: 200px; display: none;">
+                            <div style="float: left; height: 33px; line-height: 33px; font-weight: bold;">
+                                设备类型：
+                            </div>
+                            <select class="form-control m-bot15 cor_bck" id="Etype" style="width: 90px">
+                            </select>
+                        </div>
+                        <div class="col-sm-3" style="padding-left: 3px; padding-right: 3px; float: right;">
+                            <button id="btnOutPut" type="button" data-loading-text="Loading..." class="btn btn-success" style="float: right; margin-left: 10px; background-color: #ffffff; border-color: #c5c5c5; color: #165082;">
+                                <i class="fa  fa-share-square"></i>导出</button>
+                            <button id="btnsearch" type="button" data-loading-text="Loading..." class="btn btn-success" style="float: right; margin-left: 30px; background-color: #165082; border-color: #1a5284; color: #FFFFFF;">
+                                <i class="fa fa-search"></i>搜索</button>
+
+
+
+                        </div>
+                    </div>
+
+                    <!--         <div class="col-sm-2" style="padding-left: 15px; padding-right: 3px;">
+                        <section class="panel">
+                            <input id="chooseId" type="text" placeholder="请选择车组或者车辆" data-provide="typeahead" autocomplete="off" class="form-control input-small cor_bck" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5\ \-]/g,'')">
+                        </section>
+                    </div>
+                    <div class="typeahead dropdown-menu" id="TreeDiv">
+                        <p id="TreeTitel" style="margin: 3px; font-size: 12px; padding-left: 10px;">双击左边节点选择车组，单击右边节点选择车辆</p>
+                        <div id="groupTree" class="ztree RpZtree"></div>
+                        <div id="vehTree" class="ztree RpZtree"></div>
+                    </div>-->
+
+
+
+                    <!--多一列给下拉列表用,不然会遮住后面的按钮-->
+                    <!--<div class="col-sm-1" style="padding-left: 3px; padding-right: 3px;">-->
+                    <!--</div>-->
+                    <!--      <div class="col-sm-2" style="padding-left: 3px; padding-right: 3px;">
+                        <button id="btnsearch" type="button" data-loading-text="Loading..." class="btn btn-success">
+                            <i class="fa fa-search"></i>搜索</button>
+                      
+                    </div>-->
+                </div>
+                <div class="row">
+                    <div id="tip" class="col-sm-13" style="display: none;">
+                        <div class="alert alert-block alert-danger fade in" style="margin-left: 15px; margin-right: 15px;">
+                            <button data-dismiss="alert" class="close close-sm" type="button">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <strong>查询失败!</strong> 请输入车牌号或车组名称进行搜索.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="adv-table">
+                                    <table id="MileageReport"></table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="modal fade modal-dialog-center" id="tb_MileageDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; overflow-x: hidden; overflow-y: hidden;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content-wrap">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title">里程明细</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <button id="btnDetailOutPut" type="button" data-loading-text="Loading..." class="btn btn-success" style="float: right; margin-left: 10px; background-color: #ffffff; border-color: #c5c5c5; color: #165082;">
+                                                <i class="fa  fa-share-square"></i>导出
+                                            </button>
+                                            <table id="MileageDetail"></table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+        </section>
+    </section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="js/respond.min.js"></script>
+
+    <!--right slidebar-->
+    <script src="js/slidebars.min.js"></script>
+
+
+    <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
+    <!--<script src="js/advanced-form-components.js"></script>-->
+
+    <script src="layer/layer.js"></script>
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+
+    <script src="assets/timepicker/jquery.datetimepicker.js"></script>
+    <link href="assets/timepicker/jquery.datetimepicker.css" rel="stylesheet" />
+
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+
+    <!--  <script type="text/javascript" src="js/mileageReport.js"></script>-->
+    <script type="text/javascript" src="js/jquery.table2excel.js"></script>
+    <!-- <script src="js/ckTree.js"></script>-->
+    <script src="/js/versions.js"></script>
+    <script>
+        $(function () {
+            var arr = [];
+            arr.push({ src: "/js/mileageReport.js" });
+            arr.push({ src: "/js/ckTree.js" });
+            GetVersions(arr);
+            $("#infoMile_tile").hover(function (e) {
+                $("#helpinfoMile_div").css("top", e.clientY);
+                $("#helpinfoMile_div").css("left", e.clientX);
+                $("#helpinfoMile_div").show();
+            }, function () {
+                $("#helpinfoMile_div").hide();
+            });
+            var strlst = ("KM-01,KM-02,GT02D,A5E-3").split(',');
+            var shebei = "";
+            $.each(strlst, function () {
+                if (shebei != "") {
+                    shebei += ",";
+                }
+                shebei += getTypeAllocationStr(this);
+            });
+            $("#pinfoMile_shebei").html("（注：针对于设备" + shebei.replace("\n", "") + "）");
+        });
+    </script>
+    <style>
+        .search {
+            width: 200px;
+        }
+
+        .atime {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            .atime:hover {
+                color: #165082;
+                text-decoration: underline;
+            }
+
+        .btn-info, .btn-info:hover, .btn-info:active:hover, .btn-info.active:hover, .open > .dropdown-toggle.btn-info:hover, .btn-info:active:focus, .btn-info.active:focus, .open .dropdown-toggle.btn-info, .open > .dropdown-toggle.btn-info:focus, .btn-info:active.focus, .btn-info.active.focus, .open > .dropdown-toggle.btn-info.focus {
+            background-color: #b0b5b9;
+            border-color: #b0b5b9;
+        }
+
+        .btn:hover, .btn:focus, .btn.focus {
+            color: #fff;
+            text-decoration: none;
+            background-color: #165082;
+        }
+
+        .btn-white {
+            background-clip: padding-box;
+            background-color: #f7f7f7;
+            border-color: rgba(150, 160, 180, 0.3);
+            border: 1px solid #ccc;
+        }
+
+        .close {
+            float: right;
+            font-size: 21px;
+            font-weight: bold;
+            line-height: 1;
+            color: #ffffff;
+            text-shadow: 0 1px 0 #fff;
+            filter: alpha(opacity=20);
+            /* opacity: .8; */
+            opacity: 1;
+        }
+            /* opacity: .8; */
+            .close:hover, .close:focus {
+                color: #fff;
+                text-decoration: none;
+                cursor: pointer;
+                filter: alpha(opacity=50);
+                /*opacity: .5;*/
+                opacity: 1;
+            }
+
+        i {
+            font-style: normal;
+        }
+
+        .col-sm-2 {
+            width: 255px;
+        }
+
+        .tile {
+            cursor: help;
+            color: #1961f5;
+        }
+
+            .tile:hover {
+                text-decoration: underline;
+            }
+    </style>
+
+</body>
+</html>
