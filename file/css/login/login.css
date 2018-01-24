@@ -1,0 +1,226 @@
+        * {
+            margin: 0;
+            padding: 0;
+            font: 14px "微软雅黑";
+        }
+
+        .div_top {
+            height: 90px;
+        }
+
+        .div_Main {
+            height: 570px;
+        }
+
+        #div_Login {
+            width: 370px;
+            height: 430px;
+            background: url(img/login/1-1.png) no-repeat;
+            position: absolute;
+            right: 45px;
+            top: 100px;
+        }
+
+        .login_text_div {
+            margin-left: 60px;
+            background-color: #e8e8e8;
+            border: 1px solid #CCCCCC;
+            width: 200px;
+            position: relative;
+        }
+
+            .login_text_div a {
+                height: 18px;
+                width: 14px;
+                display: inline-block;
+                position: absolute;
+                top: 12px;
+                left: 10px;
+            }
+
+        #a_login_user {
+            background: url(img/login/user.png) no-repeat 6px 12px;
+            height: 40px;
+            width: 20px;
+            float: left;
+        }
+
+        #a_login_lock {
+            background: url(img/login/lock-拷贝.png) no-repeat 6px 10px;
+            height: 40px;
+            width: 20px;
+            float: left;
+        }
+
+        .login_text {
+            height: 40px;
+            line-height: 40px;
+            background-color: #e8e8e8;
+            border: none;
+            outline: none;
+            margin-left: 10px;
+        }
+
+        #login_user {
+        }
+
+        #login_psw {
+        }
+
+        #sp_psw {
+            display: inline-block;
+            margin: 40px 0 0 80px;
+            font-size: 14px;
+        }
+
+        #sp_clear {
+            display: inline-block;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        #login {
+            width: 210px;
+            height: 40px;
+            margin: 40px 0 0 60px;
+            background-color: #076699;
+            border: 1px solid #076699;
+            cursor: pointer;
+            color: #888bbb;
+        }
+
+        #isClear {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-bottom: -2px;
+            cursor: pointer;
+        }
+
+        label {
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btnLogin1 {
+            display: none;
+        }
+
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px #e8e8e8 inset;
+            -webkit-text-fill-color: #333;
+        }
+
+        .copy {
+            position: fixed;
+            bottom: 10px;
+            left: 36%;
+        }
+
+            .copy a {
+                color: #0088bb;
+            }
+
+        .tydiv {
+            height: 40px;
+            margin: 25px 0 0 212px;
+        }
+
+            .tydiv a {
+                color: #0088bb;
+            }
+
+        a {
+            color: #0088bb;
+        }
+
+        @media screen and (max-width:1281px) {
+
+            #div_Login {
+                top: 60px;
+            }
+
+            body {
+                background: url(img/login/BGBG2.png) no-repeat left top;
+            }
+        }
+
+        @media screen and (max-width:1367px) and (min-width:1281px) {
+            #div_Login {
+                top: 100px;
+                right: 70px;
+                background: url(img/login/登1.png) no-repeat;
+            }
+
+            body {
+                background: url(img/login/BGBG10.png) no-repeat left top;
+            }
+        }
+
+        @media screen and (max-width:1441px) and (min-width:1367px) {
+            #div_Login {
+                top: 130px;
+                right: 60px;
+            }
+
+            body {
+                background: url(img/login/BGBG2.png) no-repeat left top;
+            }
+        }
+
+        @media screen and (min-width:1441px) {
+            #div_Login {
+                top: 180px;
+                right: 150px;
+            }
+
+            body {
+                background: url(img/login/BG33.png) no-repeat left top;
+            }
+        }
+
+        #gun {
+            position: absolute;
+            height: 30px;
+            left: 15px;
+            top: 0px;
+            line-height: 30px;
+        }
+
+        #announcementDiv {
+            height: 30px;
+            background: url(/img/notice_ico.png) no-repeat 12px center;
+            z-index: 99999;
+        }
+
+        .header_notice p.notice_body {
+            padding-left: 30px;
+            float: left;
+            overflow: hidden;
+            line-height: 30px;
+        }
+
+        .header_notice {
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            /*float: left;*/
+            overflow: hidden;
+            padding: 0px 9px;
+            background-color: rgba(0,0,0,0.03);
+            font-size: 12px;
+            color: #333;
+            height: 30px;
+            line-height: 30px;
+            z-index: 9999;
+        }
+
+            .header_notice i.notice_close {
+                margin-left: 10px;
+                cursor: pointer;
+                font: 20px/1.5 Arial,Helvetica,sans-serif,'Roboto Condensed';
+            }
+
+        .tep {
+            margin-left: 30px;
+        }
