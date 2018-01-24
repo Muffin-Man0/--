@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-reset.css" rel="stylesheet" />
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="js/defaults-zh_CN.js"></script>
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <script src="/js/addedcoin/jquery.table2excel.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-typeahead.js"></script>
+    <script src="assets/zTree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.excheck-3.5.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exedit.js" type="text/javascript"></script>
+    <script src="assets/zTree/jquery.ztree.exhide-3.5.js" type="text/javascript"></script>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="assets/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="/js/ckTree.js"></script>
+    <style>
+        .search {
+            width: 200px;
+        }
+
+        .dropdown-menu {
+            left: 0px;
+        }
+
+        #TreeDiv {
+            top: 31px;
+            left: 68px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var daochu_l = true;
+        var chooseId, groupId, flag = -1;//0：车组，1：车辆
+        function getCmdDownInfo() {
+            var info = {};
+            if (flag != -1) {
+                info.chooseId = chooseId;
+                info.groupId = groupId;
+                info.flag = flag;
+            }
+
+            $("#btnsearch").button('loading');
+            myAjax({
+                type: 'post',
+                url: ajax('/report/MaintainMileageReport/GetMaintainMileage.json'),
+                data: info,
+                dataType: 'json',                           //指定服务器返回的数据类型
+                timeout: 30000,                              //超时时间
+                cache: false,                               //是否缓存上一次的请求数据
+                async: true,                                //是否异步
+                //data: info,
+                beforeSend: function () {
+                    //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 });
+                    $('#CmdTable').bootstrapTable('showLoading');
+                },
+                success: function (data) {
+                    $("#btnsearch").button('reset');
+                    if (data.flag == 1) {
+                        var jsonData = data.obj.data;
+                        var html = "";
+
+                        $.each(jsonData, function (i) {
+                            this.index = i + 1;
+                            html += "<tr>";
+                            html += " <td>" + this.index + "</td>      ";
+                            html += " <td>" + this.GN + "</td>   ";
+                            html += " <td>" + this.PL + "</td>   ";
+                            html += " <td>" + this.TE + "</td>   ";
+                            html += " <td>" + this.MA + "</td>   ";
+                            html += " <td>" + this.MI + "</td>   ";
+                            html += " <td>" + this.ET + "</td>   ";
+                            html += "</tr>";
+                        });
+
+                        $("#CmdTable").bootstrapTable('load', jsonData);
+                        if (html != "") {
+                            daochu_l = false;
+                        }
+                        $("#dc_table").append(html);
+                    } else {
+                        layer.msg(data.msg, { icon: 2 });
+                    }
+                    $("#CmdTable").bootstrapTable('hideLoading');
+                },
+                error: function (msg) {
+                    $("#btnsearch").button('reset');
+                    $("#CmdTable").bootstrapTable('hideLoading');
+                    layer.msg('请求发生错误' + msg.statusText, { icon: 2 });
+                }
+            });
+        }
+        $(document).ready(function ($) {
+            $("#btnsearch").click(function () {
+                if ($("#chooseId").val() == "") {
+                    flag = -1;
+                } else if (selectName != "" && selectName != $("#chooseId").val()) {
+                    layer.tips("请选择输入车组或者车辆", '#chooseId');
+                    return false;
+                }
+                getCmdDownInfo();
+            });
+
+            $('#CmdTable').bootstrapTable({
+                //url: '/Home/GetDepartment',         //请求后台的URL（*）
+                //method: 'get',                      //请求方式（*）
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                data: [],
+                striped: true,                      //是否显示行间隔色
+                cache: true,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: true,                    //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: "",                    //传递参数（*）
+                sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber: 1,                      //初始化加载第一页，默认第一页
+                pageSize: 100,                       //每页的记录行数（*）
+                pageList: [100, 250, 500, "全选"],      //可供选择的每页的行数（*）
+                search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: false,                //是否精确搜索
+                showColumns: false,                  //是否显示所有的列
+                showRefresh: false,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                height: 450,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "index",                     //每一行的唯一标识，一般为主键列
+                showToggle: false,                   //是否显示详细视图和列表视图的切换按钮
+                //cardView: false,                    //是否显示详细视图
+                detailView: false,                  //是否显示父子表
+                showExport: false,                   //是否显示导出
+                exportDataType: "all",            //basic', 'all', 'selected'
+                columns: [{
+                    field: 'index',
+                    title: '序号',
+                    visible: true
+                }, {
+                    field: 'GN',
+                    title: '车组名称',
+                    visible: false
+                }, {
+                    field: 'PL',
+                    title: '车牌'
+                }, {
+                    field: 'TE',
+                    title: '终端编号'
+                }, {
+                    field: 'MA',
+                    title: '保养里程'
+                }, {
+                    field: 'MI',
+                    title: '行驶里程'
+                }, {
+                    field: 'ET',
+                    title: '提醒时间'
+                }]
+            });
+            getCmdDownInfo();
+
+
+
+        })
+        function daochu() {
+            if (daochu_l) {
+                layer.msg('数据为空！', { icon: 2 });
+                return false;
+            }
+            var html = $("#dc_table").html();
+            $("#dc_table").table2excel({
+                exclude: ".noExl",
+                name: "Excel Document Name",
+                filename: "里程保养提醒" + getNowFormatDatezz() + ".xls",
+                exclude_img: true,
+                exclude_links: true,
+                exclude_inputs: true,
+                strhtml: html
+            });
+        }
+    </script>
+</head>
+
+
+<body style="height: 470px; width: 900px;">
+    <div>
+        <div style="padding-right: 3px; width: 350px;">
+            <div style="float: left; height: 33px; line-height: 33px; font-weight: bold;">
+                车辆车组：
+            </div>
+            <section class="panel input-group m-bot15" style="padding-left: 3px; float: left; width: 250px;">
+                <input id="chooseId" type="text" placeholder="请选择车组或者车辆" data-provide="typeahead" autocomplete="off" class="form-control input-small cor_bck" />
+                <span class="input-group-btn">
+                    <button id="btnChooseId" class="btn btn-white" type="button" style="border-radius: 0px;"><i id="iChooseId" class="fa fa-sitemap"></i></button>
+                </span>
+            </section>
+        </div>
+        <div class="typeahead dropdown-menu" id="TreeDiv">
+            <p id="TreeTitel" style="margin: 3px; font-size: 12px; padding-left: 10px;">
+                <i style="font-weight: 900; color: #f00;">“双击”</i>左边节点选择<i style="font-weight: 900; color: #f00;">“车组”</i>，
+                                 <i style="font-weight: 900; color: #f00;">“单击”</i>右边节点选择<i style="font-weight: 900; color: #f00;">“车辆”</i>
+            </p>
+            <div id="groupTree" class="ztree RpZtree"></div>
+            <div id="vehTree" class="ztree RpZtree" style="border-left: 1px solid #b0b5b9;"></div>
+        </div>
+        <button id="btnsearch" type="button" data-loading-text="Loading..." class="btn btn-success" style="float: left; margin-left: 30px; background-color: #165082; border-color: #1a5284; color: #FFFFFF;">
+            <i class="fa fa-search"></i>搜索</button>
+        <button type="button" onclick="daochu()" data-loading-text="Loading..." class="btn btn-success" style="margin-bottom: 10px; float: left; margin-left: 10px; background-color: #ffffff; border-color: #c5c5c5; color: #165082;">
+            <i class="fa  fa-share-square"></i>导出</button>
+    </div>
+
+    <table id="CmdTable"></table>
+    <table style="display: none;">
+        <tbody id="dc_table">
+            <tr>
+                <td>序号</td>
+                <td>车组名称</td>
+                <td>车牌</td>
+                <td>终端编号</td>
+                <td>保养里程</td>
+                <td>行驶里程</td>
+                <td>提醒时间</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

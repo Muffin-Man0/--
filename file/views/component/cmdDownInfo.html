@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-reset.css" rel="stylesheet" />
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <script src="js/jquery.js?v=1.1"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="layer/layer.js"></script>
+    <script type="text/javascript" src="js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="js/defaults-zh_CN.js"></script>
+    <script src="assets/bootstrap-table/bootstrap-table.js"></script>
+    <script src="assets/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>
+    <script src="assets/bootstrap-table/extensions/export/tableExport.js"></script>
+    <link href="assets/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+
+    <style>
+        .search {
+            width: 200px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function getCmdDownInfo() {
+            myAjax({
+                type: 'Get',
+                url: ajax('http/Monitor/QueryTextUpAndCmdDownInfo.json?time=' + top.time),
+                dataType: 'json',                           //指定服务器返回的数据类型
+                timeout: 30000,                              //超时时间
+                cache: false,                               //是否缓存上一次的请求数据
+                async: true,                                //是否异步
+                //data: info,
+                beforeSend: function () {
+                    //layer.msg('请求之前:' + JSON.stringify(info), { icon: 1 });
+                    $('#CmdTable').bootstrapTable('showLoading');
+                },
+                success: function (data) {
+                    if (data.flag == 1) {
+                        var jsonData = data.obj.data;
+                        top.time = data.obj.time;
+                        if (jsonData.length > 0) {
+                            $.each(jsonData, function (index) {
+                                this.index = index + 1;
+                                if (this.M != undefined) {
+                                    this.M = html_encode(this.M);
+                                    //if (this.M.length > 30) {
+                                    //    var idStr = 'txt_' + this.index;
+                                    //    this.M = '<span title="' + this.M + '">' + this.M.substr(0, 30) + '... </span>'
+                                    //        + '<span id="' + idStr + '" style="display:none;">' + this.M + '</span>'
+                                    //        + '<input type="button" name="' + idStr + '" onclick="jsCopy(this);" value="复制" style="border:0px;background-color:#fff;color: green;margin-left: 10px;" />'
+                                    //}
+                                }
+                            });
+                        }
+
+                        $("#CmdTable").bootstrapTable('load', jsonData);
+
+                    } else {
+                        layer.msg(data.msg, { icon: 2 });
+                    }
+                    $("#CmdTable").bootstrapTable('hideLoading');
+                },
+                error: function (msg) {
+                    $("#CmdTable").bootstrapTable('hideLoading');
+                    layer.msg('请求发生错误' + msg.statusText, { icon: 2 });
+                }
+            });
+        }
+
+        //此方法用来将字符串内容中的尖括号、引号等进行转义
+        function html_encode(str) {
+            var s = "";
+            if (str.length == 0) return "";
+            s = str.replace(/&/g, "&gt;");
+            s = s.replace(/</g, "&lt;");
+            s = s.replace(/>/g, "&gt;");
+            s = s.replace(/ /g, "&nbsp;");
+            s = s.replace(/\'/g, "&#39;");
+            s = s.replace(/\"/g, "&quot;");
+            s = s.replace(/\n/g, "<br>");
+            return s;
+        }
+
+        //拷贝文字
+        function jsCopy(obj) {
+            //var e = document.getElementById($(id).attr("id"));//对象是contents 
+            //e.select(); //选择对象 
+            //document.execCommand("Copy"); //执行浏览器复制命令
+
+            var elementId = $(obj).attr('name');
+            // 创建元素用于复制
+            var aux = document.createElement('input');
+            // 获取复制内容
+            var content = document.getElementById(elementId).innerHTML || document.getElementById(elementId).value;
+            // 设置元素内容
+            aux.setAttribute('value', content);
+            // 将元素插入页面进行调用
+            document.body.appendChild(aux);
+            // 复制内容
+            aux.select();
+            // 将内容复制到剪贴板
+            document.execCommand('copy');
+            // 删除创建元素
+            document.body.removeChild(aux);
+        }
+
+        $(document).ready(function ($) {
+            $('#CmdTable').bootstrapTable({
+                //url: '/Home/GetDepartment',         //请求后台的URL（*）
+                //method: 'get',                      //请求方式（*）
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                data: [],
+                striped: true,                      //是否显示行间隔色
+                cache: true,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: true,                    //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: "",                    //传递参数（*）
+                sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber: 1,                      //初始化加载第一页，默认第一页
+                pageSize: 100,                       //每页的记录行数（*）
+                pageList: [100, 250, 500, "全选"],      //可供选择的每页的行数（*）
+                search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: false,                //是否精确搜索
+                showColumns: false,                  //是否显示所有的列
+                showRefresh: false,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                height: 450,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "index",                     //每一行的唯一标识，一般为主键列
+                showToggle: false,                   //是否显示详细视图和列表视图的切换按钮
+                //cardView: false,                    //是否显示详细视图
+                detailView: false,                  //是否显示父子表
+                showExport: false,                   //是否显示导出
+                exportDataType: "all",            //basic', 'all', 'selected'
+                columns: [{
+                    field: 'index',
+                    title: '序号',
+                    visible: true,
+                    width: '50px',
+                }, {
+                    field: 'V',
+                    title: 'vehId',
+                    visible: false,
+                }, {
+                    field: 'P',
+                    title: '车牌',
+                    width: '200px',
+                }, {
+                    field: 'T',
+                    title: '上下行时间',
+                    width: '200px',
+                }, {
+                    field: 'C',
+                    title: '指令',
+                    width: '250px',
+                }, {
+                    field: 'M',
+                    title: '文本信息'
+                }]
+            });
+            getCmdDownInfo();
+        })
+    </script>
+</head>
+
+
+<body style="height: 470px; width: 900px;">
+    <table id="CmdTable"></table>
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿.msgBox
+{
+    position: absolute;
+    width: 0;
+    height: 40px;
+    line-height: 40px;
+    right: 0px;
+    bottom: 50px;
+    z-index: 99999;
+    border: 1px solid rgb(49, 85, 165);
+    color: white;
+    padding-left: 40px;
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: 0 0 10px #B7B6B6;
+    background:url(../Images/msgBox.png) no-repeat;
+    background-color:rgb(3, 80, 143);
+    background-position-y: center;
+    background-position-x: 5px;
+}

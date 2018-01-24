@@ -1,0 +1,122 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+html,
+body {
+    font-size: 12px;
+}
+body{
+ background-color:#F1F2F7;
+}
+.header-box {
+    border: 1px solid #eaeefb;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 15px;
+    position: relative;
+     background-color:#fff;
+  }
+  .header-box .header-rg {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .isdis {
+    background-color: #eef1f6!important;
+    border-color: #d1dbe5!important;
+    color: #bbb!important;
+    cursor: not-allowed;
+  }
+  .form-x {
+    width: 360px;
+    margin: auto;
+  }
+  .card-t {
+    width: 90px;
+    margin: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+  }
+  .card-t .header-g {
+    background-color: #f39b13;
+    color: white;
+    padding: 5px;
+    /* font-size: 40px; */
+  }
+  .card-t .header-g h3{
+    font-size: 21px;
+    line-height: 2;
+  }
+  /* .container-c {
+    padding: 10px;
+  } */
+  .dt-title {
+    padding: 15px 0;
+    font-size: 13px;
+    font-weight: bold;
+  }
+  .dt-title .dt-font {
+    display: inline-block;
+  }
+  .dt-title .dios {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #dadada;
+    border-radius: 50%;
+  }
+  .center-footer {
+    text-align: center;
+    margin: 30px 0 10px 0;
+  }
+  .center-footer div {
+    display: inline-block;
+    margin-right: 30px;
+  }
+  .check-x {
+    width: 200px;
+    margin: auto;
+  }
+  .check-x span {
+    font-size: 13px;
+  }
+  .check-x span:last-child {
+    color: #6866ff;
+    cursor: pointer;
+  }
+  .btn-connet {
+    margin-top: 20px;
+  }
+  .btn-connet input[type=button] {
+    width: 280px;
+    border: 1px solid #3070f3;
+    background: #3070f3;
+    padding: 7px 0;
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+  }
+  .el-form-item {
+    margin-bottom: 0px!important;
+  }
+  .el-form-item:last-child {
+    margin-bottom: 5px!important;
+  }
+  .el-form-item .err-text {
+    display: block;
+    height: 25px;
+    line-height: 25px;
+    color: #ee1414;
+  }
+  .pd-footer {
+    padding: 50px 0;
+  }
+  .detail-box {
+    font-size: 16px;
+    text-align: center;
+    border-bottom: 1px solid #F0F3F5;
+    padding-bottom: 10px;
+  }
+  

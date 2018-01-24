@@ -599,7 +599,7 @@ var strType = "全部";
 
 jQuery(document).ready(function () {
 
-    $("#vehframe").attr('src', 'monitorCenterVehInbox.html?v=' + get_versions());
+    $("#vehframe").attr('src', '/views/monitoring/monitorCenterVehInbox.html?v=' + get_versions());
 
 
 
@@ -613,8 +613,8 @@ jQuery(document).ready(function () {
 
     $("#cancelAllSelectedGroup").hide();
 
-    $("#userIframe").attr('src', 'monitorCenterGroupInbox.html?v=' + get_versions());
-    $("#alarmFrame").attr('src', 'monitorCenterAlarmInbox.html?v=' + get_versions());
+    $("#userIframe").attr('src', '/views/monitoring/monitorCenterGroupInbox.html?v=' + get_versions());
+    $("#alarmFrame").attr('src', '/views/monitoring/monitorCenterAlarmInbox.html?v=' + get_versions());
 
     monitorresize();
 
@@ -1682,7 +1682,7 @@ function monitorresize() {
 
     $(".enclosure_div_main").height($("#enclosure_div").height() - 66);
     if ($("#mapframe").attr("src") == undefined) {
-        $("#mapframe").attr("src", "gdmap.html?v=" + get_versions());
+        $("#mapframe").attr("src", "/views/monitoring/gdmap.html?v=" + get_versions());
     }
 
 
@@ -1704,11 +1704,11 @@ $("#changeMap").change(function () {
     isLoadPoint = false;
     var aa = $("#vehframe")[0].contentWindow.selectedVeh.toArray();
 
-    if ($("#mapframe").attr("src").indexOf("gdmap.html") != -1) {
-        $("#mapframe").attr("src", "bdmap.html?v=" + get_versions());
+    if ($("#mapframe").attr("src").indexOf("/views/monitoring/gdmap.html") != -1) {
+        $("#mapframe").attr("src", "/views/monitoring/bdmap.html?v=" + get_versions());
         setKeyConif("mapchoose", "1,0");
     } else {
-        $("#mapframe").attr("src", "gdmap.html?v=" + get_versions());
+        $("#mapframe").attr("src", "/views/monitoring/gdmap.html?v=" + get_versions());
         setKeyConif("mapchoose", "0,0");
     }
     stopCountDown();
@@ -2490,7 +2490,7 @@ function setAreaCenter(obj) {
         }
     }
 
-    if ($("#mapframe").attr("src").indexOf("gdmap.html") != -1) {
+    if ($("#mapframe").attr("src").indexOf("/views/monitoring/gdmap.html") != -1) {
         $("#mapframe")[0].contentWindow.map.setZoomAndCenter(14, [x, y]);
         // $("#mapframe")[0].contentWindow.map.setFitView();//地图自适应
     } else {
@@ -4227,7 +4227,7 @@ function mapjv() {
             isLoadArea = false;
             isLoadPoint = false;
             var aa = $("#vehframe")[0].contentWindow.selectedVeh.toArray();
-            $("#mapframe").attr("src", "bdmap.html?v=" + get_versions());
+            $("#mapframe").attr("src", "/views/monitoring/bdmap.html?v=" + get_versions());
             stopCountDown();
             countDown = 10;
             setTimeout(function () {
