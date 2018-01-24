@@ -1,0 +1,96 @@
+﻿* {
+padding:0;
+margin:0;
+}
+.mainStyle {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    background-color: #EAEAEA;
+    padding-top: 60px;
+}
+
+.btnCss {
+    float: left;
+    height: 20px;
+    cursor: pointer;
+    margin: 8px 2px 0px 0px;
+    width: 90px;
+    text-align: center;
+    background-color: #3896DD;
+    color: White;
+    border: 1px solid #0074CC;
+    line-height: 20px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+}
+
+    .btnCss:hover {
+        background-color: #22AF18;
+    }
+
+    .btnCss:active {
+        background-color: #3896DD;
+    }
+
+.btnCssdisabled {
+    float: left;
+    height: 20px;
+    cursor: pointer;
+    margin: 8px 2px 0px 0px;
+    width: 90px;
+    text-align: center;
+    color: White;
+    line-height: 20px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    background-color: #ccc;
+    border: 1px solid #ccc;
+}
+
+.div_Container {
+    width:1000px;
+    margin:10px auto;
+}
+#text_Dis{
+    width: 896px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    border: 1px solid #0088bb;
+}
+#btn_selectDis {
+    width: 100px;
+    height: 32px;
+    color: #fff;
+    background-color: #0088bb;
+    border: none;
+    font-size: 16px;
+      cursor:pointer;
+}
+
+#divDataTable {
+    margin-top: 20px;
+    
+}
+
+#btn_Distribute {
+margin-top: 20px;
+    float: right;
+    width: 100px;
+    height: 30px;
+    border: none;
+    background-color: #0088bb;
+    color: #fff;
+    font-size: 16px;
+    cursor:pointer;
+}
+
+
+.div_Tree {
+width:200px;
+height:400px;
+border:2px solid #0088bb;
+}

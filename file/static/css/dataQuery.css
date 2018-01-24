@@ -1,0 +1,169 @@
+﻿.txt {
+    clear: both;
+    text-align: center;
+    color: #48576a;
+}
+
+.txt_name {
+    float: left;
+    width: 121px;
+    text-align: right;
+    padding: 7px;
+    height: 66px;
+}
+
+.txt_div {
+    float: left;
+    height: 40px;
+}
+
+.tile {
+    float: left;
+    color: #f00;
+    display: none;
+}
+
+.txt_div input[type='text'] {
+    border: 1px solid #bfcbd9;
+    width: 289px;
+    padding: 3px 10px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    height: 36px;
+    border-radius: 4px;
+}
+
+.txt_div input[type='password'] {
+    border: 1px solid #bfcbd9;
+    width: 289px;
+    padding: 3px 10px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    height: 36px;
+    border-radius: 4px;
+}
+
+.txt_div select {
+    border: 1px solid #bfcbd9;
+    width: 289px;
+    padding: 3px 10px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    height: 36px;
+    border-radius: 4px;
+}
+
+.button {
+    width: 177px;
+    border: 1px solid #3070f3;
+    background: #3070f3;
+    padding: 7px 0;
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+}
+
+.header-box {
+    border: 1px solid #eaeefb;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 15px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.pu {
+    display: none;
+}
+
+.xtable {
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+
+    .xtable tr th {
+        height: 40px;
+        font-size: 15px;
+        line-height: 40px;
+        background-color: #eef1f6;
+        text-align: center;
+        border: 1px solid #ccc;
+    }
+
+    .xtable tr td {
+        height: 40px;
+        font-size: 15px;
+        line-height: 40px;
+        background-color: #fff;
+        text-align: center;
+        border: 1px solid #ccc;
+    }
+
+.dt-title {
+    padding: 15px 0;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+    .dt-title .dt-font {
+        display: inline-block;
+    }
+
+    .dt-title .dios {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: #dadada;
+        border-radius: 50%;
+    }
+
+.disabled {
+    background-color: #eef1f6!important;
+    border-color: #d1dbe5!important;
+    color: #bbb!important;
+    cursor: not-allowed !important;
+}
+
+.check_result {
+    height: 28px;
+    line-height: 24px;
+    margin-top: 7px;
+}
+
+body {
+    background-color: #F1F2F7;
+}
+
+a {
+    color: #0664f7;
+}
+
+    a:hover {
+        color: #f00;
+    }
+
+#jiesao_div p {
+    /*padding-bottom: 5px;*/
+    text-indent: 10px;
+    color: #8c8c8c;
+    font-size: 12px;
+}
+
+.dropdownul li a span {
+  
+    color: #f00;
+   
+    float:right;
+   
+}
+
+.dropdownul li a i {
+    font-style: normal;
+  
+}
+
+.layui-layer-title {
+    background-color: #165082 !important;
+    color: #fff !important;
+}
+
+#cityCodediv .dropdown-menu {
+    left: 31%;
+}

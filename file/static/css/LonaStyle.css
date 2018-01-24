@@ -1,0 +1,88 @@
+﻿.filter_box {
+    position:relative;
+    top:25px;
+    z-index:999;
+    width:85%;
+    margin-left:15px;
+    
+}
+.filter_box input,.filter_box select{
+    color:black !important;
+}
+.filter_box select {
+    cursor:pointer;
+}
+.filter_box .contor{
+    border: 1px solid #e2e2e4;
+    box-shadow: none;
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    overflow:hidden;
+}
+.filter_box .item {
+    float:left;
+    overflow:hidden;
+    margin-right:10px;
+}
+.filter_box .btn {
+    margin-right:10px;
+}
+.filter_box .tool-btn {
+    float:left;
+    width:275px;
+    margin-top:0;
+}
+.filter_box .right {
+     float:right;
+     width:79.5%;
+}
+.content-box{
+    position:relative;
+    top:-20px;
+}
+.content-box input[type='checkbox'] {
+    cursor:pointer;
+}
+
+.treebox {
+    position:absolute;
+    width:500px;
+    height:350px;
+    left:0;
+    margin-top:5px;
+    /*display:block;*/
+}
+.treebox .closs {
+    float:right;
+    margin-right:10px;
+    font-size:14px;
+    cursor:pointer;
+    margin-top:-3px;
+}
+.treebox .tree {
+    width:49.9%;
+    float:left;
+    height:315px;
+    margin-top:-3px;
+    overflow-y:auto;
+}
+.border_right {
+    border-right:1px solid #ccc;
+}
+.offset-margin-left-15 {
+    margin-left:15px;
+}

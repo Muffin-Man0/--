@@ -15,7 +15,7 @@
         #div_Login {
             width: 370px;
             height: 430px;
-            background: url(img/login/1-1.png) no-repeat;
+            background: url(/statci/images/login/1-1.png) no-repeat;
             position: absolute;
             right: 45px;
             top: 100px;
@@ -39,14 +39,14 @@
             }
 
         #a_login_user {
-            background: url(img/login/user.png) no-repeat 6px 12px;
+            background: url(/statci/images/login/user.png) no-repeat 6px 12px;
             height: 40px;
             width: 20px;
             float: left;
         }
 
         #a_login_lock {
-            background: url(img/login/lock-拷贝.png) no-repeat 6px 10px;
+            background: url(/statci/images/login/lock-拷贝.png) no-repeat 6px 10px;
             height: 40px;
             width: 20px;
             float: left;
@@ -141,7 +141,7 @@
             }
 
             body {
-                background: url(img/login/BGBG2.png) no-repeat left top;
+                background: url(/statci/images/login/BGBG2.png) no-repeat left top;
             }
         }
 
@@ -149,11 +149,11 @@
             #div_Login {
                 top: 100px;
                 right: 70px;
-                background: url(img/login/登1.png) no-repeat;
+                background: url(/statci/images/login/登1.png) no-repeat;
             }
 
             body {
-                background: url(img/login/BGBG10.png) no-repeat left top;
+                background: url(/statci/images/login/BGBG10.png) no-repeat left top;
             }
         }
 
@@ -164,7 +164,7 @@
             }
 
             body {
-                background: url(img/login/BGBG2.png) no-repeat left top;
+                background: url(/statci/images/login/BGBG2.png) no-repeat left top;
             }
         }
 
@@ -175,7 +175,7 @@
             }
 
             body {
-                background: url(img/login/BG33.png) no-repeat left top;
+                background: url(/statci/images/login/BG33.png) no-repeat left top;
             }
         }
 
@@ -189,7 +189,7 @@
 
         #announcementDiv {
             height: 30px;
-            background: url(/img/notice_ico.png) no-repeat 12px center;
+            background: url(/statci/images/notice_ico.png) no-repeat 12px center;
             z-index: 99999;
         }
 

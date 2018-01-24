@@ -75,3 +75,195 @@ function get_loding_html() {
     html += '     </section>';
     return html;
 }
+
+
+
+$(function () {
+    intercept_b();
+
+    $("#login_user").focus(function () {
+        $("#a_login_user").css("background-image", "url(img/login/user-拷贝.png)");
+        $("#div_login_user").css("outline", "2px solid rgb(151, 199, 230)");
+    })
+    $("#login_user").blur(function () {
+        $("#a_login_user").css("background-image", "url(img/login/user.png)");
+        $("#div_login_user").css("outline", "none");
+    })
+    $("#login_psw").focus(function () {
+        $("#a_login_lock").css("background-image", "url(img/login/lock.png)");
+        $("#div_login_lock").css("outline", "2px solid rgb(151, 199, 230)");
+    })
+    $("#login_psw").blur(function () {
+        $("#a_login_lock").css("background-image", "url(img/login/lock-拷贝.png)")
+        $("#div_login_lock").css("outline", "none");
+    })
+
+
+    $("#login").click(function () {
+        if ($("#userName").val() == "" | $("#userPwd").val() == "") {
+            alert('用户和密码不能为空！');
+            return false;
+        }
+
+        var url = "login/login.json?";
+        myAjax({
+            url: ajax(url),  //请求的URL
+            type: 'POST',
+            dataType: 'json',
+            data: { userName: $("#userName").val(), password: $("#userPwd").val() },
+            beforeSend: function () {
+                $("#login").val("登录中");
+                $("#login").attr("disabled", "disabled");
+            },
+            success: function (data) {
+
+                splitResult(data);
+                $("#login").removeAttr("disabled");
+                $("#login").val(" 登录");
+                if (data.flag == 1) {//登陆成功
+                    //alert("欢迎您："+$("#userName").val()+" 用户！即将跳转页面");
+
+
+                    localStorage.removeItem("loginUser");
+                    localStorage.setItem("loginUser", JSON.stringify(data.obj));
+
+                    window.location.href = 'index.html';
+                } else {
+                    layer.msg(data.msg, { icon: 2 });
+                }
+            },
+            error: function (msg) {
+                $("#login").removeAttr("disabled");
+                $("#login").val(" 登录");
+                layer.alert("readyState：" + msg.readyState + ",responseText：" + msg.responseText + ",status：" + msg.status + ",statusText：" + msg.statusText);
+            }
+
+        })
+
+    })
+
+
+    $("#visitors").click(function () {
+        //layer.msg('该功能暂未开放', { icon: 4 });
+        var url = "login/login.json?";
+        myAjax({
+            url: ajax(url),  //请求的URL
+            type: 'POST',
+            dataType: 'json',
+            data: { userName: "test01", password: "test01" },
+            beforeSend: function () {
+                $("#login").val("登录中");
+                $("#login").attr("disabled", "disabled");
+            },
+            success: function (data) {
+                splitResult(data);
+                if (data.flag == 1) {//登陆成功
+                    //alert("欢迎您："+$("#userName").val()+" 用户！即将跳转页面");
+                    localStorage.setItem("loginUser", JSON.stringify(data.obj));
+
+
+                    window.location.href = 'index.html';
+                } else {
+                    layer.msg(data.msg, { icon: 2 });
+                }
+                $("#login").removeAttr("disabled");
+                $("#login").val(" 登录");
+            },
+            error: function (msg) {
+                $("#login").removeAttr("disabled");
+                $("#login").val(" 登录");
+                layer.alert("readyState：" + msg.readyState + ",responseText：" + msg.responseText + ",status：" + msg.status + ",statusText：" + msg.statusText);
+            }
+
+        })
+    })
+
+
+
+    $("#userName").keydown(function (e) {
+        var event = e || event;
+        if (event.keyCode == 13) {
+            $("#userPwd").focus();
+        }
+    })
+    $("#userPwd").keydown(function (e) {
+        var event = e || event;
+        if (event.keyCode == 13) {
+            $("#login").click();
+        }
+    })
+
+});
+
+var divPop_show = true;
+
+$(function () {
+    if (divPop_show) {
+        divPop_t();
+    }
+});
+function divPop_t() {
+    $("#divPop1").hide();
+    myAjax({
+        url: ajax("/login/Notice/GetNotice.json"),  //请求的URL
+        type: 'get',
+        dataType: 'json',
+        data: {},
+        beforeSend: function () {
+        },
+        success: function (d) {
+            if (d.obj.length > 0) {
+                var html = "";
+                var html2 = "";
+                $.each(d.obj, function (i) {
+                    if (i != 0) {
+                        html2 += "  ";
+                    }
+                    html += "<h2 style=\"font-weight:bold;font-size:14px;\">" + d.obj[i] + "</h2>";
+                    html2 += d.obj[i];
+                });
+                //$("#contxt").html(html);
+                //$("#divPop").show();
+                //$("#divPop").animate({ top: '40px' }, "slow");
+                //setTimeout(function () { $("#divPop").hide() }, 3000);
+                $("#gundivhd").html(html2);
+                $("#gun").html(html2);
+
+
+                if (html2 == "") {
+                    $("#divPop1").hide();
+                } else {
+                    $("#divPop1").show();
+                }
+                var num = 0;
+                function goLeft() {
+                    if (num == -$("#gun").width()) {
+                        num = 0;
+                    }
+                    num -= 1;
+                    $("#gun").css({
+                        left: num
+                    });
+                }
+                var timer = 0;
+                if ($("#gundivhd").width() >= $(window).width() * 0.5) {
+                    timer = setInterval(goLeft, 20);
+                }
+                $("#announcementDiv").hover(function () {
+                    clearInterval(timer);
+                },
+                function () {
+                    if ($("#gundivhd").width() >= $(window).width() * 0.5) {
+                        timer = setInterval(goLeft, 20);
+                    }
+                });
+            }
+        },
+        error: function (msg) {
+            console.log(msg);
+        }
+    });
+}
+function closegg() {
+    $("#divPop1").hide();
+}
