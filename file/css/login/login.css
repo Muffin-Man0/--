@@ -15,7 +15,7 @@
         #div_Login {
             width: 370px;
             height: 430px;
-            background: url(/static/images/login/1-1.png) no-repeat;
+            background: url("/static/images/login/1-1.png") no-repeat;
             position: absolute;
             right: 45px;
             top: 100px;
@@ -136,7 +136,7 @@
             }
 
             body {
-                background: url(/static/images/login/BGBG2.png) no-repeat left top;
+                background: url("/static/images/login/BGBG2.png") no-repeat left top;
             }
         }
 
@@ -170,7 +170,7 @@
             }
 
             body {
-                background: url(/static/images/login/BG33.png) no-repeat left top;
+                background: url("/static/images/login/BG33.png") no-repeat left top;
             }
         }
 
@@ -184,7 +184,7 @@
 
         #announcementDiv {
             height: 30px;
-            background: url(//static/images/notice_ico.png) no-repeat 12px center;
+            background: url(/static/images/notice_ico.png) no-repeat 12px center;
             z-index: 99999;
         }
 
